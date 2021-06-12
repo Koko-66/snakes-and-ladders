@@ -15,54 +15,70 @@
     </header>
     <section>
         <div id="game-container">
-            <table>
-                <tr>
-                    <td class="field">END</td>
-                    <td class="field">29</td>
-                    <td class="field">28</td>
-                    <td class="field">27</td>
-                    <td class="field">26</td>
-                </tr>
-                <tr>
-                    <td class="field">21</td>
-                    <td class="field">22</td>
-                    <td class="field">23</td>
-                    <td class="field">24</td>
-                    <td class="field">25</td>
-                </tr>
-                <tr>
-                    <td class="field">20</td>
-                    <td class="field">19</td>
-                    <td class="field">18</td>
-                    <td class="field">17</td>
-                    <td class="field">16</td>
-                </tr>
-                <tr>
-                    <td class="field">11</td>
-                    <td class="field">12</td>
-                    <td class="field">13</td>
-                    <td class="field">14</td>
-                    <td class="field">15</td>
-                </tr>
-                <tr>
-                    <td class="field">10</td>
-                    <td class="field">9</td>
-                    <td class="field">8</td>
-                    <td class="field">7</td>
-                    <td class="field">6</td>
-                </tr>
-                <tr>
-                    <td class="field">START</td>
-                    <td class="field">2</td>
-                    <td class="field">3</td>
-                    <td class="field">4</td>
-                    <td class="field">5</td>
-                </tr>
-            </table>
+            <div id=game-board>
+                <table id=board-table>
+                    <tr>
+                        <td class="field">END</td>
+                        <td class="field">29</td>
+                        <td class="field">28</td>
+                        <td class="field">27</td>
+                        <td class="field">26</td>
+                    </tr>
+                    <tr>
+                        <td class="field">21</td>
+                        <td class="field">22</td>
+                        <td class="field">23</td>
+                        <td class="field">24</td>
+                        <td class="field">25</td>
+                    </tr>
+                    <tr>
+                        <td class="field">20</td>
+                        <td class="field">19</td>
+                        <td class="field">18</td>
+                        <td class="field">17</td>
+                        <td class="field">16</td>
+                    </tr>
+                    <tr>
+                        <td class="field">11</td>
+                        <td class="field">12</td>
+                        <td class="field">13</td>
+                        <td class="field">14</td>
+                        <td class="field">15</td>
+                    </tr>
+                    <tr>
+                        <td class="field">10</td>
+                        <td class="field">9</td>
+                        <td class="field">8</td>
+                        <td class="field">7</td>
+                        <td class="field">6</td>
+                    </tr>
+                    <tr>
+                        <td class="field">START</td>
+                        <td class="field">2</td>
+                        <td class="field" id="f3">3</td>
+                        <td class="field">4</td>
+                        <td class="field">5</td>
+                    </tr>
+                </table>
+            </div>
+            <div id="game-controls">
+                <div id=help-button class="div-controls"><i class="far fa-question-circle" style="font-size: xx-large; padding:15px;"></i>
+                </div>
+                <div id=avatars>
+                    <div id="avatar1" class="div-controls">Avatar 1 icon</div>
+                    <div id="avatar2" class="div-controls">Avatar 2 icon</div>
+                    <div id="avatar3" class="div-controls">Avatar 3 icon</div>
+                    <div id="dice" class="div-controls" style="margin-top:100px;">Dice</div>
+                </div>
+            </div>
         </div>
     </section>
 
     <script src="assets/script/script.js"></script>
+    <script src="https://kit.fontawesome.com/3241ed12ad.js" crossorigin="anonymous"></script>
 </body>
+<footer>
+    Footer
+</footer>
 
 </html>
