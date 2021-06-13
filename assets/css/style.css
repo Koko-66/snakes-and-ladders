@@ -17,6 +17,9 @@ body {
     color: rgba(0, 0, 0, 0, 0.7)
 }
 
+
+/* ---Header */
+
 header {
     height: 200px;
 }
@@ -32,17 +35,17 @@ h1 {
     margin: auto 0;
 }
 
+
+/* ---Main game area */
+
 #game-container {
     width: 700px;
     height: 700px;
-    /* background: #15194B; */
     display: block;
     margin: 0 auto;
-    /* color: white; */
 }
 
 #game-board {
-    /* background: tomato; */
     display: flex;
     flex-direction: column;
     float: left;
@@ -51,7 +54,6 @@ h1 {
 }
 
 #game-controls {
-    /* background: yellowgreen; */
     display: flex;
     flex-direction: column;
     float: left;
@@ -65,7 +67,6 @@ h1 {
 }
 
 .field {
-    /* background: #B13477; */
     border: rgba(0, 0, 0, 0.1) solid 2px;
     width: 70px;
     height: 70px;
@@ -75,7 +76,12 @@ h1 {
     margin: 5px;
     padding: 5px;
     font-size: 28px;
-    /* color: #ffffff; */
+}
+
+.field img {
+    width: 50%;
+    position: relative;
+    bottom: 60%;
 }
 
 #avatars {
