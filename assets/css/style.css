@@ -3,7 +3,7 @@
 /* colors */
 
 
-/* charcoal */
+/* rgba(0,0,0,0.7) - charcoal*/
 
 
 /* off-white */
@@ -21,7 +21,12 @@ body {
 /* ---Header */
 
 header {
+    display: flex;
+    align-items: center;
+    justify-content: center;
     height: 200px;
+    width: 100%;
+    clear: both;
 }
 
 footer {
@@ -30,19 +35,42 @@ footer {
 
 h1 {
     font-family: 'Viaoda Libre', cursive;
-    padding-top: 100px;
     text-align: center;
     margin: auto 0;
+}
+
+
+/* ---instructions box */
+
+#instructions {
+    display: block;
+    width: 80%;
+    /* position: absolute; */
+    /* left: 33%; */
+    background: #EEF2F6;
+    border: rgba(0, 0, 0, 0.5) solid 1px;
+    border-radius: 10px;
+    padding: 10px;
+    line-height: 1.2em;
+    font-family: 'Viaoda Libre', cursive;
+    color: #B13477;
+    font-size: 1.2em;
+    text-align: center;
+    z-index: 1;
+    margin: 0 auto;
 }
 
 
 /* ---Main game area */
 
 #game-container {
-    width: 700px;
-    height: 700px;
+    width: fit-content;
+    height: 500px;
     display: block;
     margin: 0 auto;
+    background: lightblue;
+    padding: 20px;
+    border: rgba(0, 0, 0, 0, 0.7) solid 1px;
 }
 
 #game-board {
@@ -50,7 +78,8 @@ h1 {
     flex-direction: column;
     float: left;
     height: inherit;
-    width: 80%;
+    width: auto;
+    padding: 20px;
 }
 
 #game-controls {
@@ -58,7 +87,8 @@ h1 {
     flex-direction: column;
     float: left;
     height: inherit;
-    width: 20%;
+    width: auto;
+    padding: 20px;
 }
 
 .board-row {
@@ -85,26 +115,36 @@ h1 {
 }
 
 #avatars {
+    display: flex;
     color: rgba(0, 0, 0, 0.7);
+    margin: 15px;
 }
 
 #help-button {
     margin: 0 auto;
-    margin-top: 20px;
 }
 
-.div-controls {
+.avatar {
     border: black solid 2px;
     width: 50px;
     height: 50px;
     margin: 0 auto;
-    margin-top: 50px;
 }
 
 .dice img {
-    margin: 20px;
     width: 70px;
     height: auto;
     position: absolute;
-    margin: 200px 20px 0 30px;
+    margin: 50px -9px 0 -9px;
+}
+
+.button {
+    border: rgba(0, 0, 0, 0.7) solid 2px;
+    border-bottom: 4px;
+    border-right: 4px;
+    height: 2em;
+    font-size: inherit;
+    font-family: inherit;
+    background-color: #B13477;
+    color: whitesmoke;
 }

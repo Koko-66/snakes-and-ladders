@@ -11,72 +11,84 @@
 
 <body>
     <header>
-        <h1>Snakes and Ladders</h1>
+        <h1>Snakes and Ladders</h1><i class="far fa-question-circle" style="font-size: xx-large; padding-left:25px;"></i>
+
     </header>
-    <section id=game-area>
-        <div id="instructions">HOW TO PLAY<br>You will be playing against the computer. To start, first choose your avatar. When you made your choice, "throw" the dice (click it) to play for who goes first. Then wait for you turn and click the dice to throw it again. Your avatar
-            will move by the number shown on the dice. If you stand on the field showing a ladder you will move forward to the indicated filed. If you come accross, it will bite you and make you move down. To win, you need to reach the END first. Good
-            luck!
+    <section id="instructions">
+        <div>
+            <p>HOW TO PLAY</p>
+            <p>First, choose your avatar.
+                <div id=avatars>
+                    <div id="avatar1" class="avatar">Avatar 1</div>
+                    <div id="avatar2" class="avatar">Avatar 2</div>
+                    <div id="avatar3" class="avatar">Avatar 3</div>
+                </div>
+                If you want to change your avatar later, click on the help button and select your avatar again.<br> You will be playing against the computer, so to find out who will go first, "throw" the dice (click it). You will see a message showing
+                who thrown the higher number. If you are not the one starting, wait for you turn and click the dice to throw it again. Your avatar will move by the number of fields shown on the dice.
+                <p>You can move quicker! If you stand on the field with a <strong><em>ladder</em></strong>, you will move up to the indicated field. But be careful! If you come accross a <strong><em>snake</em></strong>, it will bite you and you will need
+                    to go back to recover. To win, you need to reach the <strong>END</strong> first.
+                </p>
+                <p>Good luck!</p>
+                <button id="gamebtn" class="button" onclick="hide()">Let's play!</button>
         </div>
-        <div id="game-container">
+    </section>
+    <section id="game-area ">
+
+        <div id="game-container ">
             <div id=game-board>
-                <div id="row1" class="board-row">
-                    <div id="21" class="field">21</div>
-                    <div id="f22" class="field">22</div>
-                    <div id="f23" class="field">23</div>
-                    <div id="f24" class="field">24 snake</div>
-                    <div id="f25" class="field">end</div>
+                <div id="row1 " class="board-row ">
+                    <div id="21 " class="field ">21</div>
+                    <div id="f22 " class="field ">22</div>
+                    <div id="f23 " class="field ">23</div>
+                    <div id="f24 " class="field ">24 snake</div>
+                    <div id="f25 " class="field ">end</div>
                 </div>
-                <div id="row2" class="board-row">
-                    <div id="f20" class="field">20<img src="assets/images/ladder_transparent.png" alt="ladder"></div>
-                    <div id="f19" class="field">19 snake</div>
-                    <div id="f18" class="field">18</div>
-                    <div id="f17" class="field">17</div>
-                    <div id="f16" class="field">16</div>
+                <div id="row2 " class="board-row ">
+                    <div id="f20 " class="field ">20<img src="assets/images/ladder_transparent.png " alt="ladder "></div>
+                    <div id="f19 " class="field ">19 snake</div>
+                    <div id="f18 " class="field ">18</div>
+                    <div id="f17 " class="field ">17</div>
+                    <div id="f16 " class="field ">16</div>
                 </div>
-                <div id="row3" class="board-row">
-                    <div id="f11" class="field">11 snake</div>
-                    <div id="f12" class="field">12</div>
-                    <div id="f13" class="field">13</div>
-                    <div id="f14" class="field">14<img src="assets/images/ladder_transparent.png" alt="ladder"></div>
-                    <div id="f15" class="field">15</div>
+                <div id="row3 " class="board-row ">
+                    <div id="f11 " class="field ">11 snake</div>
+                    <div id="f12 " class="field ">12</div>
+                    <div id="f13 " class="field ">13</div>
+                    <div id="f14 " class="field ">14<img src="assets/images/ladder_transparent.png " alt="ladder "></div>
+                    <div id="f15 " class="field ">15</div>
                 </div>
-                <div id="row4" class="board-row">
-                    <div id="f10" class="field">10</div>
-                    <div id="f9" class="field">9</div>
-                    <div id="f8" class="field">8 snake</div>
-                    <div id="f7" class="field">7</div>
-                    <div id="f6" class="field">6</div>
+                <div id="row4 " class="board-row ">
+                    <div id="f10 " class="field ">10</div>
+                    <div id="f9 " class="field ">9</div>
+                    <div id="f8 " class="field ">8 snake</div>
+                    <div id="f7 " class="field ">7</div>
+                    <div id="f6 " class="field ">6</div>
                 </div>
-                <div id="row5" class="board-row">
-                    <div id="start" class="field">START</div>
-                    <div id="f2" class="field">2<img src="assets/images/ladder_transparent.png" alt="ladder"></div>
-                    <div id="f3" class="field">3</div>
-                    <div id="f4" class="field">4</div>
-                    <div id="f5" class="field">5</div>
+                <div id="row5 " class="board-row ">
+                    <div id="start " class="field ">START+computer image</div>
+                    <div id="f2 " class="field ">2<img src="assets/images/ladder_transparent.png " alt="ladder "></div>
+                    <div id="f3 " class="field ">3</div>
+                    <div id="f4 " class="field ">4</div>
+                    <div id="f5 " class="field ">5</div>
                 </div>
 
             </div>
-            <div id="game-controls">
-                <div id=help-button class="div-controls" style="border: none;"><i class="far fa-question-circle" style="font-size: xx-large; padding-left:25px;"></i>
-                </div>
-                <div id=avatars>
-                    <div id="avatar1" class="div-controls">Computer</div>
-                    <div id="avatar2" class="div-controls">Avatar 2 icon</div>
-                    <div id="avatar3" class="div-controls">Avatar 3 icon</div>
-                    <div id="dice1" class="dice"><img src="assets/images/Dice-1-b.svg.png" alt="Dice result 1"></div>
-                    <div id="dice2" class="dice"><img src="assets/images/Dice-2-b.svg.png" alt="Dice result 2"></div>
-                    <div id="dice3" class="dice"><img src="assets/images/Dice-3-b.svg.png" alt="Dice result 3"></div>
-                    <div id="dice4" class="dice"><img src="assets/images/Dice-4-b.svg.png" alt="Dice result 4"></div>
-                    <div id="dice5" class="dice"><img src="assets/images/Dice-5-b.svg.png" alt="Dice result 5"></div>
-                    <div id="dice6" class="dice"><img src="assets/images/Dice-6-b.svg.png" alt="Dice result 6"></div>
+            <div id="game-controls ">
+
+                <div id="dice ">
+                    <div id="dice1 " class="dice "><img src="assets/images/Dice-1-b.svg.png " alt="Dice result 1 "></div>
+                    <div id="dice2 " class="dice "><img src="assets/images/Dice-2-b.svg.png " alt="Dice result 2 "></div>
+                    <div id="dice3 " class="dice "><img src="assets/images/Dice-3-b.svg.png " alt="Dice result 3 "></div>
+                    <div id="dice4 " class="dice "><img src="assets/images/Dice-4-b.svg.png " alt="Dice result 4 "></div>
+                    <div id="dice5 " class="dice "><img src="assets/images/Dice-5-b.svg.png " alt="Dice result 5 "></div>
+                    <div id="dice6 " class="dice "><img src="assets/images/Dice-6-b.svg.png " alt="Dice result 6 "></div>
                 </div>
             </div>
         </div>
     </section>
 
     <script src="assets/script/script.js"></script>
-    <script src="https://kit.fontawesome.com/3241ed12ad.js" crossorigin="anonymous"></script>
+    <script src="https://kit.fontawesome.com/3241ed12ad.js " crossorigin="anonymous "></script>
 </body>
 <footer>
     Footer

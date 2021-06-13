@@ -1,6 +1,6 @@
 //events on loading: 
-//load instructions as a separate module
-//focus on the first avata
+//load instructions as a separate module localStorage
+
 
 //game setup:
 //close/toggle help button to show instructions
@@ -16,3 +16,9 @@
 //move when on a "ladder" field
 //move when on a "green" field
 //game lasts while avatar not on End / i <=23
+
+
+let game - board[{
+            player: "";
+            field: "f1";
+        }
