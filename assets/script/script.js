@@ -1,17 +1,18 @@
 //events on loading: 
-//focus on the first avatar
-//who you want to play against?
 //load instructions as a separate module
+//focus on the first avata
 
 //game setup:
-//close/toggle the hide help
+//close/toggle help button to show instructions
 //select avatar 
-//select who goes first
+//throw dice to choose who goes first
 
 //game functions: 
 //
-//dice throw - random number
-//move pin
+//dice throw
+//dice throw - computer (separate function?)
+//dice throw - avatar (separate function?)
+//move avatar
 //move when on a "ladder" field
 //move when on a "green" field
-//
+//game lasts while avatar not on End / i <=23
