@@ -11,11 +11,11 @@
 
 <body>
     <header>
-        <h1>Snakes and Ladders</h1><i class="far fa-question-circle" style="font-size: xx-large; padding-left:25px;"></i>
+        <h1>Snakes and Ladders</h1><i class="far fa-question-circle" style="font-size: xx-large; padding-left:25px;" onclick="hide()"></i>
 
     </header>
     <section id="instructions">
-        <div>
+        <div id="instr-container">
             <p>HOW TO PLAY</p>
             <p>First, choose your avatar.
                 <div id=avatars>
@@ -34,7 +34,7 @@
     </section>
     <section id="game-area ">
 
-        <div id="game-container ">
+        <div id="game-container">
             <div id=game-board>
                 <div id="row1 " class="board-row ">
                     <div id="21 " class="field ">21</div>
@@ -73,17 +73,16 @@
                 </div>
 
             </div>
-            <div id="game-controls ">
 
-                <div id="dice ">
-                    <div id="dice1 " class="dice "><img src="assets/images/Dice-1-b.svg.png " alt="Dice result 1 "></div>
-                    <div id="dice2 " class="dice "><img src="assets/images/Dice-2-b.svg.png " alt="Dice result 2 "></div>
-                    <div id="dice3 " class="dice "><img src="assets/images/Dice-3-b.svg.png " alt="Dice result 3 "></div>
-                    <div id="dice4 " class="dice "><img src="assets/images/Dice-4-b.svg.png " alt="Dice result 4 "></div>
-                    <div id="dice5 " class="dice "><img src="assets/images/Dice-5-b.svg.png " alt="Dice result 5 "></div>
-                    <div id="dice6 " class="dice "><img src="assets/images/Dice-6-b.svg.png " alt="Dice result 6 "></div>
-                </div>
+            <div id="dice ">
+                <div id="dice1 " class="dice "><img src="assets/images/Dice-1-b.svg.png " alt="Dice result 1 "></div>
+                <div id="dice2 " class="dice "><img src="assets/images/Dice-2-b.svg.png " alt="Dice result 2 "></div>
+                <div id="dice3 " class="dice "><img src="assets/images/Dice-3-b.svg.png " alt="Dice result 3 "></div>
+                <div id="dice4 " class="dice "><img src="assets/images/Dice-4-b.svg.png " alt="Dice result 4 "></div>
+                <div id="dice5 " class="dice "><img src="assets/images/Dice-5-b.svg.png " alt="Dice result 5 "></div>
+                <div id="dice6 " class="dice "><img src="assets/images/Dice-6-b.svg.png " alt="Dice result 6 "></div>
             </div>
+
         </div>
     </section>
 

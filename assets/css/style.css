@@ -31,6 +31,8 @@ header {
 
 footer {
     height: 100px;
+    position: fixed;
+    bottom: 0;
 }
 
 h1 {
@@ -48,12 +50,12 @@ h1 {
     /* position: absolute; */
     /* left: 33%; */
     background: #EEF2F6;
-    border: rgba(0, 0, 0, 0.5) solid 1px;
+    border: rgba(0, 0, 0, 0.7) solid 1px;
     border-radius: 10px;
     padding: 10px;
     line-height: 1.2em;
     font-family: 'Viaoda Libre', cursive;
-    color: #B13477;
+    color: rgba(0, 0, 0, 0.7);
     font-size: 1.2em;
     text-align: center;
     z-index: 1;
