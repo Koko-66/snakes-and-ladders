@@ -31,7 +31,6 @@ header {
 
 footer {
     height: 100px;
-    position: fixed;
     bottom: 0;
 }
 
@@ -46,7 +45,7 @@ h1 {
 
 #instructions {
     display: block;
-    width: 80%;
+    width: 50%;
     /* position: absolute; */
     /* left: 33%; */
     background: #EEF2F6;
@@ -59,7 +58,7 @@ h1 {
     font-size: 1.2em;
     text-align: center;
     z-index: 1;
-    margin: 0 auto;
+    margin: auto;
 }
 
 
@@ -76,11 +75,12 @@ h1 {
 }
 
 #game-board {
+    width: 500px;
     display: flex;
     flex-direction: row-reverse;
     float: left;
-    height: inherit;
-    width: auto;
+    /* height: inherit; */
+    /* width: auto; */
     padding: 20px;
     flex-wrap: wrap;
 }
@@ -119,12 +119,19 @@ h1 {
 
 #avatars {
     display: flex;
+    flex-direction: row;
     color: rgba(0, 0, 0, 0.7);
-    margin: 15px;
+    margin: auto;
+    margin-bottom: 20px;
+    width: 50%;
 }
 
 #help-button {
     margin: 0 auto;
+}
+
+.avatar {
+    margin: auto;
 }
 
 .avatar img {
@@ -139,6 +146,11 @@ h1 {
     height: auto;
     position: absolute;
     margin: 50px -9px 0 -9px;
+    /* display: none; */
+}
+
+#dice1 img {
+    display: block;
 }
 
 .button {
