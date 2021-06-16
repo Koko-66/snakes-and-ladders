@@ -133,6 +133,10 @@ hr {
     bottom: 60%;
 }
 
+#f1 {
+    background-color: rgba(72, 168, 4, 0.8)
+}
+
 #avatars {
     display: flex;
     flex-direction: row;

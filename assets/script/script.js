@@ -52,7 +52,14 @@ function createGameBoard() {
     for (field of fields) {
         let position = { position: i }
         board.push(position);
-        field.innerHTML = i;
+        if (i === 1) {
+            field.innerHTML = "Start";
+        } else if (i === 25) {
+            field.innerHTML = "End";
+        } else {
+            field.innerHTML = i;
+        }
+
         field.id = `f${i}`;
         i -= 1;
     }
