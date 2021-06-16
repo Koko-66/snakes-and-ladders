@@ -59,6 +59,8 @@ h1 {
     text-align: center;
     z-index: 1;
     margin: auto;
+    margin-bottom: 1000px;
+    /*bottom margin to prevent gameboard from being visible when instructions block is activated after the first load */
 }
 
 
