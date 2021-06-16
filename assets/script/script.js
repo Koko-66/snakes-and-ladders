@@ -11,14 +11,14 @@ document.addEventListener("DOMContentLoaded", function() {
 })
 
 function diceThrow() {
-    return Math.floor(Math.random() * 7) + 1;
+    return Math.floor(Math.random() * 6) + 1;
 }
 
 dice = document.getElementById("dice");
 dice.addEventListener("click", function() {
     let result = diceThrow();
     console.log(result);
-    dice.innerHTML = `<img src='assets/images/Dice-${result}-b.svg.png'`;
+    dice.innerHTML = `<img src="../assets/images/Dice-${result}-b.svg.png" alt="Dice result ${result}">`;
     // if (result === 1) {
     //     dice.innerHTML = "<img src=\"assets\/images\/Dice-1-b.svg.png\" > "
     // } else if (result === 2) {
@@ -32,7 +32,7 @@ dice.addEventListener("click", function() {
     // } else if (result === 6) {
     //     dice.innerHTML = "<img src=\"assets\/images\/Dice-6-b.svg.png\">"
     // } else {
-    alert("Oops, there's been an issue, please try again");
+    // alert("Oops, there's been an issue, please try again");
 })
 
 
