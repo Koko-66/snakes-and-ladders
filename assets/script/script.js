@@ -53,6 +53,7 @@ function createGameBoard() {
         let position = { position: i }
         board.push(position);
         field.innerHTML = i;
+        field.id = `f${i}`;
         i -= 1;
     }
     console.log(board);
