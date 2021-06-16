@@ -119,6 +119,7 @@ hr {
 
 .field {
     border: rgba(0, 0, 0, 0.1) solid 2px;
+    background-color: rgba(0, 0, 0, 0.1);
     width: 70px;
     height: 70px;
     border-radius: 10%;
