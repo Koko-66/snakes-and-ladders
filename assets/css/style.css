@@ -19,6 +19,7 @@ body {
     padding: 0;
     color: rgba(0, 0, 0, 0, 0.7);
     font-family: 'Viaoda Libre', cursive;
+    font-size: 18px;
 }
 
 
@@ -40,6 +41,7 @@ footer {
 
 h1 {
     font-family: 'Viaoda Libre', cursive;
+    font-size: 30px;
     text-align: center;
     margin: auto 0;
 }
@@ -53,20 +55,17 @@ hr {
 
 #instructions {
     display: block;
-    width: 50%;
-    /* position: absolute; */
-    /* left: 33%; */
-    background: #EEF2F6;
-    border: rgba(0, 0, 0, 0.7) solid 1px;
+    width: 70%;
+    background-color: rgba(0, 0, 0, 0.1);
+    border: rgba(0, 0, 0, 0.1) solid 2px;
     border-radius: 10px;
     padding: 10px;
-    line-height: 1.2em;
+    line-height: 1.3em;
     font-family: 'Viaoda Libre', cursive;
-    color: rgba(0, 0, 0, 0.7);
     font-size: 1.2em;
     text-align: center;
     z-index: 1;
-    margin: auto;
+    margin: 50px auto;
     margin-bottom: 1000px;
     /*bottom margin to prevent gameboard from being visible when instructions block is activated after the first load */
 }
