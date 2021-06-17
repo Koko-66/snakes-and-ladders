@@ -122,6 +122,26 @@ hr {
     border-radius: 50%;
 }
 
+ol {
+    text-align: left;
+    width: 80%;
+    margin-left: 7%;
+}
+
+
+/* Sytling for "Let's go" button */
+
+.button {
+    border: #fafafa solid 2px;
+    border-radius: 5px;
+    height: 2.5em;
+    width: 30%;
+    font-size: inherit;
+    font-family: inherit;
+    background-color: rgba(165, 20, 108, 1);
+    color: whitesmoke;
+}
+
 
 /* ---Main game area */
 
@@ -209,18 +229,4 @@ hr {
     background-color: rgba(165, 20, 108, 0.7);
     border-radius: 10px;
     /* display: none; */
-}
-
-
-/* Sytling for "Let's go" button */
-
-.button {
-    border: rgba(0, 0, 0, 0.7) solid 2px;
-    border-bottom: 4px;
-    border-right: 4px;
-    height: 2em;
-    font-size: inherit;
-    font-family: inherit;
-    background-color: rgba(165, 20, 108, 1);
-    color: whitesmoke;
 }
