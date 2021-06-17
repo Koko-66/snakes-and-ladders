@@ -23,18 +23,18 @@
             <p>HOW TO PLAY</p>
             <p>First, choose your avatar.
                 <div id=avatars>
-                    <div id="avatar1" class="avatar">
-                        <img src="assets/images/avatar_blue.jpeg" alt="avatar-blue">
+                    <div id="avatar1" data-avatar-color="blue" class="avatar" onlick="selectAvatar(this.id)">
+                        <img src="assets/images/avatar_blue.png" alt="blue avatar">
                     </div>
-                    <div id="avatar2" class="avatar">
-                        <img src="assets/images/avatar_red.jpeg" alt="avatar-red">
+                    <div id="avatar2" data-avatar-color="red" class="avatar" onlick="selectAvatar(this.id)">
+                        <img src="assets/images/avatar_red.png" alt="red avatar">
                     </div>
-                    <div id="avatar3" class="avatar">Avatar 3</div>
+                    <div id="avatar3" class="avatar" data-avatar-color="yellow" onlick="selectAvatar(this.id)"><img src="assets/images/avatar-yellow.png" alt="yellow avatar"></div>
                 </div>
                 If you want to change your avatar later, click on the help button and select your avatar again.<br> You will be playing against the computer, so to find out who will go first, "throw" the dice (click it). You will see a message showing
                 who thrown the higher number. If you are not the one starting, wait for you turn and click the dice to throw it again. Your avatar will move by the number of fields shown on the dice.
-                <p>You can move quicker! If you stand on the field with a <strong>LADER</strong>, you will move up to the indicated field. But be careful! If you come accross a <strong>SNAKE</strong>, it will bite you and you will need
-                    to go back to recover. To win, you need to reach the <strong>END</strong> first.
+                <p>You can move quicker! If you stand on the field with a <strong>LADER</strong>, you will move up to the indicated field. But be careful! If you come accross a <strong>SNAKE</strong>, it will bite you and you will need to go back to recover.
+                    To win, you need to reach the <strong>END</strong> first.
                 </p>
                 <p>Good luck!</p>
                 <button id="gamebtn" class="button" onclick="hide()">Let's play!</button>

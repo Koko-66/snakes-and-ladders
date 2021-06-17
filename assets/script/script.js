@@ -1,4 +1,3 @@
-
 //1. page loading
 
 //hides instructions pop up window on clicking Let's go button; sets localStorage to true if instructions were shown once
@@ -14,6 +13,24 @@ document.addEventListener("DOMContentLoaded", function() {
     }
     createGameBoard();
 })
+
+//2. game setup
+//select avatar
+
+let avatars = document.getElementsByClassName("avatar");
+for (let avatar of avatars) {
+    avatar.addEventListener('click', function() {
+        if (this.getAttribute('data-avatar-color') === 'blue') {
+            document.getElementById('f1').innerHTML = `<img src="assets/images/avatar_blue.png" alt="blue avatar">`;
+        } else if (this.getAttribute('data-avatar-color') === 'red') {
+            document.getElementById('f1').innerHTML = `<img src="assets/images/avatar_red.png" alt="blue avatar">`;
+        } else {
+            document.getElementById('f1').innerHTML = `<img src="assets/images/avatar-yellow.png" alt="blue avatar">`;
+        }
+    })
+}
+
+//throw dice to choose who goes first
 
 //generates random number between 1 and 6
 function diceThrow() {
@@ -66,9 +83,8 @@ function createGameBoard() {
     console.log(board);
 }
 
-//game setup:
-//select avatar 
-//throw dice to choose who goes first
+
+
 
 //add 
 
