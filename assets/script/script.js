@@ -1,10 +1,13 @@
+
+//1. page loading
+
 //hides instructions pop up window on clicking Let's go button; sets localStorage to true if instructions were shown once
 function hide() {
     let instructions = document.getElementById('instructions');
     instructions.style.display !== "none" ? instructions.style.display = "none" : instructions.style.display = "block";
     localStorage.setItem('instructionsShown', 'true');
 }
-//adds event listenter for instructions not to show them on reloading; creates board instead
+//adds event listenter for instructions not to show on reloading; creates board instead
 document.addEventListener("DOMContentLoaded", function() {
     if (localStorage.getItem('instructionsShown')) {
         instructions.style.display = "none";
@@ -27,16 +30,14 @@ dice.addEventListener("click", function() {
     dice.innerHTML = `<img src="../assets/images/Dice-${result}-b.svg.png" alt="Dice result ${result}">`;
 })
 
-
-
-// generate gameboard option by row
+// generates gameboard by row and then field
 
 function createGameBoard() {
     let gameBoard = document.getElementById('game-board');
     for (let r = 1; r < 6; ++r) {
         let row = document.createElement('div');
         row.className = 'board-row';
-        row.style.flexDirection = r % 2 === 0 ? "row" : "row-reverse"; //reverses the order for every other row to reverse counting 
+        row.style.flexDirection = r % 2 === 0 ? "row" : "row-reverse"; //reverses the order for every other row to make numbers flow correctly 
         for (let i = 1; i < 6; ++i) {
             let field = document.createElement('div');
             field.className = 'field';
@@ -45,8 +46,8 @@ function createGameBoard() {
         gameBoard.appendChild(row);
     }
 
-    //add numbers to the board and objects to board list for tracking
-    let i = 25;
+    //adds numbers to the board and creates objects to push to board array for tracking
+    let i = 25; //descending order to start game from the bottom of the board
     let fields = document.getElementsByClassName("field");
     let board = []
     for (field of fields) {
@@ -65,68 +66,12 @@ function createGameBoard() {
     console.log(board);
 }
 
-//add 
-
-// function createGameBoard() {
-//     let gameBoard = document.getElementBy) =n-ol,l,l, Id('game-board');
-//     board = []
-//     for (let r = 1; r < 6; ++r) {
-//         let row = document.createElement('div');
-//         row.className = 'board-row';
-//         row.style.flexDirection = r % 2 === 0 ? "row-reverse" : "row";
-//         for (i = 1; i < 6; ++i) {
-//             let field = document.createElement('div');
-//             field.className = 'field';
-//             field.innerHTML = i;
-//             row.appendChild(field);
-
-//         gameBoard.appendChild(row);
-//     }
-// }
-// } else {
-//     for (i = i * 2; i >= i * 2; i--) {
-//         var field = document.createElement('div');
-//         field.className = 'field';
-//         row.appendChild(field);
-//         field.innerHTML = i;
-//     }
-// let row = document.createElement("div");
-
-
-// while (5 < i <= 10) {
-//     for (let i = 11; i < 5; i--) {
-//         let field = document.createElement("div");
-//         field.className = 'field';
-//         row.appendChild(field);
-//         field.innerHTML = i;
-//     }
-// gameBoard.appendChild(row);
-
-
-//generate gameboard option 2 by div
-
-// function createGameBoard() {
-//     let gameBoard = document.getElementById("game-board");
-//     board = [];
-//     // newRow = false;
-//     for (let i = 25; i > 0; --i) {
-//         let position = { position: i }
-//         board.push(position);
-//         let field = document.createElement("div");
-//         field.className = 'field';
-//         field.innerHTML = i;
-//         field.id = i;
-//         gameBoard.appendChild(field);
-//         // newRow = i % 5 === 0;
-//         // i += 5;
-//         // newRow = false;
-//     }
-//     console.log(board);
-// }
-
 //game setup:
 //select avatar 
 //throw dice to choose who goes first
+
+//add 
+
 
 //game functions: 
 //
