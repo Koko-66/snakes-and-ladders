@@ -15,7 +15,8 @@ document.addEventListener("DOMContentLoaded", function() {
 })
 
 //2. game setup
-//select avatar
+
+//selects avatar and places it in the start field
 
 let avatars = document.getElementsByClassName("avatar");
 for (let avatar of avatars) {
@@ -70,12 +71,19 @@ function createGameBoard() {
     for (field of fields) {
         let position = { position: i }
         board.push(position);
+        // let player = document.createElement("div");
+        // player.className = "player"
+        // let ai = document.createElement("div");
+        // ai.className = "player"
+        // field.appendChild(player);
+        // field.appendChild(ai);
+
         if (i === 1) { // changes first field to "start" and last to "end"
-            field.innerHTML = "Start";
+            field.innerHTML = `Start<div class="player"></div><div class="ai"><img src="assets/images/avatar_red.png" alt="red avatar"></div>`;
         } else if (i === 25) {
-            field.innerHTML = "End";
+            field.innerHTML = `End<div class="player"></div><div class="ai"></div>`;
         } else {
-            field.innerHTML = i;
+            field.innerHTML = `${i}<div class="player"></div><div class="ai"></div>`;;
         }
         field.id = `f${i}`;
         i -= 1;
