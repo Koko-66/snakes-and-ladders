@@ -23,7 +23,7 @@ body {
 }
 
 
-/* ---Header */
+/* main elements */
 
 header {
     display: flex;
@@ -78,6 +78,51 @@ hr {
 }
 
 
+/* styling for avatars in the instructions box */
+
+#avatars {
+    display: flex;
+    flex-direction: row;
+    color: rgba(0, 0, 0, 0.7);
+    margin: auto;
+    margin-bottom: 20px;
+    width: 50%;
+}
+
+#help-button {
+    margin: 0 auto;
+}
+
+.avatar {
+    margin: auto;
+}
+
+
+/* styling for red avatar (Evil Boy) - designated for computer */
+
+#avatar1 img {
+    border: rgba(0, 0, 0, 0.7) solid 2px;
+    background: #fafafa;
+    width: 70px;
+    height: 70px;
+    margin: 0 auto;
+    border-radius: 50%;
+}
+
+
+/* styling for blue and yellow avatars for the player*/
+
+#avatar2 img,
+#avatar3 img {
+    border: #fafafa solid 2px;
+    background: rgba(0, 0, 0, 0.7);
+    width: 70px;
+    height: 70px;
+    margin: 0 auto;
+    border-radius: 50%;
+}
+
+
 /* ---Main game area */
 
 #game-container {
@@ -129,11 +174,23 @@ hr {
     font-size: 28px;
 }
 
+
+/* Styling for avatars on the board */
+
 .field img {
-    width: 50%;
+    /* width: 50%; */
+    border: #fafafa solid 2px;
+    background: rgba(0, 0, 0, 0.7);
+    width: 30px;
+    height: 30px;
+    margin: 0 auto;
+    border-radius: 50%;
     /* position: relative; */
     /* bottom: 60%; */
 }
+
+
+/* ___styling for avatars when in the board */
 
 
 /* Styles for start and end fields */
@@ -141,34 +198,6 @@ hr {
 #f1,
 #f25 {
     background-color: rgba(72, 168, 4, 1)
-}
-
-
-/* avatars styling */
-
-#avatars {
-    display: flex;
-    flex-direction: row;
-    color: rgba(0, 0, 0, 0.7);
-    margin: auto;
-    margin-bottom: 20px;
-    width: 50%;
-}
-
-#help-button {
-    margin: 0 auto;
-}
-
-.avatar {
-    margin: auto;
-}
-
-.avatar img {
-    background: rgba(0, 0, 0, 0.7);
-    width: 70px;
-    height: 70px;
-    margin: 0 auto;
-    border-radius: 50%;
 }
 
 .dice img {

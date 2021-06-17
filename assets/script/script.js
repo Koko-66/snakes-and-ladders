@@ -22,11 +22,11 @@ let avatars = document.getElementsByClassName("avatar");
 for (let avatar of avatars) {
     avatar.addEventListener('click', function() {
         if (this.getAttribute('data-avatar-color') === 'blue') {
-            document.getElementById('f1').innerHTML = `<img src="assets/images/avatar_blue.png" alt="blue avatar">`;
-        } else if (this.getAttribute('data-avatar-color') === 'red') {
-            document.getElementById('f1').innerHTML = `<img src="assets/images/avatar_red.png" alt="blue avatar">`;
+            `<img src="assets/images/avatar_blue.png" alt="blue avatar">`;
+            document.getElementById('f1').innerHTML = `<div id ="player-f1" class="player"><img src="assets/images/avatar_blue.png" alt="blue avatar"></div> <div id ="ai-f1" class="ai"><img src="assets/images/avatar_red.png" alt="red avatar"></div>`;
         } else {
-            document.getElementById('f1').innerHTML = `<img src="assets/images/avatar-yellow.png" alt="blue avatar">`;
+            document.getElementById('f1').innerHTML = `<div id ="player-f1" class="player"><img src="assets/images/avatar-yellow.png" alt="yellow avatar"></div> <div id ="ai-f1" class="ai"><img src="assets/images/avatar_red.png" alt="red avatar"></div>`;
+
         }
     })
 }
@@ -71,19 +71,13 @@ function createGameBoard() {
     for (field of fields) {
         let position = { position: i }
         board.push(position);
-        // let player = document.createElement("div");
-        // player.className = "player"
-        // let ai = document.createElement("div");
-        // ai.className = "player"
-        // field.appendChild(player);
-        // field.appendChild(ai);
 
-        if (i === 1) { // changes first field to "start" and last to "end"
-            field.innerHTML = `Start<div class="player"></div><div class="ai"><img src="assets/images/avatar_red.png" alt="red avatar"></div>`;
+        if (i === 1) { // changes first field to "start" and last to "end" and adds separate divs for ai and player avatars with id's
+            field.innerHTML = `Start<div id ="player-f1" class="player"></div> <div id ="ai-f1" class="ai"><img src="assets/images/avatar_red.png" alt="red avatar"></div>`;
         } else if (i === 25) {
-            field.innerHTML = `End<div class="player"></div><div class="ai"></div>`;
+            field.innerHTML = `End<div id ="player-f25" class="player"></div> <div id ="ai-f25" class="ai">`;
         } else {
-            field.innerHTML = `${i}<div class="player"></div><div class="ai"></div>`;;
+            field.innerHTML = `${i} <div id ="player-f${i}" class="player"></div> <div id ="ai-f${i}" class="ai">`;
         }
         field.id = `f${i}`;
         i -= 1;
