@@ -122,6 +122,14 @@ hr {
     border-radius: 50%;
 }
 
+
+/* makes avatar icon bigger when clicked 8*/
+
+#avatar2 img:active,
+#avatar3 img:active {
+    transform: scale(120%);
+}
+
 ol {
     text-align: left;
     width: 80%;
@@ -195,11 +203,11 @@ ol {
 }
 
 
-/* Styling for avatars on the board */
+/* Styling for avatars when on the board */
 
 .field img {
     /* width: 50%; */
-    border: #fafafa solid 2px;
+    border: #fafafa solid 1px;
     background: rgba(0, 0, 0, 0.7);
     width: 30px;
     height: 30px;
@@ -207,6 +215,11 @@ ol {
     border-radius: 50%;
     /* position: relative; */
     /* bottom: 60%; */
+}
+
+.ai img {
+    border: rgba(0, 0, 0, 0.7) solid 1px;
+    background: #fafafa;
 }
 
 
