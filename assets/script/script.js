@@ -1,4 +1,4 @@
-//1. page loading
+//1. PAGE LOADING - INSTRUCTIONS
 
 //hides instructions pop up window on clicking Let's go button; sets localStorage to true if instructions were shown once
 function hide() {
@@ -7,47 +7,37 @@ function hide() {
     localStorage.setItem('instructionsShown', 'true');
 }
 //adds event listenter for instructions not to show on reloading; creates board instead
-document.addEventListener("DOMContentLoaded", function() {
+document.addEventListener('DOMContentLoaded', function() {
     if (localStorage.getItem('instructionsShown')) {
         instructions.style.display = "none";
     }
     createGameBoard();
 })
 
-//2. game setup
+// -- GLOBAL VARIABLES --
 
-//selects avatar and places it in the start field
+let avatars = document.getElementsByClassName('avatar');
+let dice = document.getElementById('dice');
+let playerResult;
+let aiResult;
 
-let avatars = document.getElementsByClassName("avatar");
-for (let avatar of avatars) {
-    avatar.addEventListener('click', function() {
-        if (this.getAttribute('data-avatar-color') === 'blue') {
-            `<img src="assets/images/avatar_blue.png" alt="blue avatar">`;
-            document.getElementById('f1').innerHTML = `<div id ="player-f1" class="player"><img src="assets/images/avatar_blue.png" alt="blue avatar"></div> <div id ="ai-f1" class="ai"><img src="assets/images/avatar_red.png" alt="red avatar"></div>`;
-        } else {
-            document.getElementById('f1').innerHTML = `<div id ="player-f1" class="player"><img src="assets/images/avatar-yellow.png" alt="yellow avatar"></div> <div id ="ai-f1" class="ai"><img src="assets/images/avatar_red.png" alt="red avatar"></div>`;
+// --GAME FUNCTIONS --
 
-        }
-    })
-}
-
-//throw dice to choose who goes first
-
-
-
-//generates random number between 1 and 6
-function diceThrow() {
+//generates random number between 1 and 6 for player
+function playerDiceThrow() {
     return Math.floor(Math.random() * 6) + 1;
 }
 
-//creates a global variable for dice
-let dice = document.getElementById('dice');
-
-//adds event listener to dice and changes image depending on what the functions returns
+//generates random number between 1 and 6 for ai
+function aiDiceThrow() {
+    return Math.floor(Math.random() * 6) + 1;
+}
+//adds event listener to dice and changes image depending on what playerDiceThrow returns
 dice.addEventListener("click", function() {
-    let result = diceThrow();
-    console.log(result);
-    dice.innerHTML = `<img src="../assets/images/Dice-${result}-b.svg.png" alt="Dice result ${result}">`;
+    playerResult = playerDiceThrow();
+    dice.innerHTML = `<img src="../assets/images/Dice-${playerResult}-b.svg.png" alt="Dice result ${playerResult}">`;
+
+    goesFirst();
 })
 
 // generates gameboard by row and then field
@@ -85,6 +75,51 @@ function createGameBoard() {
     }
     console.log(board);
 }
+
+//selects avatar and places it in the start field
+
+for (let avatar of avatars) {
+    avatar.addEventListener('click', function() {
+        if (this.getAttribute('data-avatar-color') === 'blue') {
+            `<img src="assets/images/avatar_blue.png" alt="blue avatar">`;
+            document.getElementById('f1').innerHTML = `<div id ="player-f1" class="player"><img src="assets/images/avatar_blue.png" alt="blue avatar"></div> <div id ="ai-f1" class="ai"><img src="assets/images/avatar_red.png" alt="red avatar"></div>`;
+        } else {
+            document.getElementById('f1').innerHTML = `<div id ="player-f1" class="player"><img src="assets/images/avatar-yellow.png" alt="yellow avatar"></div> <div id ="ai-f1" class="ai"><img src="assets/images/avatar_red.png" alt="red avatar"></div>`;
+
+        }
+    })
+}
+
+//2. GAME SETUP
+
+// -- check who goes first and generates alert --/
+// on first dice click then set to true in localStorage
+function goesFirst() {
+    playerResult = playerDiceThrow();
+    aiResult = aiDiceThrow();
+    if (playerResult === aiResult) {
+        alert(`EvilBoy: ${aiResult}.\nYou: ${playerResult}.\nIt's a tie! Try again!`);
+    } else if (playerResult > aiResult) {
+        alert(`EvilBoy: ${aiResult}.\nYou: ${playerResult}.\nCongratulations! You're going first`);
+        playerFirst = true;
+    } else {
+        alert(`EvilBoy: ${aiResult}.\nYou: ${playerResult}.\nSorry! EvilBoy is starting this time!`);
+        aiFirst = true
+    }
+    localStorage.setItem('goesFirst', true);
+}
+
+function gameRound {
+    while (i <= 25) {
+        if (aiFirst)
+
+    }
+
+}
+// if (localStorage.getItem('goesFirst')) {
+//     function gameRound();
+// }
+
 
 //to generate snakes and ladders automatically: genearate 2 (easy) 4 (medium) 5 (difficult) random numbers; 
 //when number matches i place snake
