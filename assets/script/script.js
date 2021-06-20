@@ -1,4 +1,4 @@
-//1. PAGE LOADING - INSTRUCTIONS
+//1. PAGE LOADING - INSTRUCTIONS AND GAME SETUP
 
 //hides instructions pop up window on clicking Let's go button; sets localStorage to true if instructions were shown once
 function hide() {
@@ -14,33 +14,30 @@ document.addEventListener('DOMContentLoaded', function() {
     createGameBoard();
 })
 
-// -- GLOBAL VARIABLES --
+//variables to store avatars
+let blue = `<img src="assets/images/avatar_blue.png" alt="blue avatar"></img>`
+let yellow = `<img src="assets/images/avatar-yellow.png" alt="yellow avatar"></img>`
+let evilBoy = `<img src="assets/images/avatar_red.png" alt="red avatar"></img>`
 
+//selects avatar and places it in the start field
+let player = { position: 0, };
+let ai = { position: 0, avatar: evilBoy };
 let avatars = document.getElementsByClassName('avatar');
-let dice = document.getElementById('dice');
-let playerResult;
-let aiResult;
-
-// --GAME FUNCTIONS --
-
-//generates random number between 1 and 6 for player
-function playerDiceThrow() {
-    return Math.floor(Math.random() * 6) + 1;
+for (let avatar of avatars) {
+    avatar.addEventListener('click', function() {
+        if (this.getAttribute('data-avatar-color') === 'blue') {
+            player.avatar = blue;
+            document.getElementById('f1').innerHTML = `<div id ="player-f1" class="player">${blue}</div><div id ="ai-f1" class="ai">${evilBoy}</div>`;
+        } else {
+            player.avatar = yellow;
+            document.getElementById('f1').innerHTML = `<div id ="player-f1" class="player">${yellow}</div><div id ="ai-f1" class="ai">${evilBoy}</div>`;
+        }
+    })
 }
-
-//generates random number between 1 and 6 for ai
-function aiDiceThrow() {
-    return Math.floor(Math.random() * 6) + 1;
-}
-//adds event listener to dice and changes image depending on what playerDiceThrow returns
-dice.addEventListener("click", function() {
-    playerResult = playerDiceThrow();
-    dice.innerHTML = `<img src="../assets/images/Dice-${playerResult}-b.svg.png" alt="Dice result ${playerResult}">`;
-
-    goesFirst();
-})
 
 // generates gameboard by row and then field
+
+// let position;
 function createGameBoard() {
     let gameBoard = document.getElementById('game-board');
     for (let r = 1; r < 6; ++r) {
@@ -54,17 +51,16 @@ function createGameBoard() {
         }
         gameBoard.appendChild(row);
     }
-    //adds numbers to the board and creates objects to push to board array for tracking 
-    //descending order to start game from the bottom of the board
+    //Adds numbers to the board and creates objects to push to board array for tracking 
+    //in escending order to start game from the bottom of the board
     let i = 25;
     let fields = document.getElementsByClassName("field");
-    let board = []
     for (field of fields) {
-        let position = { position: i }
-        board.push(position);
+        //     position = { position: i }
+        //     board.push(position);
         // changes first field to "start" and last to "end" and adds separate divs for ai and player avatars with id's
         if (i === 1) {
-            field.innerHTML = `Start<div id ="player-f1" class="player"></div> <div id ="ai-f1" class="ai"><img src="assets/images/avatar_red.png" alt="red avatar"></div>`;
+            field.innerHTML = `Start<div id ="player-f1" class="player"></div> <div id ="ai-f1" class="ai">${evilBoy}</div>`;
         } else if (i === 25) {
             field.innerHTML = `End<div id ="player-f25" class="player"></div> <div id ="ai-f25" class="ai">`;
         } else {
@@ -73,49 +69,52 @@ function createGameBoard() {
         field.id = `f${i}`;
         i -= 1;
     }
-    console.log(board);
+    // console.log(board);
 }
 
-//selects avatar and places it in the start field
+//2. GAME FUNCTIONS
 
-for (let avatar of avatars) {
-    avatar.addEventListener('click', function() {
-        if (this.getAttribute('data-avatar-color') === 'blue') {
-            `<img src="assets/images/avatar_blue.png" alt="blue avatar">`;
-            document.getElementById('f1').innerHTML = `<div id ="player-f1" class="player"><img src="assets/images/avatar_blue.png" alt="blue avatar"></div> <div id ="ai-f1" class="ai"><img src="assets/images/avatar_red.png" alt="red avatar"></div>`;
-        } else {
-            document.getElementById('f1').innerHTML = `<div id ="player-f1" class="player"><img src="assets/images/avatar-yellow.png" alt="yellow avatar"></div> <div id ="ai-f1" class="ai"><img src="assets/images/avatar_red.png" alt="red avatar"></div>`;
+//generates random number between 1 and 6 for player
+let dice = document.getElementById('dice');
 
-        }
-    })
+function diceThrow() {
+    return Math.floor(Math.random() * 6) + 1;
 }
 
-//2. GAME SETUP
+//adds event listener to dice and changes image depending on what playerDiceThrow returns
+let playerResult;
+let aiResult;
+
+dice.addEventListener("click", function() {
+    playerResult = diceThrow();
+    dice.innerHTML = `<img src="../assets/images/Dice-${playerResult}-b.svg.png" alt="Dice result ${playerResult}">`;
+    playerTurn();
+})
 
 // -- check who goes first and generates alert --/
 // on first dice click then set to true in localStorage
 function goesFirst() {
-    playerResult = playerDiceThrow();
-    aiResult = aiDiceThrow();
+    playerResult = diceThrow();
+    aiResult = diceThrow();
     if (playerResult === aiResult) {
         alert(`EvilBoy: ${aiResult}.\nYou: ${playerResult}.\nIt's a tie! Try again!`);
     } else if (playerResult > aiResult) {
         alert(`EvilBoy: ${aiResult}.\nYou: ${playerResult}.\nCongratulations! You're going first`);
-        playerFirst = true;
+        var playerFirst = true;
     } else {
         alert(`EvilBoy: ${aiResult}.\nYou: ${playerResult}.\nSorry! EvilBoy is starting this time!`);
-        aiFirst = true
+        var aiFirst = true
     }
     localStorage.setItem('goesFirst', true);
 }
 
-function gameRound {
-    while (i <= 25) {
-        if (aiFirst)
+function playerTurn() {
+    player.position = playerResult;
+    alert(`You threw ${playerResult}`);
+    console.log(player);
 
-    }
+};
 
-}
 // if (localStorage.getItem('goesFirst')) {
 //     function gameRound();
 // }
