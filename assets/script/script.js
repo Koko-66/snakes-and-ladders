@@ -5,6 +5,7 @@ function hide() {
     let instructions = document.getElementById('instructions');
     instructions.style.display !== "none" ? instructions.style.display = "none" : instructions.style.display = "block";
     localStorage.setItem('instructionsShown', 'true');
+    hideBoard();
 }
 //adds event listenter for instructions not to show on reloading; creates board instead
 document.addEventListener('DOMContentLoaded', function() {
@@ -13,6 +14,13 @@ document.addEventListener('DOMContentLoaded', function() {
     }
     createGameBoard();
 })
+
+function hideBoard() {
+    let instructions = document.getElementById('instructions');
+    let board = document.getElementById('game-area');
+    instructions.style.display !== "none" ? board.style.display = "none" : board.style.display = "block";
+}
+
 
 //variables to store avatars
 let blue = `<img src="assets/images/avatar_blue.png" alt="blue avatar"></img>`
@@ -40,6 +48,11 @@ for (let avatar of avatars) {
 // let position;
 function createGameBoard() {
     let gameBoard = document.getElementById('game-board');
+    let end = document.createElement('div');
+    end.className = 'board-edge';
+    end.id = 'end';
+    end.innerHTML = "END";
+    gameBoard.appendChild(end);
     for (let r = 1; r < 6; ++r) {
         let row = document.createElement('div');
         row.className = 'board-row';
@@ -51,6 +64,12 @@ function createGameBoard() {
         }
         gameBoard.appendChild(row);
     }
+    let start = document.createElement('div');
+    start.className = 'board-edge';
+    start.id = 'start';
+    start.innerHTML = "START";
+    gameBoard.appendChild(start);
+
     //Adds numbers to the board and creates objects to push to board array for tracking 
     //in escending order to start game from the bottom of the board
     let i = 25;
@@ -60,9 +79,7 @@ function createGameBoard() {
         //     board.push(position);
         // changes first field to "start" and last to "end" and adds separate divs for ai and player avatars with id's
         if (i === 1) {
-            field.innerHTML = `Start<div id ="player-f1" class="player"></div> <div id ="ai-f1" class="ai">${evilBoy}</div>`;
-        } else if (i === 25) {
-            field.innerHTML = `End<div id ="player-f25" class="player"></div> <div id ="ai-f25" class="ai">`;
+            field.innerHTML = `<div id ="player-f1" class="player"></div> <div id ="ai-f1" class="ai">${evilBoy}</div>`;
         } else {
             field.innerHTML = `${i} <div id ="player-f${i}" class="player"></div> <div id ="ai-f${i}" class="ai">`;
         }
@@ -125,9 +142,9 @@ function aiTurn() {
 };
 
 
-// if (localStorage.getItem('goesFirst')) {
-//     function gameRound();
-// }
+//game 
+
+
 
 
 //to generate snakes and ladders automatically: genearate 2 (easy) 4 (medium) 5 (difficult) random numbers; 

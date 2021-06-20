@@ -14,16 +14,20 @@
 
 /* light grey */
 
-body {
+
+/* main elements */
+
+* {
     margin: 0;
     padding: 0;
+    border: 0;
+}
+
+body {
     color: rgba(0, 0, 0, 0, 0.7);
     font-family: 'Viaoda Libre', cursive;
     font-size: 18px;
 }
-
-
-/* main elements */
 
 header {
     display: flex;
@@ -31,7 +35,6 @@ header {
     justify-content: center;
     height: 100px;
     width: 100%;
-    clear: both;
 }
 
 footer {
@@ -46,8 +49,8 @@ h1 {
     margin: auto 0;
 }
 
-hr {
-    width: 90%;
+p {
+    margin: 10px;
 }
 
 
@@ -55,19 +58,24 @@ hr {
 
 #instructions {
     display: block;
+    /* font-size: 16px; */
     width: 70%;
     background-color: rgba(0, 0, 0, 0.1);
     border: rgba(0, 0, 0, 0.1) solid 2px;
     border-radius: 10px;
     padding: 10px;
-    line-height: 1.3em;
-    font-family: 'Viaoda Libre', cursive;
-    font-size: 1.2em;
+    line-height: 1.1em;
+    font-size: 1.1em;
     text-align: center;
     z-index: 1;
     margin: 50px auto;
-    margin-bottom: 1000px;
-    /*bottom margin to prevent gameboard from being visible when instructions block is activated after the first load */
+}
+
+#note {
+    font-size: 0.9em;
+    font-style: italic;
+    line-height: 1em;
+    padding-bottom: 10px;
 }
 
 
@@ -84,13 +92,12 @@ hr {
     display: flex;
     flex-direction: row;
     color: rgba(0, 0, 0, 0.7);
-    margin: auto;
-    margin-bottom: 20px;
+    margin: 10px auto;
     width: 50%;
 }
 
 #help-button {
-    margin: 0 auto;
+    margin: 10px auto;
 }
 
 .avatar {
@@ -132,7 +139,7 @@ hr {
 
 ol {
     text-align: left;
-    width: 80%;
+    width: 90%;
     margin-left: 7%;
 }
 
@@ -154,9 +161,9 @@ ol {
 /* ---Main game area */
 
 #game-container {
+    display: block;
     height: 500px;
     width: 620px;
-    display: block;
     margin: 0 auto;
     /* background: lightblue; */
     padding: 20px;
@@ -179,6 +186,19 @@ ol {
     height: inherit;
     width: auto;
     padding: 20px;
+}
+
+.board-edge {
+    height: 1.5em;
+    border-bottom: rgba(0, 0, 0, 0.7) solid 1px;
+    margin-top: 2px;
+    font-size: 1.5em;
+}
+
+#end {
+    text-align: right;
+    border-top: rgba(0, 0, 0, 0.7) solid 1px;
+    border-bottom: none;
 }
 
 
