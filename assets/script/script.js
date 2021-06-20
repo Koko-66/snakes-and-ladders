@@ -20,8 +20,8 @@ let yellow = `<img src="assets/images/avatar-yellow.png" alt="yellow avatar"></i
 let evilBoy = `<img src="assets/images/avatar_red.png" alt="red avatar"></img>`
 
 //selects avatar and places it in the start field
-let player = { position: 0, };
-let ai = { position: 0, avatar: evilBoy };
+let player = { position: 1, };
+let ai = { position: 1, avatar: evilBoy };
 let avatars = document.getElementsByClassName('avatar');
 for (let avatar of avatars) {
     avatar.addEventListener('click', function() {
@@ -109,9 +109,11 @@ function goesFirst() {
 }
 
 function playerTurn() {
-    player.position = playerResult;
-    alert(`You threw ${playerResult}`);
-    console.log(player);
+
+    document.getElementById(`player-f${player.position}`).innerHTML = "";
+    alert(`You threw: ${playerResult}`);
+    player.position = player.position + playerResult;
+    document.getElementById(`player-f${player.position}`).innerHTML = player.avatar;
 
 };
 
