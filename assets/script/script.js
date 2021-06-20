@@ -109,13 +109,21 @@ function goesFirst() {
 }
 
 function playerTurn() {
-
     document.getElementById(`player-f${player.position}`).innerHTML = "";
     alert(`You threw: ${playerResult}`);
     player.position = player.position + playerResult;
     document.getElementById(`player-f${player.position}`).innerHTML = player.avatar;
-
+    aiTurn();
 };
+
+function aiTurn() {
+    aiResult = diceThrow();
+    document.getElementById(`ai-f${ai.position}`).innerHTML = "";
+    alert(`You threw: ${aiResult}`);
+    ai.position = ai.position + aiResult;
+    document.getElementById(`ai-f${ai.position}`).innerHTML = ai.avatar;
+};
+
 
 // if (localStorage.getItem('goesFirst')) {
 //     function gameRound();
