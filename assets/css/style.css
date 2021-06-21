@@ -210,6 +210,7 @@ ol {
 }
 
 .field {
+    display: flex;
     border: rgba(0, 0, 0, 0.1) solid 1px;
     background-color: rgba(0, 0, 0, 0.1);
     width: 70px;
@@ -226,12 +227,11 @@ ol {
 /* Styling for avatars when on the board */
 
 .field img {
-    /* width: 50%; */
     border: #fafafa solid 1px;
     background: rgba(0, 0, 0, 0.7);
     width: 30px;
     height: 30px;
-    margin: 0 auto;
+    margin: 30px auto;
     border-radius: 50%;
     /* position: relative; */
     /* bottom: 60%; */

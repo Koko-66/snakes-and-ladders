@@ -13,8 +13,11 @@ document.addEventListener('DOMContentLoaded', function() {
         instructions.style.display = "none";
     }
     createGameBoard();
+    selectAvatar();
 })
 
+//hides board when instructions are shown 
+// fixes instructions width issue on smaller devices
 function hideBoard() {
     let instructions = document.getElementById('instructions');
     let board = document.getElementById('game-area');
@@ -27,20 +30,27 @@ let blue = `<img src="assets/images/avatar_blue.png" alt="blue avatar"></img>`
 let yellow = `<img src="assets/images/avatar-yellow.png" alt="yellow avatar"></img>`
 let evilBoy = `<img src="assets/images/avatar_red.png" alt="red avatar"></img>`
 
-//selects avatar and places it in the start field
+
 let player = { position: 1, };
 let ai = { position: 1, avatar: evilBoy };
-let avatars = document.getElementsByClassName('avatar');
-for (let avatar of avatars) {
-    avatar.addEventListener('click', function() {
-        if (this.getAttribute('data-avatar-color') === 'blue') {
-            player.avatar = blue;
-            document.getElementById('f1').innerHTML = `<div id ="player-f1" class="player">${blue}</div><div id ="ai-f1" class="ai">${evilBoy}</div>`;
-        } else {
-            player.avatar = yellow;
-            document.getElementById('f1').innerHTML = `<div id ="player-f1" class="player">${yellow}</div><div id ="ai-f1" class="ai">${evilBoy}</div>`;
-        }
-    })
+
+//selects avatar and places it in the start field
+function selectAvatar() {
+    let avatars = document.getElementsByClassName('avatar');
+    for (let avatar of avatars) {
+        avatar.addEventListener('click', function() {
+            if (this.getAttribute('data-avatar-color') === 'blue') {
+                player.avatar = blue;
+                document.getElementById('f1').innerHTML = `1<div id ="player-f1" class="player">${blue}</div><div id ="ai-f1" class="ai">${evilBoy}</div>`;
+            } else {
+                player.avatar = yellow;
+                document.getElementById('f1').innerHTML = `1<div id ="player-f1" class="player">${yellow}</div><div id ="ai-f1" class="ai">${evilBoy}</div>`;
+            }
+            localStorage.setItem('playerAvatar', player.avatar);
+        })
+    }
+
+    localStorage.setItem('avatarSelected', 'true');
 }
 
 // generates gameboard by row and then field
@@ -71,7 +81,7 @@ function createGameBoard() {
     gameBoard.appendChild(start);
 
     //Adds numbers to the board and creates objects to push to board array for tracking 
-    //in escending order to start game from the bottom of the board
+    //in descending order to start game from the bottom of the board
     let i = 25;
     let fields = document.getElementsByClassName("field");
     for (field of fields) {
@@ -79,9 +89,14 @@ function createGameBoard() {
         //     board.push(position);
         // changes first field to "start" and last to "end" and adds separate divs for ai and player avatars with id's
         if (i === 1) {
-            field.innerHTML = `<div id ="player-f1" class="player"></div> <div id ="ai-f1" class="ai">${evilBoy}</div>`;
+            if (localStorage.getItem('avatarSelected')) {
+                let avatar = localStorage.getItem('playerAvatar');
+                field.innerHTML = `1<div id ="player-f1" class="player">${avatar}</div> <div id ="ai-f1" class="ai">${evilBoy}</div>`;
+            } else {
+                field.innerHTML = `1<div id ="player-f1" class="player"></div> <div id ="ai-f1" class="ai">${evilBoy}</div>`;
+            }
         } else {
-            field.innerHTML = `${i} <div id ="player-f${i}" class="player"></div> <div id ="ai-f${i}" class="ai">`;
+            field.innerHTML = `${i}<div id ="player-f${i}" class="player"></div> <div id ="ai-f${i}" class="ai">`;
         }
         field.id = `f${i}`;
         i -= 1;
@@ -129,7 +144,7 @@ function playerTurn() {
     document.getElementById(`player-f${player.position}`).innerHTML = "";
     alert(`You threw: ${playerResult}`);
     player.position = player.position + playerResult;
-    document.getElementById(`player-f${player.position}`).innerHTML = player.avatar;
+    document.getElementById(`player-f${player.position}`).innerHTML = localStorage.getItem('playerAvatar');
     aiTurn();
 };
 
