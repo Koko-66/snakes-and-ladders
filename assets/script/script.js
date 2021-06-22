@@ -32,7 +32,10 @@ let evilBoy = `<img src="assets/images/avatar_red-copy.png" alt="red avatar" cla
 
 
 let player = { position: 1, };
-let ai = { position: 1, avatar: evilBoy };
+let ai = {
+    position: 1,
+    avatar: evilBoy
+};
 
 //selects avatar and places it in the start field
 function selectAvatar() {
@@ -52,10 +55,10 @@ function selectAvatar() {
 
     localStorage.setItem('avatarSelected', 'true');
 }
+player.avatar = localStorage.getItem('playerAvatar');
 
 // generates gameboard by row and then field
 
-// let position;
 function createGameBoard() {
     let gameBoard = document.getElementById('game-board');
     let end = document.createElement('div');
@@ -86,10 +89,9 @@ function createGameBoard() {
     let fields = document.getElementsByClassName("field");
     for (field of fields) {
         let snake = `<img src = "assets/images/purple-snake2.png" alt="snake" class="snake">`
-        let ladder = `<img src = "assets/images/ladder2.png" alt="ladder" class="ladder">`
-            //     position = { position: i }
-            //     board.push(position);
-            // changes first field to "start" and last to "end" and adds separate divs for ai and player avatars with id's
+        let ladder = `<img src = "assets/images/ladder2.png" alt="ladder" class="ladder" data-type"="ladder">`
+
+        // changes first field to "start" and last to "end" and adds separate divs for ai and player avatars with id's
         if (i === 1) {
             if (localStorage.getItem('avatarSelected')) { //checks if avatar has been already selected and places the selected to place it in.
                 let avatar = localStorage.getItem('playerAvatar');
@@ -99,8 +101,10 @@ function createGameBoard() {
             }
         } else if (i === 7 || i === 20 || i === 24) {
             field.innerHTML = `${i}${snake}<div id ="player-f${i}" class="player"></div> <div id ="ai-f${i}" class="ai">`;
+            field.setAttribute('data-type', 'snake');
         } else if (i === 2 || i === 13 || i === 19) {
             field.innerHTML = `${i}${ladder}<div id ="player-f${i}" class="player"></div> <div id ="ai-f${i}" class="ai">`;
+            field.setAttribute('data-type', 'ladder');
         } else {
             field.innerHTML = `${i}<div id ="player-f${i}" class="player"></div> <div id ="ai-f${i}" class="ai">`;
         }
@@ -109,9 +113,6 @@ function createGameBoard() {
         i -= 1;
     }
 }
-
-
-// console.log(board);
 
 //2. GAME FUNCTIONS
 
@@ -149,23 +150,125 @@ function goesFirst() {
     localStorage.setItem('goesFirst', true);
 }
 
-function playerTurn() {
-    document.getElementById(`player-f${player.position}`).innerHTML = "";
-    alert(`You threw: ${playerResult}`);
-    player.position = player.position + playerResult;
-    document.getElementById(`player-f${player.position}`).innerHTML = localStorage.getItem('playerAvatar');
-    aiTurn();
-};
+function moveIfSnake(currentPlayer) {
+    // field = document.getElementById(`f${currentPlayer.position}`);
+    // if (field.getAttribute('data-type') === 'snake') {
+    if (currentPlayer.position === 3 || (currentPlayer.position - 3) % 5 === 0) {
+        currentPlayer.position = currentPlayer.position - 5;
+    } else if (currentPlayer.position === 1 || (currentPlayer.position - 1) % 5 === 0) {
+        currentPlayer.position = currentPlayer.position - 1;
+    } else if (currentPlayer.position === 2 || (currentPlayer.position - 2) % 5 === 0) {
+        currentPlayer.position = currentPlayer.position - 3;
+    } else if (currentPlayer.position === 4 || (currentPlayer.position - 4) % 5 === 0) {
+        currentPlayer.position = currentPlayer.position - 7;
+    } else {
+        currentPlayer.position = currentPlayer.position - 9;
+    }
 
+}
+// }
+
+function moveIfLadder(currentPlayer) {
+    // field = document.getElementById(`f${currentPlayer.position}`);
+    // if (field.getAttribute('data-type') === 'ladder') {
+    if (currentPlayer.position === 3 || (currentPlayer.position - 3) % 5 === 0) {
+        currentPlayer.position = currentPlayer.position + 5;
+    } else if (currentPlayer.position === 1 || (currentPlayer.position - 1) % 5 === 0) {
+        currentPlayer.position = currentPlayer.position + 9;
+    } else if (currentPlayer.position === 2 || (currentPlayer.position - 2) % 5 === 0) {
+        currentPlayer.position = currentPlayer.position + 7;
+    } else if (currentPlayer.position === 4 || (currentPlayer.position - 4) % 5 === 0) {
+        currentPlayer.position = currentPlayer.position + 3;
+    } else {
+        currentPlayer.position = currentPlayer.position + 1;
+    }
+}
+// }
+
+function playerTurn() {
+    alert(`Your result: ${playerResult}`);
+    document.getElementById(`player-f${player.position}`).innerHTML = ""; // deletes avatar from current position;
+    player.position = player.position + playerResult;
+    // document.getElementById(`player-f${player.position}`).innerHTML = localStorage.getItem('playerAvatar'); // places avatar in the new position;
+    let field = document.getElementById(`f${player.position}`);
+    if (field.getAttribute('data-type') === 'snake') {
+        moveIfSnake(player);
+        alert("Ooops! You came across the snake and need to run away!");
+        document.getElementById(`player-f${player.position}`).innerHTML = localStorage.getItem('playerAvatar');
+    } else if (field.getAttribute('data-type') === 'ladder') {
+        moveIfLadder(player);
+        alert("Great, you've got a ladder and can move up!");
+        document.getElementById(`player-f${player.position}`).innerHTML = localStorage.getItem('playerAvatar');
+    } else {
+        document.getElementById(`player-f${player.position}`).innerHTML = localStorage.getItem('playerAvatar');
+    }
+
+
+    aiTurn();
+}
+
+// document.getElementById(`player-f${player.position}`).innerHTML = localStorage.getItem('playerAvatar');
+
+// if (field.getAttribute('data-type') === 'snake') {
+//     if (player.position === 3 || (player.position - 3) % 5 === 0) {
+//         player.position = player.position - 5;
+//     } else if (player.position === 1 || (player.position - 1) % 5 === 0) {
+//         player.position = player.position - 1;
+//     } else if (player.position === 2 || (player.position - 5) % 5 === 0) {
+//         player.position = player.position - 3;
+//     } else if (player.position === 4 || (player.position - 4) % 5 === 0) {
+//         player.position = player.position - 7;
+//     } else {
+//         player.position = player.position - 9;
+//     }
+
+
+// } else if (field.getAttribute('data-type') === 'ladder') {
+//     if (player.position === 3 || (player.position - 3) % 5 === 0) {
+//         player.position = player.position + 5;
+//     } else if (player.position === 1 || (player.position - 1) % 5 === 0) {
+//         player.position = player.position + 9;
+//     } else if (player.position === 2 || (player.position - 5) % 5 === 0) {
+//         player.position = player.position + 7;
+//     } else if (player.position === 4 || (player.position - 4) % 5 === 0) {
+//         player.position = player.position + 3;
+//     } else {
+//         player.position = player.position + 1;
+//     }
+
+// document.getElementById(`player-f${player.position}`).innerHTML = localStorage.getItem('playerAvatar');
+
+
+// function playerTurn() {
+//     document.getElementById(`player-f${player.position}`).innerHTML = "";
+//     alert(`You threw: ${playerResult}`);
+//     player.position = player.position + playerResult;
+//     document.getElementById(`player-f${player.position}`).innerHTML = localStorage.getItem('playerAvatar'); 
+//     aiTurn();
+// };
 function aiTurn() {
     aiResult = diceThrow();
     document.getElementById(`ai-f${ai.position}`).innerHTML = "";
-    alert(`You threw: ${aiResult}`);
+    alert(`EvilBoy's result: ${aiResult}`);
     ai.position = ai.position + aiResult;
-    document.getElementById(`ai-f${ai.position}`).innerHTML = ai.avatar;
-};
+    // document.getElementById(`ai-f${ai.position}`).innerHTML = ai.avatar; // places avatar in the new position;
+    let field = document.getElementById(`f${ai.position}`);
+    if (field.getAttribute('data-type') === 'snake') {
+        // document.getElementById(`ai-f${ai.position}`).innerHTML = ai.avatar;
+        moveIfSnake(ai);
+        alert("EvilBoy came across a snake and needs to run away!");
+        document.getElementById(`ai-f${ai.position}`).innerHTML = ai.avatar;
+    } else if (field.getAttribute('data-type') === 'ladder') {
+        // document.getElementById(`ai-f${ai.position}`).innerHTML = ai.avatar;
+        moveIfLadder(ai);
+        alert("EvilBoy found a ledder! He is getting ahead!");
+        document.getElementById(`ai-f${ai.position}`).innerHTML = ai.avatar;
+    } else {
+        document.getElementById(`ai-f${ai.position}`).innerHTML = ai.avatar;
+    }
+    // document.getElementById(`ai-f${ai.position}`).innerHTML = ai.avatar;
 
-
+}
 //game 
 
 
