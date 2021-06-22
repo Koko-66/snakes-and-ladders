@@ -211,6 +211,8 @@ ol {
 
 .field {
     display: flex;
+    align-items: flex-end;
+    /* justify-content: flex-end; */
     border: rgba(0, 0, 0, 0.1) solid 1px;
     background-color: rgba(0, 0, 0, 0.1);
     width: 70px;
@@ -226,15 +228,15 @@ ol {
 
 /* Styling for avatars when on the board */
 
-.field img {
+img.avatar {
     border: #fafafa solid 1px;
     background: rgba(0, 0, 0, 0.7);
     width: 30px;
     height: 30px;
     margin: 30px auto;
     border-radius: 50%;
-    /* position: relative; */
-    /* bottom: 60%; */
+    align-items: flex-end;
+    justify-content: flex-end;
 }
 
 .ai img {
@@ -242,8 +244,26 @@ ol {
     background: #fafafa;
 }
 
+img.snake,
+img.ladder {
+    background: none;
+    border: none;
+    border-radius: 0;
+    position: relative;
+    margin: 0;
+}
 
-/* ___styling for avatars when in the board */
+img.snake {
+    top: 50px;
+    height: 65px;
+    right: 25px;
+}
+
+img.ladder {
+    bottom: 35px;
+    left: 20px;
+    height: 90px;
+}
 
 
 /* Styles for start and end fields */

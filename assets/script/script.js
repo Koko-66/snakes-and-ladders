@@ -26,9 +26,9 @@ function hideBoard() {
 
 
 //variables to store avatars
-let blue = `<img src="assets/images/avatar_blue.png" alt="blue avatar"></img>`
-let yellow = `<img src="assets/images/avatar-yellow.png" alt="yellow avatar"></img>`
-let evilBoy = `<img src="assets/images/avatar_red.png" alt="red avatar"></img>`
+let blue = `<img src="assets/images/avatar_blue.png" alt="blue avatar" class="avatar">`
+let yellow = `<img src="assets/images/avatar-yellow.png" alt="yellow avatar" class="avatar">`
+let evilBoy = `<img src="assets/images/avatar_red.png" alt="red avatar" class="avatar">`
 
 
 let player = { position: 1, };
@@ -85,24 +85,33 @@ function createGameBoard() {
     let i = 25;
     let fields = document.getElementsByClassName("field");
     for (field of fields) {
-        //     position = { position: i }
-        //     board.push(position);
-        // changes first field to "start" and last to "end" and adds separate divs for ai and player avatars with id's
+        let snake = `<img src = "assets/images/purple-snake-cropped.png" alt="snake" class="snake">`
+        let ladder = `<img src = "assets/images/ladder_transparent.png" alt="ladder" class="ladder">`
+            //     position = { position: i }
+            //     board.push(position);
+            // changes first field to "start" and last to "end" and adds separate divs for ai and player avatars with id's
         if (i === 1) {
-            if (localStorage.getItem('avatarSelected')) {
+            if (localStorage.getItem('avatarSelected')) { //checks if avatar has been already selected and places the selected to place it in.
                 let avatar = localStorage.getItem('playerAvatar');
                 field.innerHTML = `1<div id ="player-f1" class="player">${avatar}</div> <div id ="ai-f1" class="ai">${evilBoy}</div>`;
             } else {
                 field.innerHTML = `1<div id ="player-f1" class="player"></div> <div id ="ai-f1" class="ai">${evilBoy}</div>`;
             }
+        } else if (i === 7 || i === 20 || i === 24) {
+            field.innerHTML = `${i}${snake}<div id ="player-f${i}" class="player"></div> <div id ="ai-f${i}" class="ai">`;
+        } else if (i === 2 || i === 13 || i === 19) {
+            field.innerHTML = `${i}${ladder}<div id ="player-f${i}" class="player"></div> <div id ="ai-f${i}" class="ai">`;
         } else {
             field.innerHTML = `${i}<div id ="player-f${i}" class="player"></div> <div id ="ai-f${i}" class="ai">`;
         }
+
         field.id = `f${i}`;
         i -= 1;
     }
-    // console.log(board);
 }
+
+
+// console.log(board);
 
 //2. GAME FUNCTIONS
 
