@@ -27,8 +27,8 @@ function hideBoard() {
 
 //variables to store avatars
 let blue = `<img src="assets/images/avatar_blue.png" alt="blue avatar" class="avatar">`
-let yellow = `<img src="assets/images/avatar-yellow.png" alt="yellow avatar" class="avatar">`
-let evilBoy = `<img src="assets/images/avatar_red.png" alt="red avatar" class="avatar">`
+let yellow = `<img src="assets/images/avatar-yellow2.png" alt="yellow avatar" class="avatar">`
+let evilBoy = `<img src="assets/images/avatar_red-copy.png" alt="red avatar" class="avatar">`
 
 
 let player = { position: 1, };
@@ -85,8 +85,8 @@ function createGameBoard() {
     let i = 25;
     let fields = document.getElementsByClassName("field");
     for (field of fields) {
-        let snake = `<img src = "assets/images/purple-snake-cropped.png" alt="snake" class="snake">`
-        let ladder = `<img src = "assets/images/ladder_transparent.png" alt="ladder" class="ladder">`
+        let snake = `<img src = "assets/images/purple-snake2.png" alt="snake" class="snake">`
+        let ladder = `<img src = "assets/images/ladder2.png" alt="ladder" class="ladder">`
             //     position = { position: i }
             //     board.push(position);
             // changes first field to "start" and last to "end" and adds separate divs for ai and player avatars with id's

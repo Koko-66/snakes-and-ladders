@@ -256,13 +256,14 @@ img.ladder {
 img.snake {
     top: 50px;
     height: 65px;
-    right: 25px;
+    /* right: 25px; */
 }
 
 img.ladder {
     bottom: 35px;
-    left: 20px;
-    height: 90px;
+    left: 0px;
+    height: 80px;
+    width: 60%;
 }
 
 
@@ -270,7 +271,8 @@ img.ladder {
 
 #f1,
 #f25 {
-    background-color: rgba(72, 168, 4, 1)
+    background-color: rgba(40, 143, 144, 1);
+    color: #fafafa;
 }
 
 .dice img {
@@ -280,6 +282,7 @@ img.ladder {
     /* position: absolute; */
     margin-top: 200px;
     background-color: rgba(165, 20, 108, 0.7);
+    /* background-color: rgba(154,0,194,1); */
     border-radius: 10px;
     /* display: none; */
 }
