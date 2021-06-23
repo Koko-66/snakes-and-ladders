@@ -44,7 +44,7 @@
             </div>
             <p><span id="note">(Note: If you want to change your avatar later, click on the help button and select your avatar&nbsp;again.)</span></p>
             <p>Good luck!</p>
-            <button id="gamebtn" class="button" onclick="hide()">Let's play!</button>
+            <button id="gamebtn" class="button" onclick="hide()" onclick="runGame()">Let's play!</button>
         </div>
     </section>
 
@@ -54,9 +54,9 @@
             <div id=game-board>
             </div>
             <!--Div to push the dice image depending on the throw result; set to "one" by default-->
-            <div id="dice" class="dice"><img src="assets/images/Dice-1-b.svg.png" alt="Dice result 1 ">
+            <div id="dice" class="dice" onclick="round()"><img src="assets/images/Dice-1-b.svg.png" alt="Dice result 1 ">
             </div>
-            <div id="start-btn" onclick="runGame()">Start Game</div>
+            <div id="start-btn" onclick="window.location.reload(true)">Reset game</div>
         </div>
     </section>
 
