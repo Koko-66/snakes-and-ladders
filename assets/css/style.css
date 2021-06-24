@@ -96,6 +96,9 @@ p {
     width: 50%;
 }
 
+
+/* Styling for help icon */
+
 #help-button {
     margin: 10px auto;
 }
@@ -130,7 +133,7 @@ p {
 }
 
 
-/* makes avatar icon bigger when clicked 8*/
+/* makes avatar icon bigger when clicked */
 
 #avatar2 img:active,
 #avatar3 img:active {
@@ -146,15 +149,26 @@ ol {
 
 /* Sytling for "Let's go" button */
 
-.button {
-    border: #fafafa solid 2px;
-    border-radius: 5px;
+button {
+    display: block;
+    border: black solid 1px;
+    border-radius: 10px;
     height: 2.5em;
     width: 30%;
     font-size: inherit;
     font-family: inherit;
-    background-color: rgba(165, 20, 108, 1);
-    color: whitesmoke;
+    background-color: rgba(165, 20, 108, 0.7);
+    color: white;
+    margin-top: 30px;
+}
+
+button:active {
+    transform: scale(120%);
+}
+
+.controls {
+    width: 70px;
+    height: 70px;
 }
 
 
