@@ -1,85 +1,40 @@
 
 # Snakes and Ladders
-
-Snakes and Ladders brings the popular board game to your screen. It's aimed at anyone, at any age and hopes to bring a bit of fun in between the working time. 
+ 
+Snakes and Ladders brings the popular board game to your screen. The site is targeted at anyone who would like to play a game for a bit of time off from work or study and is meant purely to provide entertainment.     
 ![Responsive Mockup]()
 
-<!-- In this section, you will include one or two paragraphs providing an overview of your project. Essentially, this part is your sales p
-itch. At this stage, you should have a name for your project so use it! Don’t introduce the project as a Portfolio project for the diploma. In this section, describe what the project hopes to accomplish, who it is intended to target and how it will be useful to the target audience. -->
+## Deployed at
+## UX
+### User Stories
+	1. As a first-time player:
+		• I can easily understand the purpose of the game and how to play it.
+		• I want to see where there is a snake.
+		• I want to see where I am on the board and where is the AI and where we are both next.
+		• I want to know whose turn it is.
+		• I can find out more about the game creator and their work. 
+		• I want to know who won the game.
+		• I can reset the game at any point.
+	2. As a second-time player:
+		• On returning to/reloading the site I don't want to see the instructions pop up again.
+		• I want the avatar selected before be placed in the start box, but if I want to I can change it . 
+		• I can choose a different color scheme?
 
-<!-- For example; Love Running is a site that hopes to help keep people motivated to meet up for runs on a regular basis in Dublin, Ireland. The site will be targeted toward runners who are looking for a way to socialise and keep themselves fit. Love Running will be useful for runners to see exactly when and where they should be to join the running club.  -->
+### Features and Desing
 
-![Responsice Mockup](https://github.com/lucyrush/readme-template/blob/master/media/love_running_mockup.png)
-
-## Features 
-
-- 6 x 5 grid
-- instructions pop up in several steps on the screen on loading and - help button explaining how the game works 
-- choose avatar to be then used as a pin
-<!-- - consider display if both on the same field  -->
-<!-- - score keeping for more than one game? time? -->
-<!-- - can play against a computer or another person? -->
+#### Existing Features
+	• Instructions pop up 
+	• Selection from 2 avatars
+	• Automatic generation of the board
+	• Dice reflecting the generated number 
 
 
-<!-- ### Existing Features
+#### Features Left to Implement
+	• Choose a different color scheme
+	• Choose a different difficulty level (more fields, more snakes and more ladders)
+	
 
-- __Navigation Bar__
-
-  - Featured on all three pages, the full responsive navigation bar includes links to the Logo, Home page, Gallery and Sign Up page and is identical in each page to allow for easy navigation.
-  - This section will allow the user to easily navigate from page to page across all devices without having to revert back to the previous page via the ‘back’ button. 
-
-![Nav Bar](https://github.com/lucyrush/readme-template/blob/master/media/love_running_nav.png)
-
-- __The landing page image__
-
-  - The landing includes a photograph with text overlay to allow the user to see exactly which location this site would be applicable to. 
-  - This section introduces the user to Love Running with an eye catching animation to grab their attention
-
-![Landing Page](https://github.com/lucyrush/readme-template/blob/master/media/love_running_landing.png)
-
-- __Club Ethos Section__
-
-  - The club ethos section will allow the user to see the benefits of joining the Love Running meetups, as well as the benefits of running overall. 
-  - This user will see the value of signing up for the Love Running meetups. This should encourage the user to consider running as their form of exercise. 
-
-![Club Ethos](https://github.com/lucyrush/readme-template/blob/master/media/love_running_ethos.png)
-
-- __Meetup Times section__
-
-  - This section will allow the user to see exactly when the meetups will happen, where they will be located and how long the run will be in kilometers. 
-  - This section will be updated as these times change to keep the user up to date. 
-
-![Meetup Times](https://github.com/lucyrush/readme-template/blob/master/media/love_running_times.png)
-
-- __The Footer__ 
-
-  - The footer section includes links to the relevant social media sites for Love Running. The links will open to a new tab to allow easy navigation for the user. 
-  - The footer is valuable to the user as it encourages them to keep connected via social media
-
-![Footer](https://github.com/lucyrush/readme-template/blob/master/media/love_running_footer.png)
-
-- __Gallery__
-
-  - The gallery will provide the user with supporting images to see what the meet ups look like. 
-  - This section is valuable to the user as they will be able to easily identify the types of events the organisation puts together. 
-
-![Gallery](https://github.com/lucyrush/readme-template/blob/master/media/love_running_gallery.png)
-
-- __The Sign Up Page__
-
-  - This page will allow the user to get signed up to Love Running to start their running journey with the community. The user will be able specify if they would like to take part in road, trail or both types of running. The user will be asked to submit their full name and email address. 
-
-![Sign Up](https://github.com/lucyrush/readme-template/blob/master/media/love_running_signup.png)
-
-For some/all of your features, you may choose to reference the specific project files that implement them.
-
-In addition, you may also use this section to discuss plans for additional features to be implemented in the future:
-
-### Features Left to Implement
-
-- Another feature idea
-
-## Testing 
+<!-- ## Testing 
 
 In this section, you need to convince the assessor that you have conducted enough testing to legitimately believe that the site works well. Essentially, in this part you will want to go over all of your project’s features and ensure that they all work as intended, with the project providing an easy and straightforward way for the users to achieve their goals.
 
@@ -111,16 +66,13 @@ This section should describe the process you went through to deploy the project 
   - Once the master branch has been selected, the page will be automatically refreshed with a detailed ribbon display to indicate the successful deployment. 
 
 The live link can be found here - https://code-institute-org.github.io/love-running-2.0/index.html 
-
+ -->
 
 ## Credits 
 
-https://www.sitepoint.com/community/t/how-to-display-the-modal-pop-up-once-for-a-user/267349 - localStorage to show popup only once
+https://www.howtocodeschool.com - various tips on how to work with JavaSript; 
 
-
-In this section you need to reference where you got your content, media and extra help from. It is common practice to use code from other repositories and tutorials, however, it is important to be very specific about these sources to avoid plagiarism. 
-
-You can break the credits section up into Content and Media, depending on what you have included in your project. 
+https://betterprogramming.pub/how-to-build-a-chess-board-with-javascript-480ab182739e?gi=e116ff4de5b6 - great help in creating the board! 
 
 ### Content 
 
@@ -130,13 +82,9 @@ You can break the credits section up into Content and Media, depending on what y
 
 ### Media
 
-- The photos used on the home and sign up page are from This Open Source site
-- The images used for the gallery page were taken from this other open source site
+- Images of the avatars, snake and ladder were drawn by my son, Phillip.
 
-
-Congratulations on completing your Readme, you have made another big stride in the direction of being a developer! 
-
-## Other General Project Advice
+<!-- ## Other General Project Advice
 
 Below you will find a couple of extra tips that may be helpful when completing your project. Remember that each of these projects will become part of your final portfolio so it’s important to allow enough time to showcase your best work! 
 
@@ -151,4 +99,4 @@ Below you will find a couple of extra tips that may be helpful when completing y
   - [HTML & CSS Coding Best Practices](https://medium.com/@inceptiondj.info/html-css-coding-best-practice-fadb9870a00f)
   - [Google HTML/CSS Style Guide](https://google.github.io/styleguide/htmlcssguide.html#General)
 
-Getting started with your Portfolio Projects can be daunting, planning your project can make it a lot easier to tackle, take small steps to reach the final outcome and enjoy the process!  -->
+Getting started with your Portfolio Projects can be daunting, planning your project can make it a lot easier to tackle, take small steps to reach the final outcome and enjoy the process!  --> -->
