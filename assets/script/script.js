@@ -135,55 +135,41 @@ function generateNumber() {
 }
 
 let currentPlayer;
+let dice = document.getElementById('dice');
+dice.addEventListener('click', round);
 
-//changes image depending on what playerDiceThrow returns; 
+//
 function diceThrow(currentPlayer) {
-    let dice = document.getElementById('dice');
     let result = generateNumber();
     currentPlayer.result = result;
     dice.innerHTML = `<img src="../assets/images/Dice-${result}-b.svg.png" alt="Dice result ${result}">`;
-}
-
-
-
-function round() {
-    if (gameRunning) {
-        diceThrow(player);
-        playerTurn(player);
-        checkType();
-        checkIfWin()
-        diceThrow(ai);
-        playerTurn(ai);
-        checkType();
-        checkIfWin();
+    if (currentPlayer === player) {
+        alert(`Your result: ${player.result}`);
+    } else {
+        alert(`EvilBoy's result: ${ai.result}`);
     }
-
-
-    //initiated by the dice throw
-    //player turn
-    //check type
-    //check win
-    //ai turn
-
-
 }
 
 // -- check who goes first and hides Start Game button/Shows dice; sets value for current player
 function goesFirst() {
-    let playerResult = generateNumber();
-    let aiResult = generateNumber();
-    if (playerResult === aiResult) {
-        alert(`EvilBoy: ${aiResult}.\nYou: ${playerResult}.\nIt's a tie! Try again!`);
-    } else if (playerResult > aiResult) {
-        alert(`EvilBoy: ${aiResult}.\nYou: ${playerResult}.\nCongratulations! You're going first`);
+    diceThrow(player);
+    diceThrow(ai);
+    if (player.result === ai.result) {
+        alert(`It's a tie! Try again!`);
+    } else if (player.result > ai.result) {
+        alert(`Congratulations! You're going first`);
         currentPlayer = player;
+        moveAvatar(player);
         showDice();
+        checkType();
     } else {
-        alert(`EvilBoy: ${aiResult}.\nYou: ${playerResult}.\nSorry! EvilBoy is starting this time!`);
+        alert(`Sorry! EvilBoy is starting this time!`);
         currentPlayer = ai;
-        diceThrow(ai);
+        moveAvatar(ai);
         showDice();
+        checkType();
     }
+    // currentPlayer = player;
 }
 
 // Shows dice after goes first initiated
@@ -224,18 +210,14 @@ function moveIfLadder(currentPlayer) {
     }
 }
 
-function playerTurn(currentPlayer) {
-    // if (currentPlayer === player) {
-    //     // alert(`Your result: ${player.result}`);
-    // } else {
-    //     // alert(`EvilBoy's result: ${ai.result}`);
-    // }
+function moveAvatar(currentPlayer) {
     document.getElementById(`${currentPlayer.name}-f${currentPlayer.position}`).innerHTML = ""; // deletes avatar from current position;
     currentPlayer.position = currentPlayer.position + currentPlayer.result;
     if (currentPlayer.position < 25) {
         document.getElementById(`${currentPlayer.name}-f${currentPlayer.position}`).innerHTML = currentPlayer.avatar; // places avatar in the new position;
     } else {
-        document.getElementById(`${currentPlayer.name}-f25}`).innerHTML = currentPlayer.avatar;
+        currentPlayer.position >= 25;
+        document.getElementById(`${currentPlayer.name}-f25`).innerHTML = currentPlayer.avatar;
     }
 }
 
@@ -245,27 +227,54 @@ function checkType() {
         document.getElementById(`${currentPlayer.name}-f${currentPlayer.position}`).innerHTML = ""; // deletes avatar from current position;
         moveIfSnake(currentPlayer);
         document.getElementById(`${currentPlayer.name}-f${currentPlayer.position}`).innerHTML = currentPlayer.avatar;
-        // alert("Ooops! There's a snake! Run away!");
+        alert("Ooops! There's a snake! Run away!");
     } else if (field.getAttribute('data-type') === 'ladder') {
         document.getElementById(`${currentPlayer.name}-f${currentPlayer.position}`).innerHTML = "";
         moveIfLadder(currentPlayer);
-        // alert("There's a ladder! Climb up!");
+        alert("There's a ladder! Climb up!");
         document.getElementById(`${currentPlayer.name}-f${currentPlayer.position}`).innerHTML = currentPlayer.avatar;
     } else {
         document.getElementById(`${currentPlayer.name}-f${currentPlayer.position}`).innerHTML = currentPlayer.avatar;
     }
 }
 
-function checkIfWin() {
+//checks if player/ai's position is greater than 25 and finishes the
+function checkIfWin(currentPlayer) {
     if (currentPlayer.position >= 25) {
+        gameRunning = false;
         if (currentPlayer === player) {
             alert("Congratulations! You've won!");
         } else {
             alert("Sorry! You lost, try again!");
         }
-        gameRunning = false;
+
     } else {
         gameRunning = true;
     }
+}
 
+function playerTurn() {
+    currentPlayer = player;
+    moveAvatar(player);
+    checkType(player);
+    checkIfWin(player);
+}
+
+function aiTurn() {
+    currentPlayer = ai;
+    diceThrow(ai);
+    moveAvatar(ai);
+    checkType(ai);
+    checkIfWin(ai);
+    currentPlayer = player;
+
+}
+
+function round() {
+    if (gameRunning) {
+        playerTurn();
+        aiTurn()
+    } else {
+        alert("Game over!");
+    }
 }

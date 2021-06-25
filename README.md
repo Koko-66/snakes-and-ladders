@@ -1,6 +1,5 @@
 
 # Snakes and Ladders
- 
 Snakes and Ladders brings the popular board game to your screen. The site is targeted at anyone who would like to play a game for a bit of time off from work or study and is meant purely to provide entertainment.     
 ![Responsive Mockup]()
 
