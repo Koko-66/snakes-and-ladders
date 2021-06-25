@@ -121,7 +121,15 @@ function fillBoard() {
         field.id = `f${i}`;
         i -= 1;
     }
+    addResultHolders();
 }
+
+function addResultHolders() {
+    document.getElementById('ai-result').innerHTML = `<sttrong>EvilBoy result:</strong> ${ai.result}`;
+    document.getElementById('player-result').innerHTML = `<strong>Your result:</strong> ${player.result}`
+
+}
+
 
 
 //2. GAME FUNCTIONS
@@ -143,11 +151,13 @@ function diceThrow(currentPlayer) {
     let result = generateNumber();
     currentPlayer.result = result;
     dice.innerHTML = `<img src="../assets/images/Dice-${result}-b.svg.png" alt="Dice result ${result}">`;
-    if (currentPlayer === player) {
-        alert(`Your result: ${player.result}`);
-    } else {
-        alert(`EvilBoy's result: ${ai.result}`);
-    }
+    addResultHolders();
+
+    // if (currentPlayer === player) {
+    //     alert(`Your result: ${player.result}`);
+    // } else {
+    //     alert(`EvilBoy's result: ${ai.result}`);
+    // }
 }
 
 // -- check who goes first and hides Start Game button/Shows dice; sets value for current player
