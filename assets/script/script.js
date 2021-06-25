@@ -126,32 +126,25 @@ function fillBoard() {
 
 //2. GAME FUNCTIONS
 
-//generates random number between 1 and 6 for player
+//generates random number between 1 and 6 for player; 
 function generateNumber() {
     return Math.floor(Math.random() * 6) + 1;
 }
 
-var currentPlayer;
-//adds event listener to dice and changes image depending on what playerDiceThrow returns
+let currentPlayer;
+
+//changes image depending on what playerDiceThrow returns; 
 function diceThrow(currentPlayer) {
     let dice = document.getElementById('dice');
-    // dice.addEventListener("click", function() {
-    result = generateNumber();
+    let result = generateNumber();
     currentPlayer.result = result;
-    // currentPlayer.position = result;
     dice.innerHTML = `<img src="../assets/images/Dice-${result}-b.svg.png" alt="Dice result ${result}">`;
-    // })
     playerTurn(currentPlayer);
+    checkType();
     currentPlayer !== player ? currentPlayer = player : currentPlayer = ai;
 }
 
-
-
-// -- check who goes first and generates alert --/
-// on first dice click then set to true in localStorage
-// let playerResult;
-// let aiResult;
-
+// -- check who goes first and hides Start Game button/Shows dice; sets value for current player
 function goesFirst() {
     let playerResult = generateNumber();
     let aiResult = generateNumber();
@@ -160,17 +153,24 @@ function goesFirst() {
     } else if (playerResult > aiResult) {
         alert(`EvilBoy: ${aiResult}.\nYou: ${playerResult}.\nCongratulations! You're going first`);
         currentPlayer = player;
+        showDice();
     } else {
         alert(`EvilBoy: ${aiResult}.\nYou: ${playerResult}.\nSorry! EvilBoy is starting this time!`);
         currentPlayer = ai;
-        diceThrow(currentPlayer);
+        diceThrow(ai);
+        showDice();
     }
-    document.getElementById('start-game-btn').style.display = 'none';
-    document.getElementById('dice').style.display = 'block';
-
-    // localStorage.setItem('goesFirst', true);
 }
 
+// Shows dice after goes first initiated
+function showDice() {
+    let startButton = document.getElementById('start-game-btn');
+    let dice = document.getElementById('dice');
+    startButton.style.display = 'none';
+    dice.style.display = 'block';
+}
+
+//rules for moving if snake is in the field
 function moveIfSnake(currentPlayer) {
     if (currentPlayer.position === 3 || (currentPlayer.position - 3) % 5 === 0) {
         currentPlayer.position = currentPlayer.position - 5;
@@ -185,6 +185,7 @@ function moveIfSnake(currentPlayer) {
     }
 }
 
+//rules for moving if ladder is in the field
 function moveIfLadder(currentPlayer) {
     if (currentPlayer.position === 3 || (currentPlayer.position - 3) % 5 === 0) {
         currentPlayer.position = currentPlayer.position + 5;
@@ -199,46 +200,6 @@ function moveIfLadder(currentPlayer) {
     }
 }
 
-// function playerTurn() {
-//     playerResult = diceThrow(player);
-//     alert(`Your result: ${playerResult}`);
-//     document.getElementById(`${player.name}-f${player.position}`).innerHTML = ""; // deletes avatar from current position;
-//     player.position = player.position + playerResult;
-//     let field = document.getElementById(`f${player.position}`);
-//     if (field.getAttribute('data-type') === 'snake') {
-//         moveIfSnake(player);
-//         alert("Ooops! You came across the snake and need to run away!");
-//         document.getElementById(`${player.name}-f${player.position}`).innerHTML = player.avatar;
-//     } else if (field.getAttribute('data-type') === 'ladder') {
-//         moveIfLadder(player);
-//         alert("Great, you've got a ladder and can move up!");
-//         document.getElementById(`${player.name}-f${player.position}`).innerHTML = player.avatar;
-//     } else {
-//         document.getElementById(`${player.name}-f${player.position}`).innerHTML = player.avatar;
-//     }
-//     aiTurn();
-// }
-
-// function aiTurn() {
-//     aiResult = diceThrow();
-//     document.getElementById(`ai-f${ai.position}`).innerHTML = "";
-//     alert(`EvilBoy's result: ${aiResult}`);
-//     ai.position = ai.position + aiResult;
-//     let field = document.getElementById(`f${ai.position}`);
-//     if (field.getAttribute('data-type') === 'snake') {
-//         moveIfSnake(ai);
-//         alert("EvilBoy came across a snake and needs to run away!");
-//         document.getElementById(`ai-f${ai.position}`).innerHTML = ai.avatar;
-//     } else if (field.getAttribute('data-type') === 'ladder') {
-//         moveIfLadder(ai);
-//         alert("EvilBoy found a ledder! He is getting ahead!");
-//         document.getElementById(`ai-f${ai.position}`).innerHTML = ai.avatar;
-//     } else {
-//         document.getElementById(`ai-f${ai.position}`).innerHTML = ai.avatar;
-//     }
-
-// }
-
 function playerTurn(currentPlayer) {
     if (currentPlayer === player) {
         alert(`Your result: ${player.result}`);
@@ -246,17 +207,28 @@ function playerTurn(currentPlayer) {
         alert(`EvilBoy's result: ${ai.result}`);
     }
     document.getElementById(`${currentPlayer.name}-f${currentPlayer.position}`).innerHTML = ""; // deletes avatar from current position;
-    currentPlayer.position = currentPlayer.position + currentPlayer.result;
-    // document.getElementById(`player-f${player.position}`).innerHTML = localStorage.getItem('playerAvatar'); // places avatar in the new position;
+    if (currentPlayer.position > 0 && currentPlayer.position < 25) {
+        currentPlayer.position = currentPlayer.position + currentPlayer.result;
+        document.getElementById(`${currentPlayer.name}-f${currentPlayer.position}`).innerHTML = currentPlayer.avatar; // places avatar in the new position;
+    } else {
+        document.getElementById(`${currentPlayer.name}-f25}`).innerHTML = currentPlayer.avatar;
+        if (currentPlayer === player) {
+            alert("Congratulations! You've won!");
+        } else {
+            alert("Sorry! You lost, try again!");
+        }
+    }
+}
+
+function checkType() {
     let field = document.getElementById(`f${currentPlayer.position}`);
-    // document.getElementById(`${currentPlayer.name}-f${currentPlayer.position}`).innerHTML = currentPlayer.avatar;
     if (field.getAttribute('data-type') === 'snake') {
-        // document.getElementById(`${currentPlayer.name}-f${currentPlayer.position}`).innerHTML = "";
+        document.getElementById(`${currentPlayer.name}-f${currentPlayer.position}`).innerHTML = ""; // deletes avatar from current position;
         moveIfSnake(currentPlayer);
         document.getElementById(`${currentPlayer.name}-f${currentPlayer.position}`).innerHTML = currentPlayer.avatar;
         alert("Ooops! There's a snake! Run away!");
     } else if (field.getAttribute('data-type') === 'ladder') {
-        // document.getElementById(`${currentPlayer.name}-f${currentPlayer.position}`).innerHTML = "";
+        document.getElementById(`${currentPlayer.name}-f${currentPlayer.position}`).innerHTML = "";
         moveIfLadder(currentPlayer);
         alert("There's a ladder! Climb up!");
         document.getElementById(`${currentPlayer.name}-f${currentPlayer.position}`).innerHTML = currentPlayer.avatar;
@@ -272,22 +244,39 @@ function playerTurn(currentPlayer) {
 
 // function gameRound() {
 //     while ((player.position || ai.position) < 25) {
-//         if (player.position >= 25) {
-//             alert("Congrats! You've won!");
-//         } else if (player.position >= 25) {
-//             alert("Sorry, you lost this time. Try again!");
+//         if (currentPlayer === ai) {
+//             diceThrow(ai);
 //         } else {
-//             if (currentPlayer === player) {
-//                 playerTurn(player)
-//                 playerTurn(ai);
-//             } else {
-//                 playerTurn(ai);
-//                 playerTurn(player);
-//             }
+//             diceThrow(player);
+//         }
+//         if (player.position >= 25) {
+//             alert("Contratulations! You've won!");
+//         } else {
+//             alert("EvilBoy won thist time!");
 //         }
 //     }
 // }
 
+//             if (currentPlayer === ai) {
+//                 diceThrow(currentPlayer);
+//                 playerTurn(currentPlayer);
+//                 checkType();
+//                 currentPlayer !== player ? currentPlayer = player : currentPlayer = ai;
+
+//             } else {
+//                 playerTurn(currentPlayer);
+//                 checkType();
+//                 currentPlayer !== player ? currentPlayer = player : currentPlayer = ai;
+//                 //                 playerTurn(ai);
+//                 //             } else {
+//                 //                 playerTurn(ai);
+//                 //                 playerTurn(player);
+//                 //             }
+//             }
+//         }
+//     }
+
+// }
 
 //to generate snakes and ladders automatically: genearate 2 (easy) 4 (medium) 5 (difficult) random numbers; 
 //when number matches i place snake
@@ -298,16 +287,11 @@ function playerTurn(currentPlayer) {
 
 
 //game setup:
-//close/toggle help button to show instructions
-//select avatar 
-//throw dice to choose who goes first
 
-//game functions: 
 //
 //dice throw
 //dice throw - computer (separate function?)
 //dice throw - avatar (separate function?)
 //move avatar
-//move when on a "ladder" field
-//move when on a "green" field
-//game lasts while avatar not on End / i <=23)//
+
+//game lasts while avatar not on End / i <=25)//
