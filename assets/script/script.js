@@ -125,12 +125,10 @@ function fillBoard() {
 }
 
 function addResultHolders() {
-    document.getElementById('ai-result').innerHTML = `<sttrong>EvilBoy result:</strong> ${ai.result}`;
+    document.getElementById('ai-result').innerHTML = `<strong>EvilBoy result:</strong> ${ai.result}`;
     document.getElementById('player-result').innerHTML = `<strong>Your result:</strong> ${player.result}`
 
 }
-
-
 
 //2. GAME FUNCTIONS
 

@@ -1,22 +1,4 @@
 @import url('https://fonts.googleapis.com/css2?family=Viaoda+Libre&display=swap');
-
-/* colors */
-
-
-/* pink = #B13477 */
-
-
-/* rgba(0,0,0,0.7) - charcoal*/
-
-
-/* off-white */
-
-
-/* light grey */
-
-
-/* main elements */
-
 * {
     margin: 0;
     padding: 0;
@@ -30,6 +12,7 @@ body {
 }
 
 header {
+    /*to show icon in line with text*/
     display: flex;
     align-items: center;
     justify-content: center;
@@ -83,6 +66,8 @@ p {
 
 .far {
     color: #B13477;
+    font-size: xx-large;
+    padding-left: 25px;
 }
 
 
@@ -187,6 +172,9 @@ button:active {
     border: rgba(0, 0, 0, 0, 0.7) solid 1px;
 }
 
+
+/* div at the top of the board to hold results */
+
 #results {
     background-color: rgba(40, 143, 144, 0.2);
     width: 70%;
@@ -210,14 +198,15 @@ button:active {
     margin-left: 5%;
 }
 
-#game-controls {
-    display: flex;
-    flex-direction: column;
-    float: left;
-    height: inherit;
-    width: auto;
-    padding: 20px;
-}
+
+/* #game-controls {
+            display: flex;
+            flex-direction: column;
+            float: left;
+            height: inherit;
+            width: auto;
+            padding: 20px;
+        } */
 
 .board-edge {
     height: 1.5em;
@@ -315,13 +304,87 @@ img.ladder {
 }
 
 .dice img {
-    /* border: rgba(165, 20, 108, 1); */
     width: 70px;
     height: 70px;
-    /* position: absolute; */
     margin-top: 200px;
-    background-color: rgba(165, 20, 108, 0.7);
-    /* background-color: rgba(154,0,194,1); */
     border-radius: 10px;
-    /* display: none; */
+}
+
+@media screen and (max-width: 425px) {
+    header {
+        height: 70px;
+    }
+    h1 {
+        font-size: 26px;
+    }
+    #game-container {
+        display: block;
+        width: 320px;
+        height: auto;
+        margin: 0 auto;
+    }
+    #game-board {
+        margin-left: 0;
+    }
+    .far {
+        color: #B13477;
+        font-size: x-large;
+        padding-left: 10px;
+    }
+    /* div at the top of the board to hold results */
+    #results {
+        width: 100%;
+        font-size: 0.9em;
+    }
+    .board-edge {
+        height: 1.3em;
+        font-size: 1em;
+    }
+    .board-row {
+        display: flex;
+        flex-direction: row;
+    }
+    .field {
+        width: 45px;
+        height: 45px;
+        margin: 2px;
+        padding: 2px;
+        font-size: 18px;
+    }
+    /* Styling for avatars when on the board */
+    img.avatar {
+        width: 20px;
+        height: 20px;
+    }
+    img.snake {
+        top: 50px;
+        height: 45px;
+        margin-bottom: 20px;
+        /* right: 25px; */
+    }
+    img.ladder {
+        bottom: 35px;
+        margin-left: 10px;
+        height: 60px;
+        width: 60%;
+    }
+    #start-game-btn {
+        margin-top: 0;
+    }
+    .dice img {
+        width: 55px;
+        height: 55px;
+        margin-top: 0px;
+        display: table-cell;
+        clear: both;
+    }
+    .controls {
+        width: 55px;
+        height: 55px;
+        font-size: 0.8em;
+    }
+    button {
+        display: inline-block;
+        margin-top: 0;
+    }
 }
