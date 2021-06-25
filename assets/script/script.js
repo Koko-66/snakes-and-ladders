@@ -126,6 +126,9 @@ function fillBoard() {
 
 //2. GAME FUNCTIONS
 
+//sets game Running function for while loop
+let gameRunning = true;
+
 //generates random number between 1 and 6 for player; 
 function generateNumber() {
     return Math.floor(Math.random() * 6) + 1;
@@ -139,9 +142,30 @@ function diceThrow(currentPlayer) {
     let result = generateNumber();
     currentPlayer.result = result;
     dice.innerHTML = `<img src="../assets/images/Dice-${result}-b.svg.png" alt="Dice result ${result}">`;
-    playerTurn(currentPlayer);
-    checkType();
-    currentPlayer !== player ? currentPlayer = player : currentPlayer = ai;
+}
+
+
+
+function round() {
+    if (gameRunning) {
+        diceThrow(player);
+        playerTurn(player);
+        checkType();
+        checkIfWin()
+        diceThrow(ai);
+        playerTurn(ai);
+        checkType();
+        checkIfWin();
+    }
+
+
+    //initiated by the dice throw
+    //player turn
+    //check type
+    //check win
+    //ai turn
+
+
 }
 
 // -- check who goes first and hides Start Game button/Shows dice; sets value for current player
@@ -201,22 +225,17 @@ function moveIfLadder(currentPlayer) {
 }
 
 function playerTurn(currentPlayer) {
-    if (currentPlayer === player) {
-        alert(`Your result: ${player.result}`);
-    } else {
-        alert(`EvilBoy's result: ${ai.result}`);
-    }
+    // if (currentPlayer === player) {
+    //     // alert(`Your result: ${player.result}`);
+    // } else {
+    //     // alert(`EvilBoy's result: ${ai.result}`);
+    // }
     document.getElementById(`${currentPlayer.name}-f${currentPlayer.position}`).innerHTML = ""; // deletes avatar from current position;
-    if (currentPlayer.position > 0 && currentPlayer.position < 25) {
-        currentPlayer.position = currentPlayer.position + currentPlayer.result;
+    currentPlayer.position = currentPlayer.position + currentPlayer.result;
+    if (currentPlayer.position < 25) {
         document.getElementById(`${currentPlayer.name}-f${currentPlayer.position}`).innerHTML = currentPlayer.avatar; // places avatar in the new position;
     } else {
         document.getElementById(`${currentPlayer.name}-f25}`).innerHTML = currentPlayer.avatar;
-        if (currentPlayer === player) {
-            alert("Congratulations! You've won!");
-        } else {
-            alert("Sorry! You lost, try again!");
-        }
     }
 }
 
@@ -226,72 +245,27 @@ function checkType() {
         document.getElementById(`${currentPlayer.name}-f${currentPlayer.position}`).innerHTML = ""; // deletes avatar from current position;
         moveIfSnake(currentPlayer);
         document.getElementById(`${currentPlayer.name}-f${currentPlayer.position}`).innerHTML = currentPlayer.avatar;
-        alert("Ooops! There's a snake! Run away!");
+        // alert("Ooops! There's a snake! Run away!");
     } else if (field.getAttribute('data-type') === 'ladder') {
         document.getElementById(`${currentPlayer.name}-f${currentPlayer.position}`).innerHTML = "";
         moveIfLadder(currentPlayer);
-        alert("There's a ladder! Climb up!");
+        // alert("There's a ladder! Climb up!");
         document.getElementById(`${currentPlayer.name}-f${currentPlayer.position}`).innerHTML = currentPlayer.avatar;
     } else {
         document.getElementById(`${currentPlayer.name}-f${currentPlayer.position}`).innerHTML = currentPlayer.avatar;
     }
-    // aiTurn();
 }
 
-// game 
+function checkIfWin() {
+    if (currentPlayer.position >= 25) {
+        if (currentPlayer === player) {
+            alert("Congratulations! You've won!");
+        } else {
+            alert("Sorry! You lost, try again!");
+        }
+        gameRunning = false;
+    } else {
+        gameRunning = true;
+    }
 
-
-
-// function gameRound() {
-//     while ((player.position || ai.position) < 25) {
-//         if (currentPlayer === ai) {
-//             diceThrow(ai);
-//         } else {
-//             diceThrow(player);
-//         }
-//         if (player.position >= 25) {
-//             alert("Contratulations! You've won!");
-//         } else {
-//             alert("EvilBoy won thist time!");
-//         }
-//     }
-// }
-
-//             if (currentPlayer === ai) {
-//                 diceThrow(currentPlayer);
-//                 playerTurn(currentPlayer);
-//                 checkType();
-//                 currentPlayer !== player ? currentPlayer = player : currentPlayer = ai;
-
-//             } else {
-//                 playerTurn(currentPlayer);
-//                 checkType();
-//                 currentPlayer !== player ? currentPlayer = player : currentPlayer = ai;
-//                 //                 playerTurn(ai);
-//                 //             } else {
-//                 //                 playerTurn(ai);
-//                 //                 playerTurn(player);
-//                 //             }
-//             }
-//         }
-//     }
-
-// }
-
-//to generate snakes and ladders automatically: genearate 2 (easy) 4 (medium) 5 (difficult) random numbers; 
-//when number matches i place snake
-//generate random numbers for ladders
-//when number matches i check: if no snake in field and field above (might need to redo the field ids to "r1f3" for easier checks, would be fine since the avatars will move by avatar divs ids
-
-//game functions: 
-
-
-//game setup:
-
-//
-//dice throw
-//dice throw - computer (separate function?)
-//dice throw - avatar (separate function?)
-//move avatar
-
-//game lasts while avatar not on End / i <=25)//
+}
