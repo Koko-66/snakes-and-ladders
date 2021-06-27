@@ -82,6 +82,7 @@ https://betterprogramming.pub/how-to-build-a-chess-board-with-javascript-480ab18
 ### Media
 
 - Images of the avatars, snake and ladder were drawn by my son, Phillip.
+- Background image: Pexels form Pixelbay
 
 <!-- ## Other General Project Advice
 
