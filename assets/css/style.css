@@ -1,4 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=Viaoda+Libre&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Benne&family=Roboto&display=swap');
 * {
     margin: 0;
     padding: 0;
@@ -7,12 +8,18 @@
 
 body {
     color: rgba(0, 0, 0, 0, 0.7);
-    font-family: 'Viaoda Libre', cursive;
+    /* font-family: 'Viaoda Libre', cursive; */
+    font-family: 'Benne', serif;
     font-size: 18px;
+    background: url("../images/fronds-1869757_1920.jpg");
+    width: 100vw;
+    height: 100vh;
+    color: white;
 }
 
 header {
     /*to show icon in line with text*/
+    margin-top: 50px;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -26,7 +33,7 @@ footer {
 }
 
 h1 {
-    font-family: 'Viaoda Libre', cursive;
+    /* font-family: 'Viaoda Libre', cursive; */
     font-size: 30px;
     text-align: center;
     margin: auto 0;
@@ -43,7 +50,7 @@ p {
     display: block;
     /* font-size: 16px; */
     width: 70%;
-    background-color: rgba(0, 0, 0, 0.1);
+    background-color: rgba(0, 0, 0, 0.7);
     border: rgba(0, 0, 0, 0.1) solid 2px;
     border-radius: 10px;
     padding: 10px;
@@ -51,7 +58,8 @@ p {
     font-size: 1.1em;
     text-align: center;
     /* z-index: 1; */
-    margin: 50px auto;
+    margin: auto;
+    /* font-family: Georgia, 'Times New Roman', Times, serif; */
 }
 
 #note {
@@ -127,8 +135,7 @@ p {
 
 ol {
     text-align: left;
-    width: 90%;
-    margin-left: 7%;
+    width: auto;
 }
 
 
@@ -164,14 +171,20 @@ button:active {
 /* ---Main game area */
 
 
-/* box to hold and display dice throw results */
+/* game area section */
+
+#game-area {
+    background: rgba(0, 0, 0, 0.7);
+    width: 70%;
+    margin: auto;
+    height: 600px;
+}
 
 #game-container {
     display: block;
-    height: 500px;
-    width: 620px;
+    height: 620px;
+    width: 600px;
     margin: 0 auto;
-    /* background: lightblue; */
     padding: 20px;
     border: rgba(0, 0, 0, 0, 0.7) solid 1px;
 }
@@ -180,13 +193,11 @@ button:active {
 /* div at the top of the board to hold results */
 
 #results {
-    background-color: rgba(40, 143, 144, 0.2);
-    width: 70%;
     display: flex;
     flex-direction: row;
-    justify-content: center;
-    color: black;
-    margin: auto;
+    /* justify-content: center; */
+    margin: 0 20px -70px;
+    padding-top: 20px;
 }
 
 .result-box {
@@ -212,16 +223,20 @@ button:active {
             padding: 20px;
         } */
 
+#controls-container-mob {
+    visibility: hidden;
+}
+
 .board-edge {
     height: 1.5em;
-    border-bottom: rgba(0, 0, 0, 0.7) solid 1px;
+    border-bottom: white solid 1px;
     margin-top: 2px;
     font-size: 1.5em;
 }
 
 #end {
     text-align: right;
-    border-top: rgba(0, 0, 0, 0.7) solid 1px;
+    /* border-top: rgba(0, 0, 0, 0.7) solid 1px; */
     border-bottom: none;
 }
 
@@ -236,9 +251,9 @@ button:active {
 .field {
     display: flex;
     align-items: flex-end;
-    /* justify-content: flex-end; */
-    border: rgba(0, 0, 0, 0.1) solid 1px;
-    background-color: rgba(0, 0, 0, 0.1);
+    border: rgba(255, 255, 255, 0.5) solid 1px;
+    background-color: rgba(255, 255, 255, 0.8);
+    color: black;
     width: 70px;
     height: 70px;
     border-radius: 10%;
@@ -296,6 +311,7 @@ img.ladder {
 #f1,
 #f25 {
     background-color: rgba(40, 143, 144, 1);
+    border: rgba(40, 143, 144, 1) solid 1px;
     color: #fafafa;
 }
 
@@ -305,12 +321,12 @@ img.ladder {
 
 #dice {
     display: none;
+    margin-top: 200px;
 }
 
 .dice img {
     width: 70px;
     height: 70px;
-    margin-top: 200px;
     border-radius: 10px;
 }
 
@@ -320,6 +336,9 @@ img.ladder {
     }
     h1 {
         font-size: 26px;
+    }
+    #instructions {
+        font-size: 14px;
     }
     #game-container {
         display: block;
