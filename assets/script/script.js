@@ -175,19 +175,19 @@ function goesFirst() {
     diceThrow(player);
     diceThrow(ai);
     if (player.result === ai.result) {
-        messageBox.innerHTML = `Your result: ${player.result}<br><br>EvilBoy result: ${player.result}<br><br>It's a tie! Try again!`;
+        messageBox.innerHTML = `Your result: ${player.result}<br><br>EvilBoy result: ${ai.result}<br><br>It's a tie! Try again!`;
     } else if (player.result > ai.result) {
         currentPlayer = player;
         showDice();
-        messageBox.innerHTML = `Your result: ${player.result}<br><br>EvilBoy result: ${player.result}<br><br>You're going first`;
+        messageBox.innerHTML = `Your result: ${player.result}<br><br>EvilBoy result: ${ai.result}<br><br>You're going first`;
         id = setInterval(function() { moveAvatar(player) }, 500);
-        moveAvatar(player);
+        // moveAvatar(player);
         checkType();
     } else {
         currentPlayer = ai;
-        messageBox.innerHTML = `Your result: ${player.result}<br><br>EvilBoy result: ${player.result}<br><br>Sorry! EvilBoy is starting this time!`;
+        messageBox.innerHTML = `Your result: ${player.result}<br><br>EvilBoy result: ${ai.result}<br><br>Sorry! EvilBoy is starting this time!`;
         showDice();
-        moveAvatar(ai);
+        // moveAvatar(ai);
         id = setInterval(function() { moveAvatar(ai) }, 500);
         checkType()
     }
