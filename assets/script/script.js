@@ -35,14 +35,16 @@ let evilBoy = `<img src="assets/images/avatar_red-copy.png" alt="red avatar" cla
 //objects to store players position and avatar
 let player = {
     name: 'pl',
+    result: 0,
     position: 1,
-    result: 0
+    newPosition: 0
 };
 let ai = {
-    name: 'ai',
-    position: 1,
     avatar: evilBoy,
-    result: 0
+    name: 'ai',
+    result: 0,
+    position: 1,
+    newPosition: 0
 };
 
 //selects avatar and places it in the start field
@@ -127,7 +129,6 @@ function fillBoard() {
 function addResultHolders() {
     document.getElementById('ai-result').innerHTML = `<strong>EvilBoy result:</strong> ${ai.result}`;
     document.getElementById('player-result').innerHTML = `<strong>Your result:</strong> ${player.result}`
-
 }
 
 //2. GAME FUNCTIONS
@@ -144,39 +145,59 @@ let currentPlayer;
 let dice = document.getElementById('dice');
 dice.addEventListener('click', round);
 
-//
+// let newPosition;
+
+/*
+Dice throw: 
+generates a random number and pushes it to the result attribute of the current player; 
+if current player is a player, changes the image in the dice;
+computes the value of the new postion and pushes it to the newPosition attribute of the current player
+*/
 function diceThrow(currentPlayer) {
     let result = generateNumber();
     currentPlayer.result = result;
-    dice.innerHTML = `<img src="../assets/images/Dice-${result}-b.svg.png" alt="Dice result ${result}">`;
-    addResultHolders();
-
-    // if (currentPlayer === player) {
-    //     alert(`Your result: ${player.result}`);
-    // } else {
-    //     alert(`EvilBoy's result: ${ai.result}`);
-    // }
+    if (currentPlayer = player) {
+        dice.innerHTML = `<img src="../assets/images/Dice-${result}-b.svg.png" alt="Dice result ${result}">`;
+        addResultHolders();
+    }
+    currentPlayer.newPosition = currentPlayer.position + currentPlayer.result;
 }
 
-// -- check who goes first and hides Start Game button/Shows dice; sets value for current player
+
+//creates global variable for message box
+let messageBox = document.getElementById('message-box');
+
+
+/*
+Function to check who goes first: 
+- check who goes first and hides Start Game button/Shows dice; sets value for current player*/
 function goesFirst() {
     diceThrow(player);
     diceThrow(ai);
     if (player.result === ai.result) {
-        alert(`It's a tie! Try again!`);
+        messageBox.innerHTML = `Your result: ${player.result}<br><br>EvilBoy result: ${player.result}<br><br>It's a tie! Try again!`;
     } else if (player.result > ai.result) {
-        alert(`Congratulations! You're going first`);
         currentPlayer = player;
-        moveAvatar(player);
         showDice();
+        messageBox.innerHTML = `Your result: ${player.result}<br><br>EvilBoy result: ${player.result}<br><br>You're going first`;
+        id = setInterval(function() { moveAvatar(player) }, 500);
+        moveAvatar(player);
         checkType();
     } else {
-        alert(`Sorry! EvilBoy is starting this time!`);
         currentPlayer = ai;
-        moveAvatar(ai);
+        messageBox.innerHTML = `Your result: ${player.result}<br><br>EvilBoy result: ${player.result}<br><br>Sorry! EvilBoy is starting this time!`;
         showDice();
-        checkType();
+        moveAvatar(ai);
+        id = setInterval(function() { moveAvatar(ai) }, 500);
+        checkType()
     }
+    messageBox.style.visibility = 'visible';
+    document.getElementById('game-board').style.display = 'none';
+    setTimeout(function() {
+        messageBox.style.visibility = 'hidden';
+        document.getElementById('game-board').style.display = 'block';
+    }, 3000);
+
     // currentPlayer = player;
 }
 
@@ -218,27 +239,52 @@ function moveIfLadder(currentPlayer) {
     }
 }
 
+// let newPosition = currentPlayer.position + currentPlayer.result;
+
 function moveAvatar(currentPlayer) {
-    document.getElementById(`${currentPlayer.name}-f${currentPlayer.position}`).innerHTML = ""; // deletes avatar from current position;
-    currentPlayer.position = currentPlayer.position + currentPlayer.result;
-    if (currentPlayer.position < 25) {
-        document.getElementById(`${currentPlayer.name}-f${currentPlayer.position}`).innerHTML = currentPlayer.avatar; // places avatar in the new position;
+    // let position = currentPlayer.position;
+
+    //incrementing position by one with interval of every 200; move the avatar by
+    // id = setInterval(function() { moveAvatar(currentPlayer) }, 1000);
+
+    if (currentPlayer.newPosition !== currentPlayer.position) {
+        if (currentPlayer.newPosition >= 25) {
+            document.getElementById(`${currentPlayer.name}-f25`).innerHTML = currentPlayer.avatar;
+        } else {
+            //delete avatar from current field, increment by one and place in the next one
+            document.getElementById(`${currentPlayer.name}-f${currentPlayer.position}`).innerHTML = "";
+            currentPlayer.position += 1;
+            document.getElementById(`${currentPlayer.name}-f${currentPlayer.position}`).innerHTML = currentPlayer.avatar; // places avatar in the new position;
+        }
     } else {
-        currentPlayer.position >= 25;
-        document.getElementById(`${currentPlayer.name}-f25`).innerHTML = currentPlayer.avatar;
+        clearInterval(id);
     }
 }
+
+// function moveAvatar(currentPlayer) {
+//     //incrementing position by one with interval of every 200; move the avatar by
+//     //set interval 
+//     document.getElementById(`${currentPlayer.name}-f${currentPlayer.position}`).innerHTML = ""; // deletes avatar from current position;
+//     currentPlayer.position = currentPlayer.position + currentPlayer.result;
+//     if (currentPlayer.position < 25) {
+//         document.getElementById(`f${currentPlayer.position}`).background = 'red';
+//         document.getElementById(`${currentPlayer.name}-f${currentPlayer.position}`).innerHTML = currentPlayer.avatar; // places avatar in the new position;
+//     } else {
+//         currentPlayer.position >= 25;
+//         document.getElementById(`${currentPlayer.name}-f25`).innerHTML = currentPlayer.avatar;
+//     }
+// }
 
 function checkType() {
     let field = document.getElementById(`f${currentPlayer.position}`);
     if (field.getAttribute('data-type') === 'snake') {
         document.getElementById(`${currentPlayer.name}-f${currentPlayer.position}`).innerHTML = ""; // deletes avatar from current position;
-        moveIfSnake(currentPlayer);
+        setTimeout(function() { moveIfSnake(currentPlayer) }, 500);
         document.getElementById(`${currentPlayer.name}-f${currentPlayer.position}`).innerHTML = currentPlayer.avatar;
         alert("Ooops! There's a snake! Run away!");
     } else if (field.getAttribute('data-type') === 'ladder') {
         document.getElementById(`${currentPlayer.name}-f${currentPlayer.position}`).innerHTML = "";
-        moveIfLadder(currentPlayer);
+        setTimeout(function() { moveIfLadder(currentPlayer) }, 500);
         alert("There's a ladder! Climb up!");
         document.getElementById(`${currentPlayer.name}-f${currentPlayer.position}`).innerHTML = currentPlayer.avatar;
     } else {
@@ -263,16 +309,16 @@ function checkIfWin(currentPlayer) {
 
 function playerTurn() {
     currentPlayer = player;
-    moveAvatar(player);
-    checkType(player);
+    id = setInterval(function() { moveAvatar(player) }, 1000);
+    // checkType(player);
     checkIfWin(player);
 }
 
 function aiTurn() {
     currentPlayer = ai;
     diceThrow(ai);
-    moveAvatar(ai);
-    checkType(ai);
+    id = setInterval(function() { moveAvatar(ai) }, 1000);
+    // checkType(ai);
     checkIfWin(ai);
     currentPlayer = player;
 
