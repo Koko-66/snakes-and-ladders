@@ -150,24 +150,6 @@ function addResultHolders() {
 //sets game Running function for while loop
 let gameRunning = true;
 
-
-// function playerTurn() {
-//     currentPlayer = player;
-//     id = setInterval(function() { moveAvatar(player) }, 1000);
-//     checkType(player);
-//     checkIfWin(player);
-// }
-
-// function aiTurn() {
-//     currentPlayer = ai;
-//     diceThrow(ai);
-//     id = setInterval(function() { moveAvatar(ai) }, 1000);
-//     checkType(ai);
-//     checkIfWin(ai);
-//     currentPlayer = player;
-
-// }
-
 /** @generator generates random number between 1 and 6 for currentPlayer; */
 function generateNumber() {
     return Math.floor(Math.random() * 6) + 1;
@@ -197,6 +179,7 @@ function diceThrow(currentPlayer) {
     }
 }
 
+let id;
 /**
  * @param currentPlayer
  * moves avatar by the required number of steps
@@ -204,24 +187,36 @@ function diceThrow(currentPlayer) {
  * checks if the winning condition is met
  */
 function currentPlayerTurn(currentPlayer) {
-    id = setInterval(function() { moveAvatar(currentPlayer) }, 500);
-    checkType();
-    checkIfWin(currentPlayer);
-    currentPlayer !== player ? currentPlayer === player : currentPlayer === ai;
+    id = setInterval(function() { moveAvatar(currentPlayer) }, 200);
+    // setTimeout(function() { checkType(currentPlayer) }, 3000);
+    // checkIfWin(currentPlayer);
+    // currentPlayer !== player ? currentPlayer = player : currentPlayer = ai;
 }
+
 
 /**
  * Runs one round made of Player and Ai Turn with delay for AI movement while gameRunning is true.
  */
 function round() {
     if (gameRunning) {
+        currentPlayer = player;
         currentPlayerTurn(player);
-        setTimeout(function() { currentPlayerTurn(ai) }, 700);
+        checkType(player);
+        // checkIfWin(player);
+
+        setTimeout(function() {
+            currentPlayer = ai;
+            diceThrow(ai);
+            currentPlayerTurn(ai);
+            checkType(ai)
+                // checkIfWin(ai)
+            currentPlayer = player;
+        }, 2000);
+
     } else {
         alert("Game over!");
     }
 }
-
 
 //creates global variable for message box
 let messageBox = document.getElementById('message-box');
@@ -259,6 +254,7 @@ function goesFirst() {
         document.getElementById('game-board').style.display = 'block';
     }, 2000);
     setTimeout(function() { currentPlayerTurn(currentPlayer) }, 3500);
+    setTimeout(function() { checkType(currentPlayer) }, 4000);
 
     // currentPlayer = player;
 }
@@ -272,56 +268,68 @@ function showDice() {
 }
 
 /**@param currentPlayer
- * Set of rules to move currentPlayer if the field contains a snake*/
+ Set of rules to compute the newPosition for the currentPlayer if the field contains a snake
+ * */
 function moveIfSnake(currentPlayer) {
-    if (currentPlayer.position === 3 || (currentPlayer.position - 3) % 5 === 0) {
-        currentPlayer.position = currentPlayer.position - 5;
-    } else if (currentPlayer.position === 1 || (currentPlayer.position - 1) % 5 === 0) {
-        currentPlayer.position = currentPlayer.position - 1;
-    } else if (currentPlayer.position === 2 || (currentPlayer.position - 2) % 5 === 0) {
-        currentPlayer.position = currentPlayer.position - 3;
-    } else if (currentPlayer.position === 4 || (currentPlayer.position - 4) % 5 === 0) {
-        currentPlayer.position = currentPlayer.position - 7;
+    if ((currentPlayer.newPosition - 3) % 5 == 0) {
+        currentPlayer.newPosition = currentPlayer.newPosition - 5;
+    } else if ((currentPlayer.newPosition - 1) % 5 == 0) {
+        currentPlayer.newPosition = currentPlayer.newPosition - 1;
+    } else if ((currentPlayer.newPosition - 2) % 5 == 0) {
+        currentPlayer.newPosition = currentPlayer.newPosition - 3;
+    } else if ((currentPlayer.newPosition - 4) % 5 == 0) {
+        currentPlayer.newPosition = currentPlayer.newPosition - 7;
     } else {
-        currentPlayer.position = currentPlayer.position - 9;
+        currentPlayer.newPosition = currentPlayer.newPosition - 9;
     }
 }
 
 /**@param currentPlayer
- * Set of rules to move currentPlayer if the field contains a ladder*/
+ Set of rules to compute the newPosition for the currentPlayer
+ */
 function moveIfLadder(currentPlayer) {
-    if (currentPlayer.position === 3 || (currentPlayer.position - 3) % 5 === 0) {
-        currentPlayer.position = currentPlayer.position + 5;
-    } else if (currentPlayer.position === 1 || (currentPlayer.position - 1) % 5 === 0) {
-        currentPlayer.position = currentPlayer.position + 9;
-    } else if (currentPlayer.position === 2 || (currentPlayer.position - 2) % 5 === 0) {
-        currentPlayer.position = currentPlayer.position + 7;
-    } else if (currentPlayer.position === 4 || (currentPlayer.position - 4) % 5 === 0) {
-        currentPlayer.position = currentPlayer.position + 3;
+    if (currentPlayer.newPosition === 3 || (currentPlayer.newPosition - 3) % 5 === 0) {
+        currentPlayer.newPosition = currentPlayer.newPosition + 5;
+    } else if (currentPlayer.newPosition === 1 || (currentPlayer.newPosition - 1) % 5 === 0) {
+        currentPlayer.newPosition = currentPlayer.newPosition + 9;
+    } else if (currentPlayer.newPosition === 2 || (currentPlayer.newPosition - 2) % 5 === 0) {
+        currentPlayer.newPosition = currentPlayer.newPosition + 7;
+    } else if (currentPlayer.newPosition === 4 || (currentPlayer.newPosition - 4) % 5 === 0) {
+        currentPlayer.newPosition = currentPlayer.newPosition + 3;
     } else {
-        currentPlayer.position = currentPlayer.position + 1;
+        currentPlayer.newPosition = currentPlayer.newPosition + 1;
     }
 }
 
-
+// let id = setInterval(function() { moveAvatar(currentPlayer) }, 200);
+/**
+ @param {*} currentPlayer 
+ Takes currentPlayer as a parameter;
+ *Checks if new positions is outside of the board (>25) sets position and newPosition to 25 to avoid error.
+ *If new position witin the range increments position by one until both are equal then clears interval set in currentPlayerTurn function.
+ */
 function moveAvatar(currentPlayer) {
-    // let position = currentPlayer.position;
-
-    //incrementing position by one with interval of every 200; move the avatar by
-    // id = setInterval(function() { moveAvatar(currentPlayer) }, 1000);
-
-    if (currentPlayer.newPosition !== currentPlayer.position) {
-        if (currentPlayer.newPosition >= 25) {
+    if (currentPlayer.newPosition == currentPlayer.position) {
+        clearInterval(id);
+    } else {
+        // will increment until the position is equla to the new positionśś
+        if (currentPlayer.newPosition > 25) {
+            document.getElementById(`${currentPlayer.name}-f${currentPlayer.position}`).innerHTML = "";
+            currentPlayer.position = 25;
+            currentPlayer.newPosition = 25;
             document.getElementById(`${currentPlayer.name}-f25`).innerHTML = currentPlayer.avatar;
         } else {
-            //delete avatar from current field, increment by one and place in the next one
             document.getElementById(`${currentPlayer.name}-f${currentPlayer.position}`).innerHTML = "";
-            currentPlayer.position += 1;
+            if (snake === true) {
+                currentPlayer.position -= 1;
+            } else {
+                currentPlayer.position += 1;
+            }
             document.getElementById(`${currentPlayer.name}-f${currentPlayer.position}`).innerHTML = currentPlayer.avatar; // places avatar in the new position;
         }
-    } else {
-        clearInterval(id);
+
     }
+    snake = false;
 }
 
 // function moveAvatar(currentPlayer) {
@@ -342,20 +350,23 @@ function moveAvatar(currentPlayer) {
  * Checks if the filed contains a snake or a ladder.
  * Moves the currentPlayer's avatar according to the rules set in moveIfSnake/moveIfLadder functions
  */
-function checkType() {
-    let field = document.getElementById(`f${currentPlayer.position}`);
+let snake;
+
+function checkType(currentPlayer) {
+    let field = document.getElementById(`f${currentPlayer.newPosition}`);
     if (field.getAttribute('data-type') === 'snake') {
-        document.getElementById(`${currentPlayer.name}-f${currentPlayer.position}`).innerHTML = ""; // deletes avatar from current position;
+        snake = true;
+        // document.getElementById(`${currentPlayer.name}-f${currentPlayer.position}`).innerHTML = ""; // deletes avatar from current position;
         setTimeout(function() { moveIfSnake(currentPlayer) }, 500);
-        document.getElementById(`${currentPlayer.name}-f${currentPlayer.position}`).innerHTML = currentPlayer.avatar;
+        // document.getElementById(`${currentPlayer.name}-f${currentPlayer.newPosition}`).innerHTML = currentPlayer.avatar;
         alert("Ooops! There's a snake! Run away!");
     } else if (field.getAttribute('data-type') === 'ladder') {
-        document.getElementById(`${currentPlayer.name}-f${currentPlayer.position}`).innerHTML = "";
+        // document.getElementById(`${currentPlayer.name}-f${currentPlayer.newPosition}`).innerHTML = "";
         setTimeout(function() { moveIfLadder(currentPlayer) }, 500);
         alert("There's a ladder! Climb up!");
-        document.getElementById(`${currentPlayer.name}-f${currentPlayer.position}`).innerHTML = currentPlayer.avatar;
+        // document.getElementById(`${currentPlayer.name}-f${currentPlayer.newPosition}`).innerHTML = currentPlayer.avatar;
     } else {
-        document.getElementById(`${currentPlayer.name}-f${currentPlayer.position}`).innerHTML = currentPlayer.avatar;
+        checkIfWin(currentPlayer);
     }
 }
 
@@ -370,7 +381,6 @@ function checkIfWin(currentPlayer) {
         } else {
             alert("Sorry! You lost, try again!");
         }
-
     } else {
         gameRunning = true;
     }

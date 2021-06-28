@@ -173,8 +173,8 @@
     /* game area section */
     
     #game-area {
-        background: rgba(0, 0, 0, 0.7);
-        width: 70%;
+        /* background: rgba(0, 0, 0, 0.7); */
+        /* width: 70%; */
         margin: auto;
         height: 600px;
     }
