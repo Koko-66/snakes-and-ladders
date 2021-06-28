@@ -33,11 +33,9 @@ let snakeField; // set to true or false to reverse increment in movePlayer funct
  * Sets localStorage 'insturctionsShown' to true.
  */
 function hide() {
-    // let instructions = document.getElementById('instructions');
     instructions.style.display !== "none" ? instructions.style.display = 'none' : instructions.style.display = 'block';
     localStorage.setItem('instructionsShown', 'true');
     hideBoard();
-    // let dice = document.getElementById('dice');
     dice.style.display !== 'none' ? dice.style.display = 'none' : dice.style.display = 'block';
 }
 
@@ -50,17 +48,20 @@ document.addEventListener('DOMContentLoaded', function() {
     selectAvatar();
 })
 
+dice.addEventListener('click', round);
+
 /**
- * Hides board
+ * Toggles visibility of the board
  */
 function hideBoard() {
-    // let instructions = document.getElementById('instructions');
     let board = document.getElementById('game-area');
     instructions.style.display !== "none" ? board.style.display = "none" : board.style.display = "block";
 }
 
 /**
- * Selects avatar on click, places it in the start field and saves the choice in local storage.
+ * Selects avatar on click
+ * places it in the start field and
+ * saves the choice in local storage
  */
 function selectAvatar() {
     let avatars = document.getElementsByClassName('avatar');
@@ -109,7 +110,7 @@ function createGameBoard() {
 }
 
 /**
- * Adds numbers, snakes and ladders and id's to the board for tracking movement
+ * Adds numbers, snakes, ladders and id's to the board for tracking movement
  * Additions in descending oreder for the numbering to start at the bottom of the page.
  */
 function fillBoard() {
@@ -167,7 +168,7 @@ function goesFirst() {
     } else if (player.result > ai.result) {
         currentPlayer = player;
         showDice();
-        messageBox.innerHTML = `Your result: ${player.result}<br><br>EvilBoy result: ${ai.result}<br><br>You're going first`;
+        messageBox.innerHTML = `Your result: ${player.result}<br><br>EvilBoy result: ${ai.result}<br><br>You're going first!`;
     } else {
         currentPlayer = ai;
         messageBox.innerHTML = `Your result: ${player.result}<br><br>EvilBoy result: ${ai.result}<br><br>Sorry! EvilBoy is starting this time!`;
@@ -188,7 +189,6 @@ function generateNumber() {
     return Math.floor(Math.random() * 6) + 1;
 }
 
-dice.addEventListener('click', round);
 
 /** 
 Simulates a dice throw 
@@ -198,14 +198,14 @@ Simulates a dice throw
 *Computes the value of the new postion and pushes it to the newPosition attribute of the currentPlayer.
 */
 function diceThrow(currentPlayer) {
-    let result = generateNumber();
-    currentPlayer.result = result;
+    currentPlayer.result = generateNumber();
+    let result = currentPlayer.result;
     if (currentPlayer === player) {
         dice.innerHTML = `<img src="../assets/images/Dice-${result}-b.svg.png" alt="Dice result ${result}">`;
         addResultHolders();
-        currentPlayer.newPosition = currentPlayer.position + currentPlayer.result;
+        currentPlayer.newPosition = currentPlayer.position + result;
     } else {
-        currentPlayer.newPosition = currentPlayer.position + currentPlayer.result;
+        currentPlayer.newPosition = currentPlayer.position + result;
         addResultHolders();
     }
 }
@@ -257,34 +257,11 @@ function round() {
  Moves the avatar of the player who goes first.
  */
 
-// function goesFirst() {
-//     diceThrow(player);
-//     diceThrow(ai);
-//     if (player.result === ai.result) {
-//         messageBox.innerHTML = `Your result: ${player.result}<br><br>EvilBoy result: ${ai.result}<br><br>It's a tie! Try again!`;
-//     } else if (player.result > ai.result) {
-//         currentPlayer = player;
-//         showDice();
-//         messageBox.innerHTML = `Your result: ${player.result}<br><br>EvilBoy result: ${ai.result}<br><br>You're going first`;
-//     } else {
-//         currentPlayer = ai;
-//         messageBox.innerHTML = `Your result: ${player.result}<br><br>EvilBoy result: ${ai.result}<br><br>Sorry! EvilBoy is starting this time!`;
-//         showDice();
-//     }
-//     messageBox.style.visibility = 'visible';
-//     document.getElementById('game-board').style.display = 'none';
-//     setTimeout(function() {
-//         messageBox.style.visibility = 'hidden';
-//         document.getElementById('game-board').style.display = 'block';
-//     }, 2000);
-//     setTimeout(function() { currentPlayerTurn(currentPlayer) }, 3500);
-//     setTimeout(function() { checkType(currentPlayer) }, 4000);
-// }
+
 
 /**Sets Dice display to 'block' */
 function showDice() {
     let startButton = document.getElementById('start-game-btn');
-    // let dice = document.getElementById('dice');
     startButton.style.display = 'none';
     dice.style.display = 'block';
 }
@@ -324,7 +301,7 @@ function moveIfLadder(currentPlayer) {
 }
 
 
-// let id = setInterval(function() { moveAvatar(currentPlayer) }, 200);
+
 /**
  @param {*} currentPlayer 
  Takes currentPlayer as a parameter;
