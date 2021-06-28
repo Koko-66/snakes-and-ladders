@@ -171,13 +171,11 @@ function goesFirst() {
         showDice();
         messageBox.innerHTML = `Your result: ${player.result}<br><br>EvilBoy result: ${ai.result}<br><br>You're going first!`;
         setTimeout(function() { currentPlayerTurn(currentPlayer) }, 3500);
-        setTimeout(function() { checkType(currentPlayer) }, 4000);
     } else {
         currentPlayer = ai;
         messageBox.innerHTML = `Your result: ${player.result}<br><br>EvilBoy result: ${ai.result}<br><br>Sorry! EvilBoy is starting this time!`;
         showDice();
         setTimeout(function() { currentPlayerTurn(currentPlayer) }, 3500);
-        setTimeout(function() { checkType(currentPlayer) }, 4000);
     }
     messageBox.style.visibility = 'visible';
     document.getElementById('game-board').style.display = 'none';
@@ -213,49 +211,20 @@ function diceThrow(currentPlayer) {
 }
 
 /**
-//  * @param currentPlayer
-//  * moves avatar by the required number of steps
-//  * checks for the type of the field - snake or ladder
-//  * checks if the winning condition is met
-//  */
-// function currentPlayerTurn(currentPlayer) {
-//     id = setInterval(function() { moveAvatar(currentPlayer) }, 200);
-
-//     function () {
-//         if (currentPlayer.position === currentPlayer.newPostion) {
-//             clearInterval(id);
-//         }
-//     }
-// }
-//     id = setInterval(function() {
-//         moveAvatar(currentPlayer)
-//         if (currentPlayer.newPosition === currentPlayer.position)
-//             clearInterval(id);
-//     }, 200);
-// }
-
-/**
  * Runs one round made of Player and Ai Turn with delay for AI movement while gameRunning is true.
  */
 function round() {
     if (gameRunning) {
         currentPlayer = player;
         currentPlayerTurn(player);
-        setTimeout(function() { checkType(player) }, 1500);
-        // checkIfWin(player);
 
         setTimeout(function() {
             currentPlayer = ai;
             diceThrow(ai);
             currentPlayerTurn(ai);
-            setTimeout(function() { checkType(ai) }, 1500);
             // checkIfWin(ai)
             currentPlayer = player;
-        }, 2000);
-
-    } else {
-        gameRunning = false;
-        alert("Game over!");
+        }, 1500);
     }
 }
 
@@ -281,6 +250,7 @@ function moveIfSnake(currentPlayer) {
     } else {
         currentPlayer.newPosition = currentPlayer.newPosition - 9;
     }
+    currentPlayer.position = currentPlayer.newPosition;
 }
 
 /**@param currentPlayer
@@ -289,6 +259,7 @@ function moveIfSnake(currentPlayer) {
 function moveIfLadder(currentPlayer) {
     if (currentPlayer.newPosition === 3 || (currentPlayer.newPosition - 3) % 5 === 0) {
         currentPlayer.newPosition = currentPlayer.newPosition + 5;
+        currentPlayer.position = currentPlayer.n
     } else if (currentPlayer.newPosition === 1 || (currentPlayer.newPosition - 1) % 5 === 0) {
         currentPlayer.newPosition = currentPlayer.newPosition + 9;
     } else if (currentPlayer.newPosition === 2 || (currentPlayer.newPosition - 2) % 5 === 0) {
@@ -298,6 +269,7 @@ function moveIfLadder(currentPlayer) {
     } else {
         currentPlayer.newPosition = currentPlayer.newPosition + 1;
     }
+    currentPlayer.position = currentPlayer.newPosition;
 }
 
 /**
@@ -312,6 +284,7 @@ function currentPlayerTurn(currentPlayer) {
     function moveAvatar(currentPlayer) {
         if (currentPlayer.position === currentPlayer.newPosition) {
             clearInterval(id);
+            checkType(currentPlayer);
         } else {
             if (currentPlayer.newPosition > 25) {
                 document.getElementById(`${currentPlayer.name}-f${currentPlayer.position}`).innerHTML = "";
@@ -320,34 +293,16 @@ function currentPlayerTurn(currentPlayer) {
                 document.getElementById(`${currentPlayer.name}-f25`).innerHTML = currentPlayer.avatar;
             } else {
                 document.getElementById(`${currentPlayer.name}-f${currentPlayer.position}`).innerHTML = "";
-                if (snakeField === true) {
-                    currentPlayer.position -= 1;
-                    if (currentPlayer.position === currentPlayer.newPositon) {
-                        snakeField = false;
-                    }
-                } else {
-                    currentPlayer.position += 1;
-                }
+
+                currentPlayer.position += 1;
+
                 document.getElementById(`${currentPlayer.name}-f${currentPlayer.position}`).innerHTML = currentPlayer.avatar; // places avatar in the new position;
             }
         }
     }
+
 }
 
-
-// function moveAvatar(currentPlayer) {
-//     //incrementing position by one with interval of every 200; move the avatar by
-//     //set interval 
-//     document.getElementById(`${currentPlayer.name}-f${currentPlayer.position}`).innerHTML = ""; // deletes avatar from current position;
-//     currentPlayer.position = currentPlayer.position + currentPlayer.result;
-//     if (currentPlayer.position < 25) {
-//         document.getElementById(`f${currentPlayer.position}`).background = 'red';
-//         document.getElementById(`${currentPlayer.name}-f${currentPlayer.position}`).innerHTML = currentPlayer.avatar; // places avatar in the new position;
-//     } else {
-//         currentPlayer.position >= 25;
-//         document.getElementById(`${currentPlayer.name}-f25`).innerHTML = currentPlayer.avatar;
-//     }
-// }
 
 /**
  * Checks if the filed contains a snake or a ladder.
@@ -357,21 +312,21 @@ function checkType(currentPlayer) {
     let field = document.getElementById(`f${currentPlayer.newPosition}`);
     if (field.getAttribute('data-type') === 'snake') {
         snakeField = true;
-        // document.getElementById(`${currentPlayer.name}-f${currentPlayer.position}`).innerHTML = ""; // deletes avatar from current position;
+        document.getElementById(`${currentPlayer.name}-f${currentPlayer.position}`).innerHTML = ""; // deletes avatar from current position;
         moveIfSnake(currentPlayer);
-        // document.getElementById(`${currentPlayer.name}-f${currentPlayer.newPosition}`).innerHTML = currentPlayer.avatar;
+        document.getElementById(`${currentPlayer.name}-f${currentPlayer.newPosition}`).innerHTML = currentPlayer.avatar;
         alert("Ooops! There's a snake! Run away!");
     } else if (field.getAttribute('data-type') === 'ladder') {
-        // document.getElementById(`${currentPlayer.name}-f${currentPlayer.newPosition}`).innerHTML = "";
-        moveIfLadder(currentPlayer);
         alert("There's a ladder! Climb up!");
-        // document.getElementById(`${currentPlayer.name}-f${currentPlayer.newPosition}`).innerHTML = currentPlayer.avatar;
+        document.getElementById(`${currentPlayer.name}-f${currentPlayer.newPosition}`).innerHTML = "";
+        moveIfLadder(currentPlayer);
+        document.getElementById(`${currentPlayer.name}-f${currentPlayer.newPosition}`).innerHTML = currentPlayer.avatar;
         // } else if (field.getAttribute('data-type') === 'end') {
     } else {
         checkIfWin(currentPlayer);
     }
 }
-gameRunning = false;
+// gameRunning = false;
 /** 
 Checks if player/ai's position is greater than 25 and finishes the game if true
 */
@@ -383,6 +338,7 @@ function checkIfWin(currentPlayer) {
         } else {
             alert("Sorry! You lost, try again!");
         }
+
     } else {
         gameRunning = true;
     }
