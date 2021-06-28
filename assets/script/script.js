@@ -1,16 +1,43 @@
 //1. PAGE LOADING - INSTRUCTIONS AND GAME SETUP
 
+//variables to store avatars
+let blue = `<img src="assets/images/avatar_blue.png" alt="blue avatar" class="avatar">`;
+let yellow = `<img src="assets/images/avatar-yellow2.png" alt="yellow avatar" class="avatar">`;
+let evilBoy = `<img src="assets/images/avatar_red-copy.png" alt="red avatar" class="avatar">`;
+//objects to store players position and avatar
+let player = {
+    name: 'pl',
+    result: 0,
+    position: 1,
+    newPosition: 0
+};
+let ai = {
+    avatar: evilBoy,
+    name: 'ai',
+    result: 0,
+    position: 1,
+    newPosition: 0
+};
+let currentPlayer;
+let dice = document.getElementById('dice')
+let instructions = document.getElementById('instructions');
+let gameRunning = true;
+let id; // to set iverval for movePlayer function
+let messageBox = document.getElementById('message-box'); //div to display messages in rather than alerts
+let snakeField; // set to true or false to reverse increment in movePlayer function
+
+
 /**
  * Toggles show/hide of instructions and board, so that both are not shown at the same time
  * Toggles visibility of dice
  * Sets localStorage 'insturctionsShown' to true.
  */
 function hide() {
-    let instructions = document.getElementById('instructions');
+    // let instructions = document.getElementById('instructions');
     instructions.style.display !== "none" ? instructions.style.display = 'none' : instructions.style.display = 'block';
     localStorage.setItem('instructionsShown', 'true');
     hideBoard();
-    let dice = document.getElementById('dice');
+    // let dice = document.getElementById('dice');
     dice.style.display !== 'none' ? dice.style.display = 'none' : dice.style.display = 'block';
 }
 
@@ -27,31 +54,10 @@ document.addEventListener('DOMContentLoaded', function() {
  * Hides board
  */
 function hideBoard() {
-    let instructions = document.getElementById('instructions');
+    // let instructions = document.getElementById('instructions');
     let board = document.getElementById('game-area');
     instructions.style.display !== "none" ? board.style.display = "none" : board.style.display = "block";
 }
-
-
-//variables to store avatars
-let blue = `<img src="assets/images/avatar_blue.png" alt="blue avatar" class="avatar">`;
-let yellow = `<img src="assets/images/avatar-yellow2.png" alt="yellow avatar" class="avatar">`;
-let evilBoy = `<img src="assets/images/avatar_red-copy.png" alt="red avatar" class="avatar">`;
-
-//objects to store players position and avatar
-let player = {
-    name: 'pl',
-    result: 0,
-    position: 1,
-    newPosition: 0
-};
-let ai = {
-    avatar: evilBoy,
-    name: 'ai',
-    result: 0,
-    position: 1,
-    newPosition: 0
-};
 
 /**
  * Selects avatar on click, places it in the start field and saves the choice in local storage.
@@ -148,15 +154,40 @@ function addResultHolders() {
 //2. GAME FUNCTIONS
 
 //sets game Running function for while loop
-let gameRunning = true;
+/**
+ * Random dice thow to decide who goes first.
+ Shows a message with information about the intial throw results, hides 'Start Game' button and shows 'Dice' instead. 
+ Moves the avatar of the player who goes first.
+ */
+function goesFirst() {
+    diceThrow(player);
+    diceThrow(ai);
+    if (player.result === ai.result) {
+        messageBox.innerHTML = `Your result: ${player.result}<br><br>EvilBoy result: ${ai.result}<br><br>It's a tie! Try again!`;
+    } else if (player.result > ai.result) {
+        currentPlayer = player;
+        showDice();
+        messageBox.innerHTML = `Your result: ${player.result}<br><br>EvilBoy result: ${ai.result}<br><br>You're going first`;
+    } else {
+        currentPlayer = ai;
+        messageBox.innerHTML = `Your result: ${player.result}<br><br>EvilBoy result: ${ai.result}<br><br>Sorry! EvilBoy is starting this time!`;
+        showDice();
+    }
+    messageBox.style.visibility = 'visible';
+    document.getElementById('game-board').style.display = 'none';
+    setTimeout(function() {
+        messageBox.style.visibility = 'hidden';
+        document.getElementById('game-board').style.display = 'block';
+    }, 2000);
+    setTimeout(function() { currentPlayerTurn(currentPlayer) }, 3500);
+    setTimeout(function() { checkType(currentPlayer) }, 4000);
+}
 
 /** @generator generates random number between 1 and 6 for currentPlayer; */
 function generateNumber() {
     return Math.floor(Math.random() * 6) + 1;
 }
 
-let currentPlayer;
-let dice = document.getElementById('dice');
 dice.addEventListener('click', round);
 
 /** 
@@ -179,7 +210,7 @@ function diceThrow(currentPlayer) {
     }
 }
 
-let id;
+
 /**
  * @param currentPlayer
  * moves avatar by the required number of steps
@@ -218,8 +249,7 @@ function round() {
     }
 }
 
-//creates global variable for message box
-let messageBox = document.getElementById('message-box');
+
 
 /**
  * Random dice thow to decide who goes first.
@@ -227,42 +257,34 @@ let messageBox = document.getElementById('message-box');
  Moves the avatar of the player who goes first.
  */
 
-function goesFirst() {
-    diceThrow(player);
-    diceThrow(ai);
-    if (player.result === ai.result) {
-        messageBox.innerHTML = `Your result: ${player.result}<br><br>EvilBoy result: ${ai.result}<br><br>It's a tie! Try again!`;
-    } else if (player.result > ai.result) {
-        currentPlayer = player;
-        showDice();
-        messageBox.innerHTML = `Your result: ${player.result}<br><br>EvilBoy result: ${ai.result}<br><br>You're going first`;
-        // id = setInterval(function() { moveAvatar(player) }, 500);
-        // moveAvatar(player);
-        // checkType();
-    } else {
-        currentPlayer = ai;
-        messageBox.innerHTML = `Your result: ${player.result}<br><br>EvilBoy result: ${ai.result}<br><br>Sorry! EvilBoy is starting this time!`;
-        showDice();
-        // moveAvatar(ai);
-        // id = setInterval(function() { moveAvatar(ai) }, 500);
-        // checkType()
-    }
-    messageBox.style.visibility = 'visible';
-    document.getElementById('game-board').style.display = 'none';
-    setTimeout(function() {
-        messageBox.style.visibility = 'hidden';
-        document.getElementById('game-board').style.display = 'block';
-    }, 2000);
-    setTimeout(function() { currentPlayerTurn(currentPlayer) }, 3500);
-    setTimeout(function() { checkType(currentPlayer) }, 4000);
-
-    // currentPlayer = player;
-}
+// function goesFirst() {
+//     diceThrow(player);
+//     diceThrow(ai);
+//     if (player.result === ai.result) {
+//         messageBox.innerHTML = `Your result: ${player.result}<br><br>EvilBoy result: ${ai.result}<br><br>It's a tie! Try again!`;
+//     } else if (player.result > ai.result) {
+//         currentPlayer = player;
+//         showDice();
+//         messageBox.innerHTML = `Your result: ${player.result}<br><br>EvilBoy result: ${ai.result}<br><br>You're going first`;
+//     } else {
+//         currentPlayer = ai;
+//         messageBox.innerHTML = `Your result: ${player.result}<br><br>EvilBoy result: ${ai.result}<br><br>Sorry! EvilBoy is starting this time!`;
+//         showDice();
+//     }
+//     messageBox.style.visibility = 'visible';
+//     document.getElementById('game-board').style.display = 'none';
+//     setTimeout(function() {
+//         messageBox.style.visibility = 'hidden';
+//         document.getElementById('game-board').style.display = 'block';
+//     }, 2000);
+//     setTimeout(function() { currentPlayerTurn(currentPlayer) }, 3500);
+//     setTimeout(function() { checkType(currentPlayer) }, 4000);
+// }
 
 /**Sets Dice display to 'block' */
 function showDice() {
     let startButton = document.getElementById('start-game-btn');
-    let dice = document.getElementById('dice');
+    // let dice = document.getElementById('dice');
     startButton.style.display = 'none';
     dice.style.display = 'block';
 }
@@ -301,6 +323,7 @@ function moveIfLadder(currentPlayer) {
     }
 }
 
+
 // let id = setInterval(function() { moveAvatar(currentPlayer) }, 200);
 /**
  @param {*} currentPlayer 
@@ -320,7 +343,7 @@ function moveAvatar(currentPlayer) {
             document.getElementById(`${currentPlayer.name}-f25`).innerHTML = currentPlayer.avatar;
         } else {
             document.getElementById(`${currentPlayer.name}-f${currentPlayer.position}`).innerHTML = "";
-            if (snake === true) {
+            if (snakeField === true) {
                 currentPlayer.position -= 1;
             } else {
                 currentPlayer.position += 1;
@@ -329,7 +352,7 @@ function moveAvatar(currentPlayer) {
         }
 
     }
-    snake = false;
+    snakeField = false;
 }
 
 // function moveAvatar(currentPlayer) {
@@ -348,14 +371,12 @@ function moveAvatar(currentPlayer) {
 
 /**
  * Checks if the filed contains a snake or a ladder.
- * Moves the currentPlayer's avatar according to the rules set in moveIfSnake/moveIfLadder functions
+ * Computes the newPosition of the currentPlayer
  */
-let snake;
-
 function checkType(currentPlayer) {
     let field = document.getElementById(`f${currentPlayer.newPosition}`);
     if (field.getAttribute('data-type') === 'snake') {
-        snake = true;
+        snakeField = true;
         // document.getElementById(`${currentPlayer.name}-f${currentPlayer.position}`).innerHTML = ""; // deletes avatar from current position;
         setTimeout(function() { moveIfSnake(currentPlayer) }, 500);
         // document.getElementById(`${currentPlayer.name}-f${currentPlayer.newPosition}`).innerHTML = currentPlayer.avatar;
