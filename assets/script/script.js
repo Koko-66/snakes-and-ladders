@@ -213,14 +213,20 @@ function diceThrow(currentPlayer) {
 }
 
 /**
- * @param currentPlayer
- * moves avatar by the required number of steps
- * checks for the type of the field - snake or ladder
- * checks if the winning condition is met
- */
-function currentPlayerTurn(currentPlayer) {
-    id = setInterval(function() { moveAvatar(currentPlayer) }, 200);
-}
+//  * @param currentPlayer
+//  * moves avatar by the required number of steps
+//  * checks for the type of the field - snake or ladder
+//  * checks if the winning condition is met
+//  */
+// function currentPlayerTurn(currentPlayer) {
+//     id = setInterval(function() { moveAvatar(currentPlayer) }, 200);
+
+//     function () {
+//         if (currentPlayer.position === currentPlayer.newPostion) {
+//             clearInterval(id);
+//         }
+//     }
+// }
 //     id = setInterval(function() {
 //         moveAvatar(currentPlayer)
 //         if (currentPlayer.newPosition === currentPlayer.position)
@@ -300,23 +306,32 @@ function moveIfLadder(currentPlayer) {
  *Checks if new positions is outside of the board (>25) sets position and newPosition to 25 to avoid error.
  *If new position witin the range increments position by one until both are equal then clears interval set in currentPlayerTurn function.
  */
-function moveAvatar(currentPlayer) {
-    // will increment until the position is equla to the new positionśś
-    if (currentPlayer.newPosition > 25) {
-        document.getElementById(`${currentPlayer.name}-f${currentPlayer.position}`).innerHTML = "";
-        currentPlayer.position = 25;
-        currentPlayer.newPosition = 25;
-        document.getElementById(`${currentPlayer.name}-f25`).innerHTML = currentPlayer.avatar;
-    } else {
-        document.getElementById(`${currentPlayer.name}-f${currentPlayer.position}`).innerHTML = "";
-        if (snakeField === true) {
-            currentPlayer.position -= 1;
-        } else {
-            currentPlayer.position += 1;
-        }
-        document.getElementById(`${currentPlayer.name}-f${currentPlayer.position}`).innerHTML = currentPlayer.avatar; // places avatar in the new position;
-    }
+function currentPlayerTurn(currentPlayer) {
+    let id = setInterval(function() { moveAvatar(currentPlayer) }, 200);
 
+    function moveAvatar(currentPlayer) {
+        if (currentPlayer.position === currentPlayer.newPosition) {
+            clearInterval(id);
+        } else {
+            if (currentPlayer.newPosition > 25) {
+                document.getElementById(`${currentPlayer.name}-f${currentPlayer.position}`).innerHTML = "";
+                currentPlayer.position = 25;
+                currentPlayer.newPosition = 25;
+                document.getElementById(`${currentPlayer.name}-f25`).innerHTML = currentPlayer.avatar;
+            } else {
+                document.getElementById(`${currentPlayer.name}-f${currentPlayer.position}`).innerHTML = "";
+                if (snakeField === true) {
+                    currentPlayer.position -= 1;
+                    if (currentPlayer.position === currentPlayer.newPositon) {
+                        snakeField = false;
+                    }
+                } else {
+                    currentPlayer.position += 1;
+                }
+                document.getElementById(`${currentPlayer.name}-f${currentPlayer.position}`).innerHTML = currentPlayer.avatar; // places avatar in the new position;
+            }
+        }
+    }
 }
 
 
@@ -343,12 +358,12 @@ function checkType(currentPlayer) {
     if (field.getAttribute('data-type') === 'snake') {
         snakeField = true;
         // document.getElementById(`${currentPlayer.name}-f${currentPlayer.position}`).innerHTML = ""; // deletes avatar from current position;
-        setTimeout(function() { moveIfSnake(currentPlayer) }, 500);
+        moveIfSnake(currentPlayer);
         // document.getElementById(`${currentPlayer.name}-f${currentPlayer.newPosition}`).innerHTML = currentPlayer.avatar;
         alert("Ooops! There's a snake! Run away!");
     } else if (field.getAttribute('data-type') === 'ladder') {
         // document.getElementById(`${currentPlayer.name}-f${currentPlayer.newPosition}`).innerHTML = "";
-        setTimeout(function() { moveIfLadder(currentPlayer) }, 500);
+        moveIfLadder(currentPlayer);
         alert("There's a ladder! Climb up!");
         // document.getElementById(`${currentPlayer.name}-f${currentPlayer.newPosition}`).innerHTML = currentPlayer.avatar;
         // } else if (field.getAttribute('data-type') === 'end') {
