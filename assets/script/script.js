@@ -134,10 +134,12 @@ function fillBoard() {
         } else if (i === 2 || i === 13 || i === 19) {
             field.innerHTML = `${i}${ladder}<div id ="pl-f${i}" class="player"></div> <div id ="ai-f${i}" class="ai">`;
             field.setAttribute('data-type', 'ladder');
+            // } else if (i === 25) {
+            //     field.innerHTML = `${i}<div id ="pl-f${i}" class="player"></div> <div id ="ai-f${i}" class="ai">`;
+            //     field.setAttribute('data-type', 'end');
         } else {
             field.innerHTML = `${i}<div id ="pl-f${i}" class="player"></div> <div id ="ai-f${i}" class="ai">`;
         }
-
         field.id = `f${i}`;
         i -= 1;
     }
@@ -154,7 +156,6 @@ function addResultHolders() {
 
 //2. GAME FUNCTIONS
 
-//sets game Running function for while loop
 /**
  * Random dice thow to decide who goes first.
  Shows a message with information about the intial throw results, hides 'Start Game' button and shows 'Dice' instead. 
@@ -169,10 +170,14 @@ function goesFirst() {
         currentPlayer = player;
         showDice();
         messageBox.innerHTML = `Your result: ${player.result}<br><br>EvilBoy result: ${ai.result}<br><br>You're going first!`;
+        setTimeout(function() { currentPlayerTurn(currentPlayer) }, 3500);
+        setTimeout(function() { checkType(currentPlayer) }, 4000);
     } else {
         currentPlayer = ai;
         messageBox.innerHTML = `Your result: ${player.result}<br><br>EvilBoy result: ${ai.result}<br><br>Sorry! EvilBoy is starting this time!`;
         showDice();
+        setTimeout(function() { currentPlayerTurn(currentPlayer) }, 3500);
+        setTimeout(function() { checkType(currentPlayer) }, 4000);
     }
     messageBox.style.visibility = 'visible';
     document.getElementById('game-board').style.display = 'none';
@@ -180,15 +185,12 @@ function goesFirst() {
         messageBox.style.visibility = 'hidden';
         document.getElementById('game-board').style.display = 'block';
     }, 2000);
-    setTimeout(function() { currentPlayerTurn(currentPlayer) }, 3500);
-    setTimeout(function() { checkType(currentPlayer) }, 4000);
 }
 
 /** @generator generates random number between 1 and 6 for currentPlayer; */
 function generateNumber() {
     return Math.floor(Math.random() * 6) + 1;
 }
-
 
 /** 
 Simulates a dice throw 
@@ -210,7 +212,6 @@ function diceThrow(currentPlayer) {
     }
 }
 
-
 /**
  * @param currentPlayer
  * moves avatar by the required number of steps
@@ -219,11 +220,13 @@ function diceThrow(currentPlayer) {
  */
 function currentPlayerTurn(currentPlayer) {
     id = setInterval(function() { moveAvatar(currentPlayer) }, 200);
-    // setTimeout(function() { checkType(currentPlayer) }, 3000);
-    // checkIfWin(currentPlayer);
-    // currentPlayer !== player ? currentPlayer = player : currentPlayer = ai;
 }
-
+//     id = setInterval(function() {
+//         moveAvatar(currentPlayer)
+//         if (currentPlayer.newPosition === currentPlayer.position)
+//             clearInterval(id);
+//     }, 200);
+// }
 
 /**
  * Runs one round made of Player and Ai Turn with delay for AI movement while gameRunning is true.
@@ -232,32 +235,23 @@ function round() {
     if (gameRunning) {
         currentPlayer = player;
         currentPlayerTurn(player);
-        checkType(player);
+        setTimeout(function() { checkType(player) }, 1500);
         // checkIfWin(player);
 
         setTimeout(function() {
             currentPlayer = ai;
             diceThrow(ai);
             currentPlayerTurn(ai);
-            checkType(ai)
-                // checkIfWin(ai)
+            setTimeout(function() { checkType(ai) }, 1500);
+            // checkIfWin(ai)
             currentPlayer = player;
         }, 2000);
 
     } else {
+        gameRunning = false;
         alert("Game over!");
     }
 }
-
-
-
-/**
- * Random dice thow to decide who goes first.
- Shows a message with information about the intial throw results, hides 'Start Game' button and shows 'Dice' instead. 
- Moves the avatar of the player who goes first.
- */
-
-
 
 /**Sets Dice display to 'block' */
 function showDice() {
@@ -300,8 +294,6 @@ function moveIfLadder(currentPlayer) {
     }
 }
 
-
-
 /**
  @param {*} currentPlayer 
  Takes currentPlayer as a parameter;
@@ -309,28 +301,24 @@ function moveIfLadder(currentPlayer) {
  *If new position witin the range increments position by one until both are equal then clears interval set in currentPlayerTurn function.
  */
 function moveAvatar(currentPlayer) {
-    if (currentPlayer.newPosition == currentPlayer.position) {
-        clearInterval(id);
+    // will increment until the position is equla to the new positionśś
+    if (currentPlayer.newPosition > 25) {
+        document.getElementById(`${currentPlayer.name}-f${currentPlayer.position}`).innerHTML = "";
+        currentPlayer.position = 25;
+        currentPlayer.newPosition = 25;
+        document.getElementById(`${currentPlayer.name}-f25`).innerHTML = currentPlayer.avatar;
     } else {
-        // will increment until the position is equla to the new positionśś
-        if (currentPlayer.newPosition > 25) {
-            document.getElementById(`${currentPlayer.name}-f${currentPlayer.position}`).innerHTML = "";
-            currentPlayer.position = 25;
-            currentPlayer.newPosition = 25;
-            document.getElementById(`${currentPlayer.name}-f25`).innerHTML = currentPlayer.avatar;
+        document.getElementById(`${currentPlayer.name}-f${currentPlayer.position}`).innerHTML = "";
+        if (snakeField === true) {
+            currentPlayer.position -= 1;
         } else {
-            document.getElementById(`${currentPlayer.name}-f${currentPlayer.position}`).innerHTML = "";
-            if (snakeField === true) {
-                currentPlayer.position -= 1;
-            } else {
-                currentPlayer.position += 1;
-            }
-            document.getElementById(`${currentPlayer.name}-f${currentPlayer.position}`).innerHTML = currentPlayer.avatar; // places avatar in the new position;
+            currentPlayer.position += 1;
         }
-
+        document.getElementById(`${currentPlayer.name}-f${currentPlayer.position}`).innerHTML = currentPlayer.avatar; // places avatar in the new position;
     }
-    snakeField = false;
+
 }
+
 
 // function moveAvatar(currentPlayer) {
 //     //incrementing position by one with interval of every 200; move the avatar by
@@ -363,14 +351,15 @@ function checkType(currentPlayer) {
         setTimeout(function() { moveIfLadder(currentPlayer) }, 500);
         alert("There's a ladder! Climb up!");
         // document.getElementById(`${currentPlayer.name}-f${currentPlayer.newPosition}`).innerHTML = currentPlayer.avatar;
+        // } else if (field.getAttribute('data-type') === 'end') {
     } else {
         checkIfWin(currentPlayer);
     }
 }
-
+gameRunning = false;
 /** 
- Checks if player/ai's position is greater than 25 and finishes the game if true
- */
+Checks if player/ai's position is greater than 25 and finishes the game if true
+*/
 function checkIfWin(currentPlayer) {
     if (currentPlayer.position >= 25) {
         gameRunning = false;
