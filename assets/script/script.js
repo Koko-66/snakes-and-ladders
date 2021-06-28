@@ -338,6 +338,7 @@ function checkIfWin(currentPlayer) {
         } else {
             alert("Sorry! You lost, try again!");
         }
+        window.location.reload(true);
 
     } else {
         gameRunning = true;
