@@ -26,7 +26,7 @@
         align-items: center;
         justify-content: center;
         padding-top: 20px;
-        height: 100px;
+        height: 90px;
         width: 100%;
     }
     
@@ -100,7 +100,7 @@
         margin: 10px auto;
         width: 50%;
     }
-    /* Styling for help icon */
+    /* aligns help-button with the title height */
     
     #help-button {
         margin: 10px auto;
@@ -152,12 +152,12 @@
         width: 30%;
         font-size: inherit;
         font-family: inherit;
-        background-color: rgba(165, 20, 108, 0.7);
+        background-color: rgba(165, 20, 108, 0.85);
         color: white;
         margin-top: 30px;
     }
     
-    button:active {
+    adds click effect button:active {
         transform: scale(120%);
     }
     
@@ -181,7 +181,7 @@
     
     #game-container {
         display: block;
-        height: 620px;
+        height: 560px;
         width: 600px;
         margin: 0 auto;
         padding: 20px;
@@ -223,10 +223,10 @@
     }
     
     .board-edge {
-        height: 1.5em;
-        border-bottom: white solid 1px;
-        margin-top: 2px;
+        height: 1em;
         font-size: 1.5em;
+        align-content: flex-end;
+        padding-top: 10px;
     }
     
     #end {
@@ -260,7 +260,7 @@
     
     img.avatar {
         border: #fafafa solid 1px;
-        background: rgba(0, 0, 0, 0.7);
+        background: rgba(0, 0, 0, 0.9);
         width: 30px;
         height: 30px;
         margin: 30px auto;
@@ -299,7 +299,7 @@
     
     #f1,
     #f25 {
-        background-color: rgba(40, 143, 144, 1);
+        background-color: rgba(40, 143, 144, 0.8);
         border: rgba(40, 143, 144, 1) solid 1px;
         color: #fafafa;
     }
