@@ -10,7 +10,8 @@ let player = {
     name: 'pl',
     result: 0,
     position: 1,
-    newPosition: 0
+    newPosition: 0,
+    avatar: ''
 };
 let ai = {
     avatar: evilBoy,
@@ -45,7 +46,7 @@ dice.addEventListener('click', round);
  * Sets localStorage 'insturctionsShown' to true.
  */
 function toggleInstructions() {
-    instructions.style.display !== "none" ? instructions.style.display = 'none' : instructions.style.display = 'block';
+    instructions.style.display !== 'none' ? instructions.style.display = 'none' : instructions.style.display = 'block';
     localStorage.setItem('instructionsShown', 'true');
     hideBoard();
 }
@@ -55,7 +56,7 @@ function toggleInstructions() {
  */
 function hideBoard() {
     let board = document.getElementById('game-area');
-    instructions.style.display !== "none" ? board.style.display = "none" : board.style.display = "block";
+    instructions.style.display !== 'none' ? board.style.display = 'none' : board.style.display = 'block';
 }
 
 /**
@@ -69,25 +70,39 @@ function showDice() {
 
 /**
  * Selects avatar on click and:
- * places it in the start field;
+ * places it in the start field if none avatar has been selected before;
+ * if avatar already selected replaces it in the position is is currently in;
  * saves the choice in local storage to be visible on reloading.
  */
 function selectAvatar() {
     let avatars = document.getElementsByClassName('avatar');
     for (let avatar of avatars) {
+        // let playerDiv = document.getElementById(`pl-${player.position}`)
         avatar.addEventListener('click', function() {
-            if (this.getAttribute('data-avatar-color') === 'blue') {
-                player.avatar = blue;
-                document.getElementById('f1').innerHTML = `1<div id ="pl-f1" class="player">${blue}</div><div id ="ai-f1" class="ai">${evilBoy}</div>`;
+            if (player.avatar = '') {
+                if (this.getAttribute('data-avatar-color') === 'blue') {
+                    player.avatar = blue;
+                    document.getElementById('pl-1').innerHTML = `<div id ="pl-1" class="player">${blue}</div>`;
+                } else {
+                    player.avatar = yellow;
+                    document.getElementById('pl-1').innerHTML = `<div id ="pl-1" class="player">${yellow}</div>`;
+                }
+                localStorage.setItem('playerAvatar', player.avatar);
             } else {
-                player.avatar = yellow;
-                document.getElementById('f1').innerHTML = `1<div id ="pl-f1" class="player">${yellow}</div><div id ="ai-f1" class="ai">${evilBoy}</div>`;
+                if (this.getAttribute('data-avatar-color') === 'blue') {
+                    player.avatar = blue;
+                    document.getElementById(`pl-${player.position}`).innerHTML = `<div id ="pl-${player.position}" class="player">${blue}</div>`;
+                } else {
+                    player.avatar = yellow;
+                    document.getElementById(`pl-${player.position}`).innerHTML = `<div id ="pl-${player.position}" class="player">${yellow}</div>`;
+                }
+                localStorage.setItem('playerAvatar', player.avatar);
             }
-            localStorage.setItem('playerAvatar', player.avatar);
         })
+
+        player.avatar = localStorage.getItem('playerAvatar');
+        localStorage.setItem('avatarSelected', 'true');
     }
-    player.avatar = localStorage.getItem('playerAvatar');
-    localStorage.setItem('avatarSelected', 'true');
 }
 
 /**
@@ -134,20 +149,20 @@ function fillBoard() {
         if (i === 1) {
             if (localStorage.getItem('avatarSelected')) { //checks if avatar has been already selected and places the selected to place it in.
                 let avatar = localStorage.getItem('playerAvatar');
-                field.innerHTML = `1<div id ="pl-f1" class="player">${avatar}</div> <div id ="ai-f1" class="ai">${evilBoy}</div>`;
+                field.innerHTML = `1<div id ="pl-1" class="player">${avatar}</div> <div id ="ai-1" class="ai">${evilBoy}</div>`;
             } else {
-                field.innerHTML = `1<div id ="pl-f1" class="player"></div> <div id ="ai-f1" class="ai">${evilBoy}</div>`;
+                field.innerHTML = `1<div id ="pl-1" class="player"></div> <div id ="ai-1" class="ai">${evilBoy}</div>`;
             }
         } else if (i === 7 || i === 20 || i === 24) {
-            field.innerHTML = `${i}${snake}<div id ="pl-f${i}" class="player"></div> <div id ="ai-f${i}" class="ai">`;
+            field.innerHTML = `${i}${snake}<div id ="pl-${i}" class="player"></div> <div id ="ai-${i}" class="ai">`;
             field.setAttribute('data-type', 'snake');
         } else if (i === 2 || i === 13 || i === 19) {
-            field.innerHTML = `${i}${ladder}<div id ="pl-f${i}" class="player"></div> <div id ="ai-f${i}" class="ai">`;
+            field.innerHTML = `${i}${ladder}<div id ="pl-${i}" class="player"></div> <div id ="ai-${i}" class="ai">`;
             field.setAttribute('data-type', 'ladder');
         } else {
-            field.innerHTML = `${i}<div id ="pl-f${i}" class="player"></div> <div id ="ai-f${i}" class="ai">`;
+            field.innerHTML = `${i}<div id ="pl-${i}" class="player"></div> <div id ="ai-${i}" class="ai">`;
         }
-        field.id = `f${i}`;
+        field.id = `${i}`;
         i -= 1;
     }
     addResultHolders();
@@ -260,14 +275,14 @@ function currentPlayerTurn(currentPlayer) {
             checkType(currentPlayer);
         } else {
             if (currentPlayer.newPosition > 25) {
-                document.getElementById(`${currentPlayer.name}-f${currentPlayer.position}`).innerHTML = "";
+                document.getElementById(`${currentPlayer.name}-${currentPlayer.position}`).innerHTML = "";
                 currentPlayer.position = 25;
                 currentPlayer.newPosition = 25;
-                document.getElementById(`${currentPlayer.name}-f25`).innerHTML = currentPlayer.avatar;
+                document.getElementById(`${currentPlayer.name}-25`).innerHTML = currentPlayer.avatar;
             } else {
-                document.getElementById(`${currentPlayer.name}-f${currentPlayer.position}`).innerHTML = "";
+                document.getElementById(`${currentPlayer.name}-${currentPlayer.position}`).innerHTML = "";
                 currentPlayer.position += 1;
-                document.getElementById(`${currentPlayer.name}-f${currentPlayer.position}`).innerHTML = currentPlayer.avatar;
+                document.getElementById(`${currentPlayer.name}-${currentPlayer.position}`).innerHTML = currentPlayer.avatar;
             }
         }
     }
@@ -279,12 +294,12 @@ function currentPlayerTurn(currentPlayer) {
  * Moves the avatar into the newPosition.
  */
 function checkType(currentPlayer) {
-    let field = document.getElementById(`f${currentPlayer.newPosition}`);
+    let field = document.getElementById(`${currentPlayer.newPosition}`);
     if (field.getAttribute('data-type') === 'snake') {
         // snakeField = true;
-        document.getElementById(`${currentPlayer.name}-f${currentPlayer.position}`).innerHTML = ""; // deletes avatar from current position;
+        document.getElementById(`${currentPlayer.name}-${currentPlayer.position}`).innerHTML = ""; // deletes avatar from current position;
         moveIfSnake(currentPlayer);
-        document.getElementById(`${currentPlayer.name}-f${currentPlayer.newPosition}`).innerHTML = currentPlayer.avatar;
+        document.getElementById(`${currentPlayer.name}-${currentPlayer.newPosition}`).innerHTML = currentPlayer.avatar;
         if (currentPlayer === player) {
             messageBox.innerHTML = "Ooops! There's a snake! Run away!";
             showMessageBox()
@@ -301,9 +316,9 @@ function checkType(currentPlayer) {
             showMessageBox();
         }
 
-        document.getElementById(`${currentPlayer.name}-f${currentPlayer.newPosition}`).innerHTML = "";
+        document.getElementById(`${currentPlayer.name}-${currentPlayer.newPosition}`).innerHTML = "";
         moveIfLadder(currentPlayer);
-        document.getElementById(`${currentPlayer.name}-f${currentPlayer.newPosition}`).innerHTML = currentPlayer.avatar;
+        document.getElementById(`${currentPlayer.name}-${currentPlayer.newPosition}`).innerHTML = currentPlayer.avatar;
     } else {
         checkIfWin(currentPlayer);
     }
@@ -370,7 +385,7 @@ function checkIfWin(currentPlayer) {
             messageBox.innerHTML = "Congratulations! You've won!";
             showMessageBox();
         } else {
-            messageBox = "Sorry! You lost, try again!";
+            messageBox.innerHTML = "Sorry! You lost, try again!";
             showMessageBox();
         }
         window.location.reload(true);
