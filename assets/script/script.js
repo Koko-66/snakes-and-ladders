@@ -350,7 +350,7 @@ function moveIfLadder(currentPlayer) {
 Checks if player/ai's position is equal to 25 (will not be greater since set in currentPlayerTurn), sets gameRunning to false and generates a winning message and reloads the page.
 */
 function checkIfWin(currentPlayer) {
-    if (currentPlayer.position = 25) {
+    if (currentPlayer.position === 25) {
         gameRunning = false;
         if (currentPlayer === player) {
             alert("Congratulations! You've won!");
