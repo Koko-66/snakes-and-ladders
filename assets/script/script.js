@@ -161,6 +161,16 @@ function addResultHolders() {
     document.getElementById('player-result').innerHTML = `<strong>Your result:</strong> ${player.result}`
 }
 
+function showMessageBox() {
+    messageBox.style.visibility = 'visible';
+    document.getElementById('game-board').style.display = 'none';
+    setTimeout(function() {
+        messageBox.style.visibility = 'hidden';
+        document.getElementById('game-board').style.display = 'block';
+    }, 2000);
+}
+
+
 //-----2. GAME FUNCTIONS
 
 // - Running the game
@@ -186,12 +196,7 @@ function goesFirst() {
         showDice();
         setTimeout(function() { currentPlayerTurn(currentPlayer) }, 3500);
     }
-    messageBox.style.visibility = 'visible';
-    document.getElementById('game-board').style.display = 'none';
-    setTimeout(function() {
-        messageBox.style.visibility = 'hidden';
-        document.getElementById('game-board').style.display = 'block';
-    }, 2000);
+    showMessageBox();
 }
 
 /**
@@ -280,9 +285,22 @@ function checkType(currentPlayer) {
         document.getElementById(`${currentPlayer.name}-f${currentPlayer.position}`).innerHTML = ""; // deletes avatar from current position;
         moveIfSnake(currentPlayer);
         document.getElementById(`${currentPlayer.name}-f${currentPlayer.newPosition}`).innerHTML = currentPlayer.avatar;
-        alert("Ooops! There's a snake! Run away!");
+        if (currentPlayer === player) {
+            messageBox.innerHTML = "Ooops! There's a snake! Run away!";
+            showMessageBox()
+        } else {
+            messageBox.innerHTML = "Jazzy Croc came across a snake and will need to run away!";
+            showMessageBox()
+        }
     } else if (field.getAttribute('data-type') === 'ladder') {
-        alert("There's a ladder! Climb up!");
+        if (currentPlayer === player) {
+            messageBox.innerHTML = "Great, you found a ladder! Climb up!";
+            showMessageBox();
+        } else {
+            messageBox.innerHTML = "Jazzy Croc found a ladder!";
+            showMessageBox();
+        }
+
         document.getElementById(`${currentPlayer.name}-f${currentPlayer.newPosition}`).innerHTML = "";
         moveIfLadder(currentPlayer);
         document.getElementById(`${currentPlayer.name}-f${currentPlayer.newPosition}`).innerHTML = currentPlayer.avatar;
@@ -349,9 +367,11 @@ function checkIfWin(currentPlayer) {
     if (currentPlayer.position === 25) {
         gameRunning = false;
         if (currentPlayer === player) {
-            alert("Congratulations! You've won!");
+            messageBox.innerHTML = "Congratulations! You've won!";
+            showMessageBox();
         } else {
-            alert("Sorry! You lost, try again!");
+            messageBox = "Sorry! You lost, try again!";
+            showMessageBox();
         }
         window.location.reload(true);
 
