@@ -3,7 +3,7 @@
 //variables to store avatars
 let blue = `<img src="assets/images/avatar_blue.png" alt="blue avatar" class="avatar">`;
 let yellow = `<img src="assets/images/avatar-yellow2.png" alt="yellow avatar" class="avatar">`;
-let evilBoy = `<img src="assets/images/avatar_red-copy.png" alt="red avatar" class="avatar">`;
+let evilBoy = `<img src="assets/images/JazzyCroc_black-backgr.png" alt="red avatar" class="avatar">`;
 
 //objects to store players' positions, results, and avatar
 let player = {
