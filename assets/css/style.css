@@ -1,5 +1,6 @@
     @import url('https://fonts.googleapis.com/css2?family=Viaoda+Libre&display=swap');
     @import url('https://fonts.googleapis.com/css2?family=Benne&family=Roboto&display=swap');
+    @import url('https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@400&display=swap');
     /* setting all defaults to 0 */
     
     * {
@@ -72,6 +73,7 @@
         padding: 10px;
         line-height: 1.1em;
         font-size: 1.1em;
+        font-family: 'Source Sans Pro', sans-serif;
         text-align: center;
         margin: auto;
     }
@@ -108,6 +110,10 @@
     
     .avatar {
         margin: auto;
+    }
+    
+    .avatar:hover {
+        transform: scale(200%);
     }
     /* styling for red avatar (Evil Boy) - designated for computer */
     
@@ -157,6 +163,11 @@
         margin-top: 30px;
     }
     
+    .far:hover,
+    button:hover {
+        transform: scale(120%);
+    }
+    
     adds click effect button:active {
         transform: scale(120%);
     }
@@ -180,9 +191,10 @@
     }
     
     #game-container {
-        display: block;
+        display: flex;
         height: 560px;
-        width: 600px;
+        /* width: 600px; */
+        width: fit-content;
         margin: 0 auto;
         padding: 20px;
         border: rgba(0, 0, 0, 0, 0.7) solid 1px;
@@ -231,8 +243,8 @@
     
     #end {
         text-align: right;
-        /* border-top: rgba(0, 0, 0, 0.7) solid 1px; */
         border-bottom: none;
+        margin-right: 5px;
     }
     /*game board styling */
     
@@ -319,6 +331,28 @@
         border-radius: 10px;
     }
     
+    @media screen and (max-width: 650px) {
+        #game-container {
+            display: flex;
+            flex-direction: column;
+            /* Displays dice, start and reset button under the board*/
+        }
+        #dice {
+            margin: 0 20px;
+        }
+        #start-game-btn {
+            margin: 0 20px;
+        }
+        #controls-container {
+            display: flex;
+            flex-direction: row-reverse;
+            justify-content: center;
+        }
+        button {
+            margin: 0;
+        }
+    }
+    
     @media screen and (max-width: 425px) {
         header {
             height: 70px;
@@ -334,9 +368,10 @@
         }
         #game-container {
             display: block;
-            width: 320px;
+            width: 100%;
             height: auto;
-            margin: 0 auto;
+            padding: 0;
+            margin: auto;
         }
         #game-board {
             margin-left: 0;
@@ -384,6 +419,9 @@
             width: 60%;
         }
         #start-game-btn {
+            margin-top: 0;
+        }
+        #dice {
             margin-top: 0;
         }
         .dice img {
