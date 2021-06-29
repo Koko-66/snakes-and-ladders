@@ -23,36 +23,32 @@ let currentPlayer;
 let dice = document.getElementById('dice')
 let instructions = document.getElementById('instructions');
 let gameRunning = true;
-let id; // to set iverval for movePlayer function
 let messageBox = document.getElementById('message-box'); //div to display messages in rather than alerts
-// let snakeField; // set to true or false to reverse increment in movePlayer function
 
 // -----Events listeners ----
 
 //adds event listenter for instructions not to show on reloading; creates board instead
 document.addEventListener('DOMContentLoaded', function() {
-        if (localStorage.getItem('instructionsShown')) {
-            instructions.style.display = "none";
-        }
-        createGameBoard();
-        selectAvatar();
-    })
-    //event listener to the dice
-dice.addEventListener('click', round);
+    if (localStorage.getItem('instructionsShown')) {
+        instructions.style.display = "none";
+    }
+    createGameBoard();
+    selectAvatar();
+})
 
+//adds event listener to the dice
+dice.addEventListener('click', round);
 
 /**
  * Toggles show/hide of instructions and board, so that both are not shown at the same time
  * Toggles visibility of dice (hidden then Start Game button shown and shown when game is started)
  * Sets localStorage 'insturctionsShown' to true.
  */
-function hide() {
+function toggleInstructions() {
     instructions.style.display !== "none" ? instructions.style.display = 'none' : instructions.style.display = 'block';
     localStorage.setItem('instructionsShown', 'true');
     hideBoard();
-    dice.style.display !== 'none' ? dice.style.display = 'none' : dice.style.display = 'block';
 }
-
 
 /**
  * Toggles visibility of the board
