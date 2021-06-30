@@ -112,8 +112,13 @@ function createGameBoard() {
     let gameBoard = document.getElementById('game-board');
     let end = document.createElement('div');
     end.className = 'board-edge';
-    end.id = 'end';
-    end.innerHTML = "END";
+    end.id = 'wrapping-top';
+    end.innerHTML = `
+    <div id="results">
+    Jazzy Croc:&nbsp;
+    <div id="ai-result" class="result"></div>
+    You:&nbsp;
+    <div id="pl-result" class="result"></div></div>END`;
     gameBoard.appendChild(end);
     for (let r = 1; r < 6; ++r) {
         let row = document.createElement('div');
@@ -128,7 +133,7 @@ function createGameBoard() {
     }
     let start = document.createElement('div');
     start.className = 'board-edge';
-    start.id = 'start';
+    start.id = 'wrapping-bottom';
     start.innerHTML = "START";
     gameBoard.appendChild(start);
     fillBoard();
@@ -165,17 +170,26 @@ function fillBoard() {
         field.id = `f${i}`;
         i -= 1;
     }
-    addResultHolders();
+    // addResultHolders();
 }
 
 /**
- * Adds player and ai results to ai-results and player-results divs.
+ * Adds current player's result to the result display div at the top of the board and increases the size of the font to highlight whose turn it is.
+ * @param {*} currentPlayer 
  */
-function addResultHolders() {
-    document.getElementById('ai-result').innerHTML = `<strong>EvilBoy result:</strong> ${ai.result}`;
-    document.getElementById('player-result').innerHTML = `<strong>Your result:</strong> ${player.result}`
+function addResult(currentPlayer) {
+    resultHolder = document.getElementById(`${currentPlayer.name}-result`);
+
+    resultHolder.innerHTML = ` ${currentPlayer.result}`;
+    resultHolder.style.transform = 'scale(4)';
+
+    setTimeout(function() {
+        resultHolder.style.transform = 'scale(1)';
+    }, 500);
 }
 
+/**Toggles visibility of the full screen message box
+ */
 function showMessageBox() {
     messageBox.style.visibility = 'visible';
     document.getElementById('game-board').style.display = 'none';
@@ -199,19 +213,30 @@ function goesFirst() {
     diceThrow(player);
     diceThrow(ai);
     if (player.result === ai.result) {
-        messageBox.innerHTML = `Your result: ${player.result}<br><br>EvilBoy result: ${ai.result}<br><br>It's a tie! Try again!`;
+        //message box needs to be delayed till diceThrow(ai) executes to prevent ai result showing as 0;
+        setTimeout(function() {
+            messageBox.innerHTML = `Your result: ${player.result}<br><br>Jazzy Croc's result: ${ai.result}<br><br>It's a tie! Try again!`;
+        }, 750);
     } else if (player.result > ai.result) {
         currentPlayer = player;
         showDice();
-        messageBox.innerHTML = `Your result: ${player.result}<br><br>EvilBoy result: ${ai.result}<br><br>You're going first!`;
+        setTimeout(function() {
+                messageBox.innerHTML = `Your result: ${player.result}<br><br>Jazzy Croc's result: ${ai.result}<br><br>You're going first!`;
+            },
+            750);
         setTimeout(function() { currentPlayerTurn(currentPlayer) }, 3500);
+        document.getElementById('ai-result').innerHTML = ''; // deletes the ai's result from the box, since it's not moving
+        addResult(player);
     } else {
         currentPlayer = ai;
-        messageBox.innerHTML = `Your result: ${player.result}<br><br>EvilBoy result: ${ai.result}<br><br>Sorry! EvilBoy is starting this time!`;
+        messageBox.innerHTML = `Your result: ${player.result}<br><br>Jazzy Croc's result: ${ai.result}<br><br>Sorry! Jazzy Croc is starting this time!`;
         showDice();
         setTimeout(function() { currentPlayerTurn(currentPlayer) }, 3500);
+        document.getElementById('pl-result').innerHTML = ''; // deletes the player's result from the box, since it's not moving
+        addResult(ai);
     }
     showMessageBox();
+
 }
 
 /**
@@ -259,12 +284,13 @@ function diceThrow(currentPlayer) {
     let result = currentPlayer.result;
     if (currentPlayer === player) {
         dice.innerHTML = `<img src="../assets/images/Dice-${result}-b.svg.png" alt="Dice result ${result}">`;
-        addResultHolders();
+        addResult(player);
         currentPlayer.newPosition = currentPlayer.position + result;
     } else {
         currentPlayer.newPosition = currentPlayer.position + result;
-        addResultHolders();
+        addResult(ai);
     }
+    // addResult(currentPlayer);
 }
 
 /**
@@ -392,12 +418,12 @@ function checkIfWin(currentPlayer) {
         gameRunning = false;
         if (currentPlayer === player) {
             messageBox.innerHTML = "Congratulations! You've won!";
-            showMessageBox();
+            setTimeout(showMessageBox(), 3000);
         } else {
             messageBox.innerHTML = "Sorry! You lost, try again!";
-            showMessageBox();
+            setTimout(showMessageBox(), 3000); //to show the message long enought
         }
-        window.location.reload(true);
+        setTimeout(function() { window.location.reload(true) }, 2000); // dealy to stop reloading before message time is up
 
     } else {
         gameRunning = true;
