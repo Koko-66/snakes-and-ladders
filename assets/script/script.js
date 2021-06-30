@@ -162,7 +162,7 @@ function fillBoard() {
         } else {
             field.innerHTML = `${i}<div id ="pl-${i}" class="player"></div> <div id ="ai-${i}" class="ai">`;
         }
-        field.id = `${i}`;
+        field.id = `f${i}`;
         i -= 1;
     }
     addResultHolders();
@@ -239,6 +239,14 @@ function generateNumber() {
     return Math.floor(Math.random() * 6) + 1;
 }
 
+// function changeFieldColor() {
+//     if (currentPlayer === ai) {
+//         document.getElementById(`${ai.newPosition}`).style.background = 'red';
+//     } else {
+//         document.getElementById(`${player.newPosition}`).style.background = 'green';
+//     }
+// }
+
 /** 
 Simulates a dice throw 
 @param currentPlayer;
@@ -273,6 +281,7 @@ function currentPlayerTurn(currentPlayer) {
         if (currentPlayer.position === currentPlayer.newPosition) {
             clearInterval(id);
             checkType(currentPlayer);
+            // changeFieldColor();
         } else {
             if (currentPlayer.newPosition > 25) {
                 document.getElementById(`${currentPlayer.name}-${currentPlayer.position}`).innerHTML = "";
@@ -294,7 +303,7 @@ function currentPlayerTurn(currentPlayer) {
  * Moves the avatar into the newPosition.
  */
 function checkType(currentPlayer) {
-    let field = document.getElementById(`${currentPlayer.newPosition}`);
+    let field = document.getElementById(`f${currentPlayer.newPosition}`);
     if (field.getAttribute('data-type') === 'snake') {
         // snakeField = true;
         document.getElementById(`${currentPlayer.name}-${currentPlayer.position}`).innerHTML = ""; // deletes avatar from current position;
