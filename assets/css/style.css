@@ -1,443 +1,562 @@
-    @import url('https://fonts.googleapis.com/css2?family=Viaoda+Libre&display=swap');
-    @import url('https://fonts.googleapis.com/css2?family=Benne&family=Roboto&display=swap');
-    @import url('https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@400&display=swap');
-    /* setting all defaults to 0 */
-    
-    * {
-        margin: 0;
-        padding: 0;
-        border: 0;
-    }
-    /* styling for body and general font settings */
-    
-    body {
-        color: rgba(0, 0, 0, 0, 0.7);
-        /* font-family: 'Viaoda Libre', cursive; */
-        font-family: 'Benne', serif;
-        font-size: 18px;
-        background: url("../images/fronds-1869757_1920.jpg");
-        width: 100vw;
-        height: 100vh;
-        color: white;
-    }
-    
-    header {
-        /*to show icon in line with text*/
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        padding-top: 20px;
-        height: 90px;
-        width: 100%;
-    }
-    
-    footer {
-        height: 100px;
-        bottom: 0;
-    }
-    
-    h1 {
-        /* font-family: 'Viaoda Libre', cursive; */
-        font-size: 30px;
-        text-align: center;
-        margin: auto 0;
-    }
-    
-    p {
-        margin: 10px;
-    }
-    
-    #message-box {
-        position: fixed;
-        top: 0;
-        left: 0;
-        right: 0;
-        bottom: 0;
-        background-color: rgba(0, 0, 0, 0.9);
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        text-align: center;
-        font-size: 32px;
-        visibility: hidden;
-    }
-    /* ---instructions box */
-    
-    #instructions {
-        display: block;
-        /* font-size: 16px; */
-        width: 70%;
-        background-color: rgba(0, 0, 0, 0.7);
-        border: rgba(0, 0, 0, 0.1) solid 2px;
-        border-radius: 10px;
-        padding: 10px;
-        line-height: 1.1em;
-        font-size: 1.1em;
-        font-family: 'Source Sans Pro', sans-serif;
-        text-align: center;
-        margin: auto;
-    }
-    
-    #note {
-        font-size: 0.9em;
-        font-style: italic;
-        line-height: 1em;
-        padding-bottom: 10px;
-    }
-    /* styling for help icon*/
-    
-    .far {
-        color: #B13477;
-        font-size: xx-large;
-        padding-left: 25px;
-        /*to align icon with the title */
-        padding-bottom: 10px;
-    }
-    /* styling for avatars in the instructions box */
-    
-    #avatars {
-        display: flex;
-        flex-direction: row;
-        color: rgba(0, 0, 0, 0.7);
-        margin: 10px auto;
-        width: 50%;
-    }
-    /* aligns help-button with the title height */
-    
-    #help-button {
-        margin: 10px auto;
-    }
-    
-    .avatar {
-        margin: auto;
-    }
-    
-    .avatar:hover {
-        transform: scale(200%);
-    }
-    /* styling for red avatar (Evil Boy) - designated for computer */
-    
-    #avatar1 img {
-        border: rgba(0, 0, 0, 0.7) solid 2px;
-        background: #fafafa;
-        width: 70px;
-        height: 70px;
-        margin: 0 auto;
-        border-radius: 50%;
-    }
-    /* styling for blue and yellow avatars for the player*/
-    
-    #avatar2 img,
-    #avatar3 img {
-        border: #fafafa solid 2px;
-        background: rgba(0, 0, 0, 0.7);
-        width: 70px;
-        height: 70px;
-        margin: 0 auto;
-        border-radius: 50%;
-    }
-    /* makes avatar icon bigger when clicked */
-    
-    #avatar2 img:active,
-    #avatar3 img:active {
-        transform: scale(120%);
-    }
-    
-    ol {
-        text-align: left;
-        width: auto;
-        padding: 20px
-    }
-    /* Sytling for "Let's go" button */
-    
-    button {
-        display: block;
-        border: black solid 1px;
-        border-radius: 10px;
-        height: 2.5em;
-        width: 30%;
-        font-size: inherit;
-        font-family: inherit;
-        background-color: rgba(165, 20, 108, 0.85);
-        color: white;
-        margin-top: 30px;
-    }
-    
-    .far:hover,
-    button:hover {
-        transform: scale(120%);
-    }
-    
-    adds click effect button:active {
-        transform: scale(120%);
-    }
-    
-    .controls {
-        width: 70px;
-        height: 70px;
-    }
-    
-    #lets-go {
-        margin: auto;
-    }
-    /* ---Main game area */
-    /* game area section */
-    
-    #game-area {
-        /* background: rgba(0, 0, 0, 0.7); */
-        /* width: 70%; */
-        margin: auto;
-        height: 600px;
-    }
-    
+@import url('https://fonts.googleapis.com/css2?family=Viaoda+Libre&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Benne&family=Roboto&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@400&display=swap');
+
+/* setting all defaults to 0 */
+
+* {
+    margin: 0;
+    padding: 0;
+    border: 0;
+}
+
+
+/* styling for body and general font settings */
+
+body {
+    color: rgba(0, 0, 0, 0, 0.7);
+    /* font-family: 'Viaoda Libre', cursive; */
+    font-family: 'Benne', serif;
+    font-size: 18px;
+    background: url("../images/fronds-1869757_1920.jpg");
+    width: 100vw;
+    height: 100vh;
+    color: white;
+}
+
+header {
+    /*felx styling added to show icon in line with text*/
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding-top: 20px;
+    height: 90px;
+    width: 100%;
+    /* margin-left: -3%; */
+    visibility: visible;
+}
+
+
+/* for the Croc picture */
+
+header img {
+    height: inherit;
+}
+
+
+/* stuck to the bottom of page, otherwise ends up on the side of the board */
+
+footer {
+    height: 100px;
+    bottom: 0;
+}
+
+h1 {
+    /* font-family: 'Viaoda Libre', cursive; */
+    font-size: 30px;
+    text-align: center;
+    margin: auto 0;
+}
+
+
+/* padding for paragraphs in instructions */
+
+p {
+    padding: 0 20px;
+}
+
+
+/*Styling for instructions and game messages to show as full screen*/
+
+.full-screen {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.9);
+}
+
+
+/* full-screen messages displaying during the game */
+
+#message-box {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    font-size: 32px;
+    visibility: hidden;
+    padding: 30px;
+    line-height: 1.3em;
+}
+
+
+/* ---instructions box */
+
+#instructions {
+    display: block;
+    line-height: 1.3em;
+    font-size: 1.1em;
+    font-family: 'Source Sans Pro', sans-serif;
+    text-align: center;
+}
+
+#instr-container {
+    padding-top: 10vh;
+}
+
+#note {
+    font-size: 0.9em;
+    font-style: italic;
+    line-height: 1em;
+    padding-bottom: 10px;
+}
+
+
+/* styling for help icon*/
+
+.far {
+    color: #B13477;
+    font-size: xx-large;
+    padding-left: 25px;
+    /*padding added to align postion of the icon to be in line with the title */
+    padding-bottom: 10px;
+}
+
+.far:hover,
+button:hover {
+    transform: scale(120%);
+}
+
+
+/* --styling for avatars in the instructions box-- */
+
+#avatars {
+    display: flex;
+    flex-direction: row;
+    margin: 10px auto;
+    width: 50%;
+}
+
+.avatar {
+    margin: 5px auto;
+}
+
+.avatar img {
+    border: #fafafa solid 2px;
+    background: rgba(0, 0, 0, 0.7);
+    width: 70px;
+    height: 70px;
+    margin: 0 auto;
+    border-radius: 50%;
+}
+
+.avatar:hover {
+    transform: scale(200%);
+}
+
+
+/* Sytling for "Let's go" button */
+
+button {
+    display: block;
+    border: black solid 1px;
+    border-radius: 10px;
+    height: 2.5em;
+    width: 30%;
+    font-size: inherit;
+    font-family: inherit;
+    background-color: rgba(165, 20, 108, 0.85);
+    color: white;
+    margin-top: 30px;
+}
+
+
+/* adds click effect  */
+
+button:hover {
+    transform: scale(120%);
+}
+
+.controls {
+    width: 70px;
+    height: 70px;
+    /* margin: 5px; */
+    padding: 5px;
+}
+
+#lets-go {
+    margin: auto;
+}
+
+
+/* ---Main game area */
+
+
+/* game area section */
+
+#game-area {
+    /* background: rgba(0, 0, 0, 0.7); */
+    /* width: 70%; */
+    margin: auto;
+    height: 600px;
+}
+
+#game-container {
+    display: flex;
+    height: 560px;
+    /* width: 600px; */
+    /* width: fit-content; */
+    width: max-content;
+    margin: 0 auto;
+    padding: 20px;
+    border: rgba(0, 0, 0, 0, 0.7) solid 1px;
+}
+
+
+/* div at the top of the board to hold results */
+
+#results {
+    display: flex;
+    flex-direction: row;
+    justify-content: left;
+    width: 85%;
+    /* margin: 0 50px; */
+    /* padding-top: 20px; */
+}
+
+.result {
+    margin-right: 30px;
+}
+
+#game-board {
+    float: left;
+    /* height: inherit; */
+    width: auto;
+    padding: 20px;
+    flex-wrap: wrap;
+    margin-left: 5%;
+}
+
+#controls-container-mob {
+    visibility: hidden;
+}
+
+.board-edge {
+    height: 1em;
+    font-size: 1.5em;
+    align-content: flex-end;
+    padding-top: 10px;
+}
+
+#wrapping-top {
+    display: flex;
+    justify-content: flex-end;
+    border-bottom: none;
+    /* margin-right: 5px; */
+}
+
+
+/*game board styling */
+
+.board-row {
+    display: flex;
+    flex-direction: row;
+}
+
+.field {
+    display: flex;
+    align-items: flex-end;
+    border: rgba(255, 255, 255, 0.5) solid 1px;
+    background-color: rgba(255, 255, 255, 0.8);
+    color: black;
+    width: 70px;
+    height: 70px;
+    border-radius: 10%;
+    text-align: right;
+    vertical-align: bottom;
+    margin: 5px;
+    padding: 5px;
+    font-size: 28px;
+}
+
+
+/* Styling for avatars when on the board */
+
+img.avatar {
+    border: #fafafa solid 1px;
+    background: rgba(0, 0, 0, 0.9);
+    width: 30px;
+    height: 30px;
+    margin: auto;
+    margin: 0 10px 20px -10px;
+    border-radius: 50%;
+    align-items: flex-end;
+    justify-content: flex-end;
+}
+
+.ai img {
+    border: rgba(0, 0, 0, 0.7) solid 1px;
+    background: #fafafa;
+}
+
+img.snake,
+img.ladder {
+    background: none;
+    border: none;
+    border-radius: 0;
+    position: relative;
+    margin: 0;
+}
+
+img.snake {
+    top: 50px;
+    height: 65px;
+    /* right: 25px; */
+}
+
+img.ladder {
+    bottom: 35px;
+    left: 0px;
+    height: 80px;
+    width: 60%;
+}
+
+
+/* Styles for start and end fields */
+
+#f1,
+#f25 {
+    background-color: rgba(40, 143, 144, 0.8);
+    border: rgba(40, 143, 144, 1) solid 1px;
+    color: #fafafa;
+}
+
+#start-game-btn {
+    margin-top: 200px;
+}
+
+.dice {
+    display: none;
+    margin-top: 200px;
+}
+
+.dice img {
+    width: 70px;
+    height: 70px;
+    border-radius: 10px;
+    margin: -5px;
+}
+
+@media screen and (max-width: 650px) {
+    /* Displays dice, start and reset button under the board*/
     #game-container {
         display: flex;
-        height: 560px;
-        /* width: 600px; */
-        width: fit-content;
-        margin: 0 auto;
-        padding: 20px;
-        border: rgba(0, 0, 0, 0, 0.7) solid 1px;
+        flex-direction: column;
     }
-    /* div at the top of the board to hold results */
-    
-    #results {
-        display: flex;
-        flex-direction: row;
-        /* justify-content: center; */
-        margin: 0 20px -70px;
+    #game-board {
+        margin-left: 0;
+        padding: 0px;
         padding-top: 20px;
     }
-    
-    .result-box {
-        margin-right: 30px;
+    .dice {
+        margin: 0 20px;
     }
-    
-    #game-board {
-        float: left;
-        height: inherit;
-        width: auto;
-        padding: 20px;
-        flex-wrap: wrap;
-        margin-left: 5%;
+    #start-game-btn {
+        margin: 0 20px;
     }
-    /* #game-controls {
-            display: flex;
-            flex-direction: column;
-            float: left;
-            height: inherit;
-            width: auto;
-            padding: 20px;
-        } */
-    
-    #controls-container-mob {
-        visibility: hidden;
-    }
-    
-    .board-edge {
-        height: 1em;
-        font-size: 1.5em;
-        align-content: flex-end;
-        padding-top: 10px;
-    }
-    
-    #end {
-        text-align: right;
-        border-bottom: none;
-        margin-right: 5px;
-    }
-    /*game board styling */
-    
-    .board-row {
+    /* displays buttons and dice in one line */
+    #controls-container {
         display: flex;
-        flex-direction: row;
+        flex-direction: row-reverse;
+        justify-content: center;
     }
-    
-    .field {
-        display: flex;
-        align-items: flex-end;
-        border: rgba(255, 255, 255, 0.5) solid 1px;
-        background-color: rgba(255, 255, 255, 0.8);
-        color: black;
-        width: 70px;
-        height: 70px;
-        border-radius: 10%;
-        text-align: right;
-        vertical-align: bottom;
-        margin: 5px;
-        padding: 5px;
+    button {
+        margin: 0 20px;
+    }
+}
+
+@media screen and (max-width: 510px) {
+    h1 {
         font-size: 28px;
     }
+    header {
+        margin-left: -10px;
+    }
+    header img {
+        height: 90%;
+        width: auto;
+    }
+    .field {
+        /* width: 65px; */
+        /* height: 65px; */
+        margin: 3px;
+        /* padding: 5px; */
+    }
+    #game-area {
+        padding: 5px;
+        padding-top: 20px;
+    }
+    #game-container {
+        padding: 0;
+    }
+    .board-edge {
+        font-size: 1.4em;
+    }
+}
+
+@media screen and (max-width: 480px) {
+    .field {
+        width: 65px;
+        height: 65px;
+    }
+}
+
+@media screen and (max-width: 445px) {
+    header {
+        height: 70px;
+    }
+    /* h1 {
+            font-size: 26px;
+        } */
+    #instructions {
+        font-size: 14px;
+    }
+    .avatar img {
+        width: 60px;
+        height: 60px;
+    }
+    .far {
+        /* color: #B13477; */
+        font-size: x-large;
+        padding-left: 7px;
+    }
+    .board-edge {
+        font-size: 1.2em;
+    }
+    .field {
+        width: 60px;
+        height: 60px;
+        margin: 2px;
+        padding: 3px;
+        font-size: 24px;
+    }
     /* Styling for avatars when on the board */
-    
     img.avatar {
-        border: #fafafa solid 1px;
-        background: rgba(0, 0, 0, 0.9);
-        width: 30px;
-        height: 30px;
-        margin: 30px auto;
-        border-radius: 50%;
-        align-items: flex-end;
-        justify-content: flex-end;
+        width: 20px;
+        height: 20px;
     }
-    
-    .ai img {
-        border: rgba(0, 0, 0, 0.7) solid 1px;
-        background: #fafafa;
-    }
-    
-    img.snake,
-    img.ladder {
-        background: none;
-        border: none;
-        border-radius: 0;
-        position: relative;
-        margin: 0;
-    }
-    
     img.snake {
         top: 50px;
-        height: 65px;
+        height: 45px;
+        margin-bottom: 20px;
         /* right: 25px; */
     }
-    
     img.ladder {
         bottom: 35px;
-        left: 0px;
-        height: 80px;
+        margin-left: 10px;
+        height: 60px;
         width: 60%;
     }
-    /* Styles for start and end fields */
-    
-    #f1,
-    #f25 {
-        background-color: rgba(40, 143, 144, 0.8);
-        border: rgba(40, 143, 144, 1) solid 1px;
-        color: #fafafa;
-    }
-    
-    #start-game-btn {
-        margin-top: 200px;
-    }
-    
-    #dice {
-        display: none;
-        margin-top: 200px;
-    }
-    
     .dice img {
-        width: 70px;
-        height: 70px;
-        border-radius: 10px;
+        width: 60px;
+        height: 60px;
+        margin-top: -5px;
     }
-    
-    @media screen and (max-width: 650px) {
-        #game-container {
-            display: flex;
-            flex-direction: column;
-            /* Displays dice, start and reset button under the board*/
-        }
-        #dice {
-            margin: 0 20px;
-        }
-        #start-game-btn {
-            margin: 0 20px;
-        }
-        #controls-container {
-            display: flex;
-            flex-direction: row-reverse;
-            justify-content: center;
-        }
-        button {
-            margin: 0;
-        }
+    .controls {
+        width: 60px;
+        height: 60px;
+        font-size: 0.85em;
     }
-    
-    @media screen and (max-width: 425px) {
-        header {
-            height: 70px;
-        }
-        h1 {
-            font-size: 26px;
-        }
-        #instructions {
-            font-size: 14px;
-        }
-        ol {
-            padding: 5px
-        }
-        #game-container {
-            display: block;
-            width: 100%;
-            height: auto;
-            padding: 0;
-            margin: auto;
-        }
-        #game-board {
-            margin-left: 0;
-        }
-        .far {
-            color: #B13477;
-            font-size: x-large;
-            padding-left: 10px;
-        }
-        /* div at the top of the board to hold results */
-        #results {
-            width: 100%;
-            font-size: 0.9em;
-        }
-        .board-edge {
-            height: 1.3em;
+    #message-box {
+        font-size: 26px;
+    }
+}
+
+@media screen and (max-width: 385px) {
+    .field {
+        width: 50px;
+        height: 50px;
+    }
+    .board-edge {
+        font-size: 1.1em;
+    }
+    p {
+        padding: 0 10px;
+    }
+}
+
+@media screen and (max-width: 325px) {
+    /* .board-edge {
             font-size: 1em;
-        }
-        .board-row {
-            display: flex;
-            flex-direction: row;
-        }
-        .field {
-            width: 45px;
-            height: 45px;
-            margin: 2px;
-            padding: 2px;
-            font-size: 18px;
-        }
-        /* Styling for avatars when on the board */
-        img.avatar {
-            width: 20px;
-            height: 20px;
-        }
-        img.snake {
-            top: 50px;
-            height: 45px;
-            margin-bottom: 20px;
-            /* right: 25px; */
-        }
-        img.ladder {
-            bottom: 35px;
-            margin-left: 10px;
-            height: 60px;
-            width: 60%;
-        }
-        #start-game-btn {
-            margin-top: 0;
-        }
-        #dice {
-            margin-top: 0;
-        }
-        .dice img {
-            width: 55px;
-            height: 55px;
-            margin-top: 0px;
-            display: table-cell;
-            clear: both;
-        }
-        .controls {
-            width: 55px;
-            height: 55px;
-            font-size: 0.8em;
-        }
-        button {
-            display: inline-block;
-            margin-top: 0;
-        }
+        } */
+    header {
+        height: 60px;
+        margin-left: 0;
     }
+    h1 {
+        font-size: 24px;
+    }
+    .far {
+        /* color: #B13477; */
+        font-size: large;
+        padding-left: 5px;
+    }
+    .board-edge {
+        font-size: 1em;
+    }
+    .field {
+        width: 45px;
+        height: 45px;
+        /* margin: 2px;
+            padding: 3px; */
+        font-size: 22px;
+    }
+    img.snake {
+        top: 40px;
+        height: 45px;
+        margin-bottom: 10px;
+        /* right: 25px; */
+    }
+    img.ladder {
+        bottom: 30px;
+        /* margin-left: 10px; */
+        height: 50px;
+        width: 50%;
+    }
+    .dice img {
+        width: 55px;
+        height: 55px;
+        /* margin-top: -5px; */
+    }
+    .controls {
+        width: 55px;
+        height: 55px;
+        font-size: 0.8em;
+    }
+    #message-box {
+        font-size: 20px;
+    }
+}
+
+@media screen and (max-width: 280px) {
+    h1 {
+        font-size: 20px;
+    }
+    .field {
+        width: 40px;
+        height: 40px;
+        font-size: 18px;
+    }
+    .board-edge {
+        font-size: 0.9em;
+    }
+    .avatar img {
+        width: 50px;
+        height: 50px;
+    }
+    #instructions {
+        padding: 10px;
+    }
+}
