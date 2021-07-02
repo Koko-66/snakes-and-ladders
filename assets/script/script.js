@@ -51,6 +51,10 @@ function toggleInstructions() {
     hideBoard();
 }
 
+// function initiateGame {
+// if (player.avatar = ''
+// }
+
 /**
  * Toggles visibility of the board
  */
@@ -79,7 +83,7 @@ function selectAvatar() {
     for (let avatar of avatars) {
         // let playerDiv = document.getElementById(`pl-${player.position}`)
         avatar.addEventListener('click', function() {
-            if (player.avatar = '') {
+            if (player.avatar === '') {
                 if (this.getAttribute('data-avatar-color') === 'blue') {
                     player.avatar = blue;
                     document.getElementById('pl-1').innerHTML = `<div id ="pl-1" class="player">${blue}</div>`;
@@ -98,10 +102,12 @@ function selectAvatar() {
                 }
                 localStorage.setItem('playerAvatar', player.avatar);
             }
+            toggleInstructions();
         })
 
         player.avatar = localStorage.getItem('playerAvatar');
         localStorage.setItem('avatarSelected', 'true');
+
     }
 }
 
