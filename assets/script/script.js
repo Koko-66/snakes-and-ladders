@@ -28,12 +28,13 @@ let messageBox = document.getElementById('message-box'); //div to display messag
 
 // -----Events listeners ----
 
-//adds event listenter for instructions not to show on reloading; creates board instead
+//adds event listenter for instructions not to show on reloading; creates board (needs to be generated at this point otherwise board does not exist to palce the avatar into) and hides it
 document.addEventListener('DOMContentLoaded', function() {
     if (localStorage.getItem('instructionsShown')) {
         instructions.style.display = "none";
     }
     createGameBoard();
+    hideBoard();
     selectAvatar();
 })
 
@@ -71,7 +72,17 @@ function showDice() {
     startButton.style.display = 'none';
     dice.style.display = 'block';
 }
-
+/**
+ * Checks if avatar is selected on loading and if not, prevents moving forward to the game.
+ */
+function checkForAvatar() {
+    if (player.avatar === null) {
+        messageBox.innerHTML = "Choose an avatar";
+        showMessageBox();
+    } else {
+        toggleInstructions();
+    }
+}
 /**
  * Selects avatar on click and:
  * places it in the start field if none avatar has been selected before;
@@ -116,6 +127,7 @@ function selectAvatar() {
  */
 function createGameBoard() {
     let gameBoard = document.getElementById('game-board');
+    gameBoard.innerHTML = '';
     let end = document.createElement('div');
     end.className = 'board-edge';
     end.id = 'wrapping-top';
@@ -427,7 +439,7 @@ function checkIfWin(currentPlayer) {
             setTimeout(showMessageBox(), 3000);
         } else {
             messageBox.innerHTML = "Sorry! You lost, try again!";
-            setTimout(showMessageBox(), 3000); //to show the message long enought
+            setTimeout(showMessageBox(), 3000); //to show the message long enought
         }
         setTimeout(function() { window.location.reload(true) }, 2000); // dealy to stop reloading before message time is up
 
