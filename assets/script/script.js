@@ -24,7 +24,9 @@ let currentPlayer;
 let dice = document.getElementById('dice')
 let instructions = document.getElementById('instructions');
 let gameRunning = true;
+let board = document.getElementById('game-container');
 let messageBox = document.getElementById('message-box'); //div to display messages in rather than alerts
+let aiTurnDiv = document.getElementById('ai-turn-info'); //variable for div to display message about ai turn and initiate turn on click
 
 // -----Events listeners ----
 
@@ -52,17 +54,14 @@ function toggleInstructions() {
     hideBoard();
 }
 
-// function initiateGame {
-// if (player.avatar = ''
-// }
 
 /**
- * Toggles visibility of the board
+ * Toggles visibility of the board and controls;
  */
 function hideBoard() {
-    let board = document.getElementById('game-area');
-    instructions.style.display !== 'none' ? board.style.display = 'none' : board.style.display = 'block';
+    instructions.style.visibility !== 'visible' ? board.style.visibility = 'visible' : board.style.visibility = 'hidden';
 }
+
 
 /**
  * Hides startButton and shows Dice.
@@ -118,7 +117,6 @@ function selectAvatar() {
 
         player.avatar = localStorage.getItem('playerAvatar');
         localStorage.setItem('avatarSelected', 'true');
-
     }
 }
 
@@ -199,7 +197,7 @@ function addResult(currentPlayer) {
     resultHolder = document.getElementById(`${currentPlayer.name}-result`);
 
     resultHolder.innerHTML = ` ${currentPlayer.result}`;
-    resultHolder.style.transform = 'scale(4)';
+    resultHolder.style.transform = 'scale(2)';
 
     setTimeout(function() {
         resultHolder.style.transform = 'scale(1)';
@@ -210,11 +208,11 @@ function addResult(currentPlayer) {
  */
 function showMessageBox() {
     messageBox.style.visibility = 'visible';
-    document.getElementById('game-board').style.display = 'none';
-    setTimeout(function() {
+    board.style.visibility = 'hidden';
+    messageBox.addEventListener('click', function() {
         messageBox.style.visibility = 'hidden';
-        document.getElementById('game-board').style.display = 'block';
-    }, 2000);
+        board.style.visibility = 'visible';
+    })
 }
 
 
@@ -234,61 +232,62 @@ function goesFirst() {
         //message box needs to be delayed till diceThrow(ai) executes to prevent ai result showing as 0;
         setTimeout(function() {
             messageBox.innerHTML = `Your result: ${player.result}<br><br>Jazzy Croc's result: ${ai.result}<br><br>It's a tie! Try again!`;
-        }, 750);
+        }, 300);
     } else if (player.result > ai.result) {
         currentPlayer = player;
         showDice();
         setTimeout(function() {
-                messageBox.innerHTML = `Your result: ${player.result}<br><br>Jazzy Croc's result: ${ai.result}<br><br>You're going first!`;
+                messageBox.innerHTML = `Your result: ${player.result}<br><br>Jazzy Croc's result: ${ai.result}<br><br>You're going first! Throw the dice!`;
             },
-            750);
-        setTimeout(function() { currentPlayerTurn(currentPlayer) }, 3500);
+            300);
         document.getElementById('ai-result').innerHTML = ''; // deletes the ai's result from the box, since it's not moving
         addResult(player);
     } else {
         currentPlayer = ai;
-        messageBox.innerHTML = `Your result: ${player.result}<br><br>Jazzy Croc's result: ${ai.result}<br><br>Sorry! Jazzy Croc is starting this time!`;
         showDice();
-        setTimeout(function() { currentPlayerTurn(currentPlayer) }, 3500);
+        messageBox.innerHTML = `Your result: ${player.result}<br><br>Jazzy Croc's result: ${ai.result}<br><br>Sorry! Jazzy Croc is starting this time!`;
+        initiateAiMove();
         document.getElementById('pl-result').innerHTML = ''; // deletes the player's result from the box, since it's not moving
         addResult(ai);
     }
     showMessageBox();
-
 }
 
 /**
  * Runs one round made of Player and Ai Turn with delay for AI movement while gameRunning is true.
  */
 function round() {
+    let timeOut = player.result * 250 + 1000;
     if (gameRunning) {
         currentPlayer = player;
         currentPlayerTurn(player);
-
         setTimeout(function() {
             currentPlayer = ai;
             diceThrow(ai);
-            currentPlayerTurn(ai);
-            // checkIfWin(ai)
+            initiateAiMove();
             currentPlayer = player;
-        }, 1500);
+        }, timeOut);
+
     }
 }
 
-// - Throw and movement functions
+function initiateAiMove() {
+    aiTurnDiv.innerHTML = `It's Jazzy Croc's turn. He threw: ${ai.result}!`
+    aiTurnDiv.style.visibility = 'visible';
+    board.style.visibility = 'hidden';
+    aiTurnDiv.addEventListener('click', function() {
+        aiTurnDiv.style.visibility = 'hidden';
+        board.style.visibility = 'visible';
+        currentPlayerTurn(ai);
+    })
+}
+
+
 
 /** @generator generates random number between 1 and 6 for currentPlayer; */
 function generateNumber() {
     return Math.floor(Math.random() * 6) + 1;
 }
-
-// function changeFieldColor() {
-//     if (currentPlayer === ai) {
-//         document.getElementById(`${ai.newPosition}`).style.background = 'red';
-//     } else {
-//         document.getElementById(`${player.newPosition}`).style.background = 'green';
-//     }
-// }
 
 /** 
 Simulates a dice throw 
@@ -319,7 +318,7 @@ function diceThrow(currentPlayer) {
  @param currentPlayer ai or player
  */
 function currentPlayerTurn(currentPlayer) {
-    let id = setInterval(function() { moveAvatar(currentPlayer) }, 200);
+    let id = setInterval(function() { moveAvatar(currentPlayer) }, 250);
 
     function moveAvatar(currentPlayer) {
         if (currentPlayer.position === currentPlayer.newPosition) {
@@ -355,9 +354,9 @@ function checkType(currentPlayer) {
         document.getElementById(`${currentPlayer.name}-${currentPlayer.newPosition}`).innerHTML = currentPlayer.avatar;
         if (currentPlayer === player) {
             messageBox.innerHTML = "Ooops! There's a snake! Run away!";
-            showMessageBox()
+            showMessageBox();
         } else {
-            messageBox.innerHTML = "Jazzy Croc came across a snake and will need to run away!";
+            messageBox.innerHTML = "Jazzy Croc found a snake!";
             showMessageBox()
         }
     } else if (field.getAttribute('data-type') === 'ladder') {
@@ -379,8 +378,9 @@ function checkType(currentPlayer) {
 
 /**
  Computes the newPosition for the currentPlayer if the field contains a snake. Considers the fields by columns and adjusts the number according the pattern:
- * to check for numbers 8, 13, 18, 23 take away 3 and check %5, then adjust position by -5;
- * to check for numbers 6, 11, 16 take away 1 and check %5, then adjust position by -1;
+
+*to check for numbers 8, 13, 18, 23 take away 3 and check %5, then adjust position by -5;
+*to check for numbers 6, 11, 16 take away 1 and check %5, then adjust position by -1;
  * to check for numbers 7, 12, 17 take away 2 and check %5, then adjust position by -3;
  * to check for numbers 9, 14, 19 take away 4 and check %5, then adjust postion by -7; 
  * the remaining numbers: 10, 15, 20 adjust by -9;
@@ -439,9 +439,10 @@ function checkIfWin(currentPlayer) {
             setTimeout(showMessageBox(), 3000);
         } else {
             messageBox.innerHTML = "Sorry! You lost, try again!";
-            setTimeout(showMessageBox(), 3000); //to show the message long enought
+            setTimeout(showMessageBox(), 3000);
         }
         setTimeout(function() { window.location.reload(true) }, 2000); // dealy to stop reloading before message time is up
+
 
     } else {
         gameRunning = true;
