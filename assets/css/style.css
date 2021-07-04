@@ -2,7 +2,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Benne&family=Roboto&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@400&display=swap');
 
-/* setting all defaults to 0 */
+/* ---General--- */
 
 * {
     margin: 0;
@@ -11,7 +11,7 @@
 }
 
 
-/* styling for body and general font settings */
+/* Body*/
 
 body {
     color: rgba(0, 0, 0, 0, 0.7);
@@ -24,8 +24,11 @@ body {
     color: white;
 }
 
+
+/* Header */
+
 header {
-    /*felx styling added to show icon in line with text*/
+    /*flex styling to show Help icon in line with text*/
     display: flex;
     align-items: center;
     justify-content: center;
@@ -37,19 +40,22 @@ header {
 }
 
 
-/* for the Croc picture */
+/* Jazzy Croc picture in the header */
 
 header img {
     height: inherit;
 }
 
 
-/* stuck to the bottom of page, otherwise ends up on the side of the board */
+/*Footer*/
 
 footer {
     height: 100px;
     bottom: 0;
 }
+
+
+/* Main heading (used in the header) */
 
 h1 {
     /* font-family: 'Viaoda Libre', cursive; */
@@ -59,10 +65,11 @@ h1 {
 }
 
 
-/* padding for paragraphs in instructions */
+/* Heading 2 (used in the intructions box) */
 
-p {
-    padding: 0 20px;
+h2 {
+    text-decoration: underline;
+    font-size: 22px;
 }
 
 
@@ -78,9 +85,9 @@ p {
 }
 
 
-/* full-screen messages displaying during the game */
+/* Div for messages displaying during the game */
 
-#message-box {
+.message-box {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -92,29 +99,10 @@ p {
 }
 
 
-/* ---instructions box */
-
-#instructions {
-    display: block;
-    line-height: 1.3em;
-    font-size: 1.1em;
-    font-family: 'Source Sans Pro', sans-serif;
-    text-align: center;
-}
-
-#instr-container {
-    padding-top: 10vh;
-}
-
-#note {
-    font-size: 0.9em;
-    font-style: italic;
-    line-height: 1em;
-    padding-bottom: 10px;
-}
+/* ---Header--- */
 
 
-/* styling for help icon*/
+/* Help icon*/
 
 .far {
     color: #B13477;
@@ -124,13 +112,57 @@ p {
     padding-bottom: 10px;
 }
 
+
+/* Help icon on hover */
+
 .far:hover,
 button:hover {
     transform: scale(120%);
 }
 
 
-/* --styling for avatars in the instructions box-- */
+/* ---Instructions box--- */
+
+
+/* Instructions section */
+
+#instructions {
+    display: block;
+    line-height: 1.3em;
+    font-size: 1.1em;
+    font-family: 'Source Sans Pro', sans-serif;
+    text-align: center;
+}
+
+
+/* div holding the intructions content */
+
+#instructions-container {
+    padding-top: 10vh;
+}
+
+
+/* padding for paragraphs in the instructions box */
+
+p {
+    padding: 0 20px;
+}
+
+
+/* Note text in the instructions box */
+
+#note {
+    font-size: 0.9em;
+    font-style: italic;
+    line-height: 1em;
+    padding-bottom: 10px;
+}
+
+
+/* --Avatars for player in the instructions box-- */
+
+
+/* Div for avatars (flext to show in line) */
 
 #avatars {
     display: flex;
@@ -199,6 +231,7 @@ button:hover {
 #game-area {
     /* background: rgba(0, 0, 0, 0.7); */
     /* width: 70%; */
+    /* display: block; */
     margin: auto;
     height: 600px;
 }
@@ -212,6 +245,8 @@ button:hover {
     margin: 0 auto;
     padding: 20px;
     border: rgba(0, 0, 0, 0, 0.7) solid 1px;
+    visibility: visible;
+    ling
 }
 
 
@@ -469,7 +504,7 @@ img.ladder {
         height: 60px;
         font-size: 0.85em;
     }
-    #message-box {
+    .message-box {
         font-size: 26px;
     }
 }
@@ -535,7 +570,7 @@ img.ladder {
         height: 55px;
         font-size: 0.8em;
     }
-    #message-box {
+    .message-box {
         font-size: 20px;
     }
 }
