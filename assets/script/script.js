@@ -27,6 +27,8 @@ let gameRunning = true;
 let board = document.getElementById('game-container');
 let messageBox = document.getElementById('message-box'); //div to display messages in rather than alerts
 let aiTurnDiv = document.getElementById('ai-turn-info'); //variable for div to display message about ai turn and initiate turn on click
+let firstRound;
+let playerFinished;
 
 // -----Events listeners ----
 
@@ -212,6 +214,11 @@ function showMessageBox() {
     messageBox.addEventListener('click', function() {
         messageBox.style.visibility = 'hidden';
         board.style.visibility = 'visible';
+        if (firstRound === true && currentPlayer === ai) {
+            currentPlayerTurn(currentPlayer);
+            firstRound = false;
+
+        }
     })
 }
 
@@ -226,6 +233,7 @@ function showMessageBox() {
  Moves the avatar of the player who goes first.
  */
 function goesFirst() {
+    firstRound = true;
     diceThrow(player);
     diceThrow(ai);
     if (player.result === ai.result) {
@@ -246,11 +254,11 @@ function goesFirst() {
         currentPlayer = ai;
         showDice();
         messageBox.innerHTML = `Your result: ${player.result}<br><br>Jazzy Croc's result: ${ai.result}<br><br>Sorry! Jazzy Croc is starting this time!`;
-        initiateAiMove();
         document.getElementById('pl-result').innerHTML = ''; // deletes the player's result from the box, since it's not moving
         addResult(ai);
     }
     showMessageBox();
+
 }
 
 /**
@@ -266,20 +274,23 @@ function round() {
             diceThrow(ai);
             initiateAiMove();
             currentPlayer = player;
+            // playerFinished = false;
         }, timeOut);
 
     }
 }
 
 function initiateAiMove() {
-    aiTurnDiv.innerHTML = `It's Jazzy Croc's turn. He threw: ${ai.result}!`
-    aiTurnDiv.style.visibility = 'visible';
+    // if (playerFinished) {
+    aiTurnDiv.innerHTML = `It's Jazzy Croc's turn. He threw: ${ai.result}!`;
     board.style.visibility = 'hidden';
+    aiTurnDiv.style.visibility = 'visible';
     aiTurnDiv.addEventListener('click', function() {
-        aiTurnDiv.style.visibility = 'hidden';
-        board.style.visibility = 'visible';
-        currentPlayerTurn(ai);
-    })
+            aiTurnDiv.style.visibility = 'hidden';
+            board.style.visibility = 'visible';
+            currentPlayerTurn(ai);
+        })
+        // }
 }
 
 
@@ -338,6 +349,9 @@ function currentPlayerTurn(currentPlayer) {
             }
         }
     }
+    // if (currentPlayer === player) {
+    //     playerFinished = true;
+    // }
 }
 
 /**
