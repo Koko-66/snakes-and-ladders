@@ -26,9 +26,9 @@ let instructions = document.getElementById('instructions');
 let gameRunning = true;
 let board = document.getElementById('game-container');
 let messageBox = document.getElementById('message-box'); //div to display messages in rather than alerts
-let aiTurnDiv = document.getElementById('ai-turn-info'); //variable for div to display message about ai turn and initiate turn on click
+// let aiTurnDiv = document.getElementById('ai-turn-info'); //variable for div to display message about ai turn and initiate turn on click
 let firstRound;
-let playerFinished;
+// let playerFinished;
 
 // -----Events listeners ----
 
@@ -44,6 +44,9 @@ document.addEventListener('DOMContentLoaded', function() {
 
 //adds event listener to the dice
 dice.addEventListener('click', round);
+
+//adds click event listener to message to hide it on clicking and initiate further steps
+messageBox.addEventListener('click', hideMessageBox);
 
 /**
  * Toggles show/hide of instructions and board, so that both are not shown at the same time
@@ -206,21 +209,32 @@ function addResult(currentPlayer) {
     }, 500);
 }
 
-/**Toggles visibility of the full screen message box
+/**
+ * Displays the full screen message box
  */
 function showMessageBox() {
     messageBox.style.visibility = 'visible';
     board.style.visibility = 'hidden';
-    messageBox.addEventListener('click', function() {
+}
+
+/**
+ * Hides message box, shows board and intiates ai move if ai's turn
+ */
+function hideMessageBox() {
+    if (firstRound === true && currentPlayer === ai) {
         messageBox.style.visibility = 'hidden';
         board.style.visibility = 'visible';
-        if (firstRound === true && currentPlayer === ai) {
-            currentPlayerTurn(currentPlayer);
-            firstRound = false;
-
-        }
-    })
+        currentPlayerTurn(currentPlayer);
+    } else if (currentPlayer === ai) {
+        messageBox.style.visibility = 'hidden';
+        board.style.visibility = 'visible';
+        initiateAiMove()
+    } else {
+        messageBox.style.visibility = 'hidden';
+        board.style.visibility = 'visible';
+    }
 }
+
 
 
 //-----2. GAME FUNCTIONS
@@ -250,17 +264,14 @@ function goesFirst() {
             300);
         document.getElementById('ai-result').innerHTML = ''; // deletes the ai's result from the box, since it's not moving
         addResult(player);
+        firstRound = false;
     } else {
         currentPlayer = ai;
         showDice();
         messageBox.innerHTML = `Your result: ${player.result}<br><br>Jazzy Croc's result: ${ai.result}<br><br>Sorry! Jazzy Croc is starting this time!`;
-        document.getElementById('pl-result').innerHTML = ''; // deletes the player's result from the box, since it's not moving
-        addResult(ai);
     }
     showMessageBox();
-
 }
-
 /**
  * Runs one round made of Player and Ai Turn with delay for AI movement while gameRunning is true.
  */
@@ -281,16 +292,19 @@ function round() {
 }
 
 function initiateAiMove() {
-    // if (playerFinished) {
-    aiTurnDiv.innerHTML = `It's Jazzy Croc's turn. He threw: ${ai.result}!`;
+    if (firstRound !== true) {
+        messageBox.innerHTML = `It's Jazzy Croc's turn. He threw: ${ai.result}!`;
+    } else {
+        firstRound = false;
+    }
+
     board.style.visibility = 'hidden';
-    aiTurnDiv.style.visibility = 'visible';
-    aiTurnDiv.addEventListener('click', function() {
-            aiTurnDiv.style.visibility = 'hidden';
-            board.style.visibility = 'visible';
-            currentPlayerTurn(ai);
-        })
-        // }
+    messageBox.style.visibility = 'visible';
+    messageBox.addEventListener('click', function() {
+        messageBox.style.visibility = 'hidden';
+        board.style.visibility = 'visible';
+        currentPlayerTurn(ai);
+    })
 }
 
 
@@ -335,7 +349,6 @@ function currentPlayerTurn(currentPlayer) {
         if (currentPlayer.position === currentPlayer.newPosition) {
             clearInterval(id);
             checkType(currentPlayer);
-            // changeFieldColor();
         } else {
             if (currentPlayer.newPosition > 25) {
                 document.getElementById(`${currentPlayer.name}-${currentPlayer.position}`).innerHTML = "";
@@ -349,9 +362,6 @@ function currentPlayerTurn(currentPlayer) {
             }
         }
     }
-    // if (currentPlayer === player) {
-    //     playerFinished = true;
-    // }
 }
 
 /**
@@ -371,20 +381,21 @@ function checkType(currentPlayer) {
             showMessageBox();
         } else {
             messageBox.innerHTML = "Jazzy Croc found a snake!";
-            showMessageBox()
+            showMessageBox();
         }
     } else if (field.getAttribute('data-type') === 'ladder') {
+        specialField = true;
         if (currentPlayer === player) {
             messageBox.innerHTML = "Great, you found a ladder! Climb up!";
+
             showMessageBox();
         } else {
             messageBox.innerHTML = "Jazzy Croc found a ladder!";
             showMessageBox();
         }
-
         document.getElementById(`${currentPlayer.name}-${currentPlayer.newPosition}`).innerHTML = "";
         moveIfLadder(currentPlayer);
-        document.getElementById(`${currentPlayer.name}-${currentPlayer.newPosition}`).innerHTML = currentPlayer.avatar;
+        setTimeout(document.getElementById(`${currentPlayer.name}-${currentPlayer.newPosition}`).innerHTML = currentPlayer.avatar, 1000);
     } else {
         checkIfWin(currentPlayer);
     }
@@ -455,7 +466,7 @@ function checkIfWin(currentPlayer) {
             messageBox.innerHTML = "Sorry! You lost, try again!";
             setTimeout(showMessageBox(), 3000);
         }
-        setTimeout(function() { window.location.reload(true) }, 2000); // dealy to stop reloading before message time is up
+        setTimeout(function() { window.location.reload(true) }, 2000);
 
 
     } else {
