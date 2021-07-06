@@ -12,14 +12,14 @@ let player = {
     position: 1,
     newPosition: 0,
     avatar: ''
-};
+}
 let ai = {
     avatar: evilBoy,
     name: 'ai',
     result: 0,
     position: 1,
     newPosition: 0
-};
+}
 let currentPlayer;
 let dice = document.getElementById('dice')
 let instructions = document.getElementById('instructions');
@@ -228,7 +228,7 @@ function hideMessageBox() {
     } else if (currentPlayer === ai) {
         messageBox.style.visibility = 'hidden';
         board.style.visibility = 'visible';
-        initiateAiMove()
+        // initiateAiMove()
     } else {
         messageBox.style.visibility = 'hidden';
         board.style.visibility = 'visible';
@@ -253,22 +253,22 @@ function goesFirst() {
     if (player.result === ai.result) {
         //message box needs to be delayed till diceThrow(ai) executes to prevent ai result showing as 0;
         setTimeout(function() {
-            messageBox.innerHTML = `Your result: ${player.result}<br><br>Jazzy Croc's result: ${ai.result}<br><br>It's a tie! Try again!`;
+            messageBox.innerHTML = `You: ${player.result}<br>Jazzy Croc: ${ai.result}<br><br>It's a tie! Try again!`;
         }, 300);
     } else if (player.result > ai.result) {
         currentPlayer = player;
         showDice();
         setTimeout(function() {
-                messageBox.innerHTML = `Your result: ${player.result}<br><br>Jazzy Croc's result: ${ai.result}<br><br>You're going first! Throw the dice!`;
+                messageBox.innerHTML = `You: ${player.result}<br>Jazzy Croc: ${ai.result}<br><br>You're going first! Throw the dice!`;
             },
             300);
-        document.getElementById('ai-result').innerHTML = ''; // deletes the ai's result from the box, since it's not moving
+        // document.getElementById('ai-result').innerHTML = ''; // deletes the ai's result from the box, since it's not moving
         addResult(player);
-        firstRound = false;
+        // firstRound = false;
     } else {
         currentPlayer = ai;
         showDice();
-        messageBox.innerHTML = `Your result: ${player.result}<br><br>Jazzy Croc's result: ${ai.result}<br><br>Sorry! Jazzy Croc is starting this time!`;
+        messageBox.innerHTML = `You: ${player.result}<br>Jazzy Croc: ${ai.result}<br><br>Jazzy Croc is going first!`;
     }
     showMessageBox();
 }
@@ -276,34 +276,42 @@ function goesFirst() {
  * Runs one round made of Player and Ai Turn with delay for AI movement while gameRunning is true.
  */
 function round() {
-    let timeOut = player.result * 250 + 1000;
+    // let timeOut = player.result * 300 + 1000;
+    // if (specialField === true) {
+    //     timeOut += 2000;
+    // }
     if (gameRunning) {
         currentPlayer = player;
         currentPlayerTurn(player);
-        setTimeout(function() {
-            currentPlayer = ai;
-            diceThrow(ai);
-            initiateAiMove();
-            currentPlayer = player;
-            // playerFinished = false;
-        }, timeOut);
+        // setTimeout(function() {
+        //     currentPlayer = ai;
+        //     diceThrow(ai);
+        //     initiateAiMove();
+        //     currentPlayer = player;
+        //     // playerFinished = false;
+        // }, timeOut);
 
     }
 }
 
 function initiateAiMove() {
-    if (firstRound !== true) {
-        messageBox.innerHTML = `It's Jazzy Croc's turn. He threw: ${ai.result}!`;
-    } else {
-        firstRound = false;
-    }
+    currentPlayer = ai;
+    diceThrow(ai);
+    //     initiateAiMove();
 
-    board.style.visibility = 'hidden';
-    messageBox.style.visibility = 'visible';
+    if (firstRound === true) {
+        firstRound = false;
+        hideMessageBox();
+    } else {
+        messageBox.innerHTML = `JazzyCrock: ${ai.result}!`;
+    }
+    // board.style.visibility = 'hidden';
+    // messageBox.style.visibility = 'visible';
+    setTimeout(showMessageBox(), 500);
     messageBox.addEventListener('click', function() {
-        messageBox.style.visibility = 'hidden';
-        board.style.visibility = 'visible';
+        hideMessageBox();
         currentPlayerTurn(ai);
+        // currentPlayer = player;
     })
 }
 
@@ -343,7 +351,8 @@ function diceThrow(currentPlayer) {
  @param currentPlayer ai or player
  */
 function currentPlayerTurn(currentPlayer) {
-    let id = setInterval(function() { moveAvatar(currentPlayer) }, 250);
+    let id = setInterval(function() { moveAvatar(currentPlayer) }, 300);
+    firstRound = false;
 
     function moveAvatar(currentPlayer) {
         if (currentPlayer.position === currentPlayer.newPosition) {
@@ -371,33 +380,42 @@ function currentPlayerTurn(currentPlayer) {
  */
 function checkType(currentPlayer) {
     let field = document.getElementById(`f${currentPlayer.newPosition}`);
-    if (field.getAttribute('data-type') === 'snake') {
-        // snakeField = true;
-        document.getElementById(`${currentPlayer.name}-${currentPlayer.position}`).innerHTML = ""; // deletes avatar from current position;
-        moveIfSnake(currentPlayer);
-        document.getElementById(`${currentPlayer.name}-${currentPlayer.newPosition}`).innerHTML = currentPlayer.avatar;
-        if (currentPlayer === player) {
-            messageBox.innerHTML = "Ooops! There's a snake! Run away!";
-            showMessageBox();
-        } else {
-            messageBox.innerHTML = "Jazzy Croc found a snake!";
-            showMessageBox();
-        }
-    } else if (field.getAttribute('data-type') === 'ladder') {
-        specialField = true;
-        if (currentPlayer === player) {
-            messageBox.innerHTML = "Great, you found a ladder! Climb up!";
+    if (gameRunning) {
+        if (field.getAttribute('data-type') === 'snake') {
+            document.getElementById(`${currentPlayer.name}-${currentPlayer.position}`).innerHTML = ""; // deletes avatar from current position;
+            moveIfSnake(currentPlayer);
+            document.getElementById(`${currentPlayer.name}-${currentPlayer.newPosition}`).innerHTML = currentPlayer.avatar;
+            if (currentPlayer === player) {
+                messageBox.innerHTML = "Ooops! There's a snake! Run away!";
+                setTimeout(showMessageBox(), 400);
+                // showMessageBox();
+            } else {
+                messageBox.innerHTML = "Jazzy Croc found a snake!";
+                setTimeout(showMessageBox(), 400);
+                // showMessageBox();
+            }
 
-            showMessageBox();
+        } else if (field.getAttribute('data-type') === 'ladder') {
+            document.getElementById(`${currentPlayer.name}-${currentPlayer.position}`).innerHTML = ""; // deletes avatar from current position;
+            moveIfLadder(currentPlayer);
+            document.getElementById(`${currentPlayer.name}-${currentPlayer.newPosition}`).innerHTML = currentPlayer.avatar;
+            if (currentPlayer === player) {
+                messageBox.innerHTML = "Great, you found a ladder! Climb up!";
+                setTimeout(showMessageBox(), 400);
+                // showMessageBox();
+            } else {
+                messageBox.innerHTML = "Jazzy Croc found a ladder!";
+                setTimeout(showMessageBox(), 400);
+                // showMessageBox();
+            }
         } else {
-            messageBox.innerHTML = "Jazzy Croc found a ladder!";
-            showMessageBox();
+            checkIfWin(currentPlayer);
         }
-        document.getElementById(`${currentPlayer.name}-${currentPlayer.newPosition}`).innerHTML = "";
-        moveIfLadder(currentPlayer);
-        setTimeout(document.getElementById(`${currentPlayer.name}-${currentPlayer.newPosition}`).innerHTML = currentPlayer.avatar, 1000);
-    } else {
-        checkIfWin(currentPlayer);
+        currentPlayer !== ai ? currentPlayer = ai : currentPlayer = player;
+        if (currentPlayer === ai && firstRound === false && player.position !== 25) {
+            setTimeout(initiateAiMove(), 1500);
+            // initiateAiMove();
+        }
     }
 }
 
@@ -466,7 +484,7 @@ function checkIfWin(currentPlayer) {
             messageBox.innerHTML = "Sorry! You lost, try again!";
             setTimeout(showMessageBox(), 3000);
         }
-        setTimeout(function() { window.location.reload(true) }, 2000);
+        setTimeout(function() { window.location.reload(true) }, 1500);
 
 
     } else {
