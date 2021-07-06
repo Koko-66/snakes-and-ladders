@@ -64,7 +64,7 @@ function toggleInstructions() {
  * Toggles visibility of the board and controls;
  */
 function hideBoard() {
-    instructions.style.visibility !== 'visible' ? board.style.visibility = 'visible' : board.style.visibility = 'hidden';
+    instructions.style.display !== 'block' ? board.style.visibility = 'visible' : board.style.visibility = 'hidden';
 }
 
 
@@ -303,7 +303,7 @@ function initiateAiMove() {
         firstRound = false;
         hideMessageBox();
     } else {
-        messageBox.innerHTML = `JazzyCrock: ${ai.result}!`;
+        messageBox.innerHTML = `Jazzy Crock: ${ai.result}!`;
     }
     // board.style.visibility = 'hidden';
     // messageBox.style.visibility = 'visible';
@@ -479,10 +479,10 @@ function checkIfWin(currentPlayer) {
         gameRunning = false;
         if (currentPlayer === player) {
             messageBox.innerHTML = "Congratulations! You've won!";
-            setTimeout(showMessageBox(), 3000);
+            setTimeout(showMessageBox(), 5000);
         } else {
             messageBox.innerHTML = "Sorry! You lost, try again!";
-            setTimeout(showMessageBox(), 3000);
+            setTimeout(showMessageBox(), 5000);
         }
         setTimeout(function() { window.location.reload(true) }, 1500);
 
