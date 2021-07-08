@@ -3,7 +3,7 @@
 //variables to store avatars
 let blue = `<img src="assets/images/avatar_blue.png" alt="blue avatar" class="avatar">`;
 let yellow = `<img src="assets/images/avatar-yellow2.png" alt="yellow avatar" class="avatar">`;
-let evilBoy = `<img src="assets/images/JazzyCroc_black-backgr.png" alt="red avatar" class="avatar">`;
+let evilBoy = `<img src="assets/images/JazzyCroc_black-backgr.png" alt="Jazzy Croc's avatar" class="avatar croc">`;
 
 //objects to store players' positions, results, and avatar
 let player = {
@@ -25,14 +25,19 @@ let dice = document.getElementById('dice')
 let instructions = document.getElementById('instructions');
 let gameRunning = true;
 let board = document.getElementById('game-container');
-let messageBox = document.getElementById('message-box'); //div to display messages in rather than alerts
-// let aiTurnDiv = document.getElementById('ai-turn-info'); //variable for div to display message about ai turn and initiate turn on click
+let messageBox = document.getElementById('message-box'); //div to display messages in full screen rather than alerts
 let firstRound;
-// let playerFinished;
+let turnInfoVisible;
+let messageToggle = document.getElementById('turn-info-btn');
+
 
 // -----Events listeners ----
 
-//adds event listenter for instructions not to show on reloading; creates board (needs to be generated at this point otherwise board does not exist to palce the avatar into) and hides it
+/**
+ * Adds event listenter for instructions not to show on reloading; 
+creates board (needs to be generated at this point otherwise board does not exist to palce the avatar into) and hides it;
+checks localStorage for turnInfo and sets the content of the button accordingly
+*/
 document.addEventListener('DOMContentLoaded', function() {
     if (localStorage.getItem('instructionsShown')) {
         instructions.style.display = "none";
@@ -40,6 +45,13 @@ document.addEventListener('DOMContentLoaded', function() {
     createGameBoard();
     hideBoard();
     selectAvatar();
+    if (localStorage.getItem('turnInfo') === 'false'){
+        messageToggle.innerHTML = "TURN INFO off";
+    }else if (localStorage.getItem('turnInfo') === 'false'){
+        messageToggle.innerHTML = "TURN INFO on";
+    }else{
+        turnInfoVisible = true;
+    }  
 })
 
 //adds event listener to the dice
@@ -47,6 +59,18 @@ dice.addEventListener('click', round);
 
 //adds click event listener to message to hide it on clicking and initiate further steps
 messageBox.addEventListener('click', hideMessageBox);
+
+/**
+ * event lsitener for toggling message with information about Corc's result in between moves
+ */
+document.getElementById('turn-info-btn').addEventListener('click', function() {
+    turnInfoVisible !== true ? turnInfoVisible = true : turnInfoVisible = false;
+    console.log(turnInfoVisible);
+    turnInfoVisible !== true ? messageToggle.innerHTML = "Turn Info OFF" : messageToggle.innerHTML = "Turn Info ON";
+    localStorage.setItem('turnInfo', turnInfoVisible);
+})
+
+//----- General functions -----
 
 /**
  * Toggles show/hide of instructions and board, so that both are not shown at the same time
@@ -59,14 +83,12 @@ function toggleInstructions() {
     hideBoard();
 }
 
-
 /**
  * Toggles visibility of the board and controls;
  */
 function hideBoard() {
     instructions.style.display !== 'block' ? board.style.visibility = 'visible' : board.style.visibility = 'hidden';
 }
-
 
 /**
  * Hides startButton and shows Dice.
@@ -87,6 +109,7 @@ function checkForAvatar() {
         toggleInstructions();
     }
 }
+
 /**
  * Selects avatar on click and:
  * places it in the start field if none avatar has been selected before;
@@ -191,7 +214,6 @@ function fillBoard() {
         field.id = `f${i}`;
         i -= 1;
     }
-    // addResultHolders();
 }
 
 /**
@@ -276,45 +298,32 @@ function goesFirst() {
  * Runs one round made of Player and Ai Turn with delay for AI movement while gameRunning is true.
  */
 function round() {
-    // let timeOut = player.result * 300 + 1000;
-    // if (specialField === true) {
-    //     timeOut += 2000;
-    // }
     if (gameRunning) {
         currentPlayer = player;
         currentPlayerTurn(player);
-        // setTimeout(function() {
-        //     currentPlayer = ai;
-        //     diceThrow(ai);
-        //     initiateAiMove();
-        //     currentPlayer = player;
-        //     // playerFinished = false;
-        // }, timeOut);
-
     }
 }
 
+/**
+ * Initiates Ai move after checking if messages need to be displayed and if it's the first round
+ */
 function initiateAiMove() {
     currentPlayer = ai;
     diceThrow(ai);
-    //     initiateAiMove();
-
-    if (firstRound === true) {
-        firstRound = false;
-        hideMessageBox();
-    } else {
-        messageBox.innerHTML = `Jazzy Crock: ${ai.result}!`;
+    if (turnInfoVisible === true) {
+        if (firstRound === true) {
+            firstRound = false;
+            hideMessageBox();
+        } else {
+            messageBox.innerHTML = `Jazzy Crock: ${ai.result}`;
+        }
+        setTimeout(showMessageBox(), 500);
+        messageBox.addEventListener('click', function() {
+            hideMessageBox();
+        })
     }
-    // board.style.visibility = 'hidden';
-    // messageBox.style.visibility = 'visible';
-    setTimeout(showMessageBox(), 500);
-    messageBox.addEventListener('click', function() {
-        hideMessageBox();
-        currentPlayerTurn(ai);
-        // currentPlayer = player;
-    })
+    currentPlayerTurn(ai);
 }
-
 
 
 /** @generator generates random number between 1 and 6 for currentPlayer; */
@@ -324,10 +333,10 @@ function generateNumber() {
 
 /** 
 Simulates a dice throw 
-@param currentPlayer;
 *Generates a random number and pushes it to the result attribute of the current player and the resultHolders.
 *If current player is 'player', changes the image in the dice.
 *Computes the value of the new postion and pushes it to the newPosition attribute of the currentPlayer.
+@param currentPlayer;
 */
 function diceThrow(currentPlayer) {
     currentPlayer.result = generateNumber();
@@ -377,6 +386,7 @@ function currentPlayerTurn(currentPlayer) {
  * Checks the data-type in the field to determine if it contains snake/ladder or checks for win.
  * Calls moveIfSnake/moveIfLadder functions to compute the new postions as needed.
  * Moves the avatar into the newPosition.
+ * Initiates ai move
  */
 function checkType(currentPlayer) {
     let field = document.getElementById(`f${currentPlayer.newPosition}`);
@@ -411,10 +421,9 @@ function checkType(currentPlayer) {
         } else {
             checkIfWin(currentPlayer);
         }
-        currentPlayer !== ai ? currentPlayer = ai : currentPlayer = player;
+        currentPlayer !== ai ? currentPlayer = ai : currentPlayer = player; // swapps the player
         if (currentPlayer === ai && firstRound === false && player.position !== 25) {
-            setTimeout(initiateAiMove(), 1500);
-            // initiateAiMove();
+            setTimeout(initiateAiMove(), 1500); // initiates ai move if player set to ai
         }
     }
 }

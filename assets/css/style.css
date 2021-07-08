@@ -1,6 +1,8 @@
 @import url('https://fonts.googleapis.com/css2?family=Viaoda+Libre&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Benne&family=Roboto&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@400&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Otomanopee+One&display=swap');
+
 
 /* ---General--- */
 
@@ -58,7 +60,7 @@ footer {
 /* Main heading (used in the header) */
 
 h1 {
-    /* font-family: 'Viaoda Libre', cursive; */
+    font-family: 'Otomanopee One', sans-serif;
     font-size: 30px;
     text-align: center;
     margin: auto 0;
@@ -88,6 +90,7 @@ h2 {
 /* Div for messages displaying during the game */
 
 .message-box {
+    font-family: 'Otomanopee One', sans-serif;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -129,8 +132,8 @@ button:hover {
 #instructions {
     display: block;
     line-height: 1.3em;
-    font-size: 1.1em;
-    font-family: 'Source Sans Pro', sans-serif;
+    /* font-size: 1.1em; */
+    font-family: 'Otomanopee One', sans-serif;
     text-align: center;
 }
 
@@ -214,8 +217,10 @@ button:hover {
 .controls {
     width: 70px;
     height: 70px;
-    /* margin: 5px; */
     padding: 5px;
+    font-family: 'Otomanopee One', sans-serif;
+    list-style: 1.2em;
+    font-size: 0.75em;
 }
 
 #lets-go {
@@ -394,7 +399,7 @@ img.ladder {
         margin: 0 20px;
     }
     #start-game-btn {
-        margin: 0 20px;
+        margin: 20px 20px;
     }
     /* displays buttons and dice in one line */
     #controls-container {
@@ -402,9 +407,10 @@ img.ladder {
         flex-direction: row-reverse;
         justify-content: center;
     }
-    button {
-        margin: 0 20px;
+    .controls {
+        margin: 20px 20px;
     }
+
 }
 
 @media screen and (max-width: 510px) {
@@ -419,14 +425,11 @@ img.ladder {
         width: auto;
     }
     .field {
-        /* width: 65px; */
-        /* height: 65px; */
         margin: 3px;
-        /* padding: 5px; */
     }
     #game-area {
         padding: 5px;
-        padding-top: 20px;
+        /* padding-top: 20px; */
     }
     #game-container {
         padding: 0;
@@ -476,7 +479,12 @@ img.ladder {
     img.avatar {
         width: 20px;
         height: 20px;
+        margin: auto;
     }
+    .croc {
+        margin-left: -10px;
+    }
+
     img.snake {
         top: 50px;
         height: 45px;
@@ -497,7 +505,8 @@ img.ladder {
     .controls {
         width: 60px;
         height: 60px;
-        font-size: 0.85em;
+        font-size: 0.75em;
+        line-height: 1.2;
     }
     .message-box {
         font-size: 26px;
@@ -529,7 +538,6 @@ img.ladder {
         font-size: 24px;
     }
     .far {
-        /* color: #B13477; */
         font-size: large;
         padding-left: 5px;
     }
@@ -539,19 +547,15 @@ img.ladder {
     .field {
         width: 45px;
         height: 45px;
-        /* margin: 2px;
-            padding: 3px; */
         font-size: 22px;
     }
     img.snake {
         top: 40px;
         height: 45px;
         margin-bottom: 10px;
-        /* right: 25px; */
     }
     img.ladder {
         bottom: 30px;
-        /* margin-left: 10px; */
         height: 50px;
         width: 50%;
     }
@@ -563,7 +567,11 @@ img.ladder {
     .controls {
         width: 55px;
         height: 55px;
-        font-size: 0.8em;
+        font-size: 0.7em;
+        margin: 10px 10px;
+    }
+    #start-game-btn {
+        margin: 10px 10px;
     }
     .message-box {
         font-size: 20px;
