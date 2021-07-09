@@ -89,6 +89,7 @@ Snakes and Ladders brings the popular board game to the screen. The game is aime
 - CSS
   - No errors were found when passing through the official [(Jigsaw) validator](https://jigsaw.w3.org/css-validator)
 
+
 ### Bugs and Fixes
 
 During the development and testing the game various bugs appeared. A summary of most important ones can be found below: 
@@ -99,7 +100,7 @@ During the development and testing the game various bugs appeared. A summary of 
 2. Various issues with hidding board and game buttons (Start button, Dice and Reset Button) when showing full screen messages and instruction text. 
 	__FIXED__ Removed div for AI's turn message and showing all messages using the same 'message-box' div (otherwise, if both coinicinding clicking the one on top would unhide the board while still showing the second message) and eventually hiding the 'game-container' div rather than just 'game-board' div to solve issues with Dice and Reset Game being visible.
 
-3. Game could be initiated even if avatar is not selected, resulting in the avatar showing as 'null' instead of an image. 	__FIXED__ Added checkForAvatar() function to the Let's go button, which displays a "Choose avatar!" message and prevents the Instructions from closing. This way the player cannot start the game until one of the avatars is selected.
+3. Game could be initiated even if avatar is not selected, resulting in the avatar showing as 'null' instead of an image. 	  	  __FIXED__ Added checkForAvatar() function to the Let's go button, which displays a "Choose avatar!" message and prevents the Instructions from closing. This way the player cannot start the game until one of the avatars is selected.
 
 4. Changing avatar while game started causes duplication of avatar and its placement in the first field. 
 	__FIXED__ Adjusted SelectAvatar() function to place the avatar in its current field rather than f1 and in f1 only if no avatar has been previously selected.
@@ -119,6 +120,10 @@ During the development and testing the game various bugs appeared. A summary of 
 9. On first starting the game after loading the page for the first time 'Choose avatar' message showing briefly. 
 	__FIXED__ Cleared message content as a first step of goesFirst().
 
+<!-- 10. After deploying, it appears that the link to the dice image is broken
+ __FIXED__ Removed ../ from the start of the path -->
+
+
 
 <!-- ### Unfixed Bugs
 
@@ -129,7 +134,8 @@ You will need to mention unfixed bugs and why they were not fixed. This section 
 
 - The site was deployed to GitHub pages. The steps to deploy are as follows: 
   - In the GitHub repository, navigate to the Settings tab 
-  - From the source section drop-down menu, select the Master Branch
+	<!-- - Select Pages -->
+  <!-- - From the source section drop-down menu, select the Master Branch / root (without theme) -->
   - Once the master branch has been selected, the page will be automatically refreshed with a detailed ribbon display to indicate the successful deployment. 
 
 The live link can be found here: 
