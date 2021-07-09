@@ -25,6 +25,7 @@ let dice = document.getElementById('dice')
 let instructions = document.getElementById('instructions');
 let gameRunning = true;
 let board = document.getElementById('game-container');
+let header = document.getElementById('header');
 let messageBox = document.getElementById('message-box'); //div to display messages in full screen rather than alerts
 let firstRound;
 let turnInfoVisible;
@@ -39,12 +40,17 @@ creates board (needs to be generated at this point otherwise board does not exis
 checks localStorage for turnInfo and sets the content of the button accordingly
 */
 document.addEventListener('DOMContentLoaded', function() {
-    if (localStorage.getItem('instructionsShown')) {
-        instructions.style.display = "none";
-    }
     createGameBoard();
-    hideBoard();
     selectAvatar();
+    if (localStorage.getItem('instructionsShown')) {
+        instructions.style.display = 'none';
+        // board.style.visibility = 'visbile';
+        toggleBoard();
+    }else{ // cannot use toggle here
+        board.style.visibility = 'hidden';
+        header.style.visibility = 'hidden'
+    }
+
     if (localStorage.getItem('turnInfo') === 'false'){
         messageToggle.innerHTML = "TURN INFO off";
     }else if (localStorage.getItem('turnInfo') === 'false'){
@@ -66,7 +72,7 @@ messageBox.addEventListener('click', hideMessageBox);
 document.getElementById('turn-info-btn').addEventListener('click', function() {
     turnInfoVisible !== true ? turnInfoVisible = true : turnInfoVisible = false;
     console.log(turnInfoVisible);
-    turnInfoVisible !== true ? messageToggle.innerHTML = "Turn Info OFF" : messageToggle.innerHTML = "Turn Info ON";
+    turnInfoVisible !== true ? messageToggle.innerHTML = "TURN INFO off" : messageToggle.innerHTML = "TURN INFO on";
     localStorage.setItem('turnInfo', turnInfoVisible);
 })
 
@@ -80,15 +86,17 @@ document.getElementById('turn-info-btn').addEventListener('click', function() {
 function toggleInstructions() {
     instructions.style.display !== 'none' ? instructions.style.display = 'none' : instructions.style.display = 'block';
     localStorage.setItem('instructionsShown', 'true');
-    hideBoard();
+    instructions.style.display !== 'none' ? board.style.visibility = 'hidden' : board.style.visibility = 'visible';
 }
-
 /**
- * Toggles visibility of the board and controls;
+ * Toggles visibility of the board, control buttons (dice, reset, start nad turn info) and header depending on the visibilyt of the instrucitons and messages;
  */
-function hideBoard() {
+ function toggleBoard() {
     instructions.style.display !== 'block' ? board.style.visibility = 'visible' : board.style.visibility = 'hidden';
-}
+    instructions.style.display !== 'block' ? header.style.visibility = 'visible' : header.style.visibility = 'hidden';
+    messageBox.style.visibility !== 'visible' ? board.style.visibility = 'visible' : board.style.visibility = 'hidden';
+    messageBox.style.visibility !== 'visible' ? header.style.visibility = 'visible' : header.style.visibility = 'hidden';
+} 
 
 /**
  * Hides startButton and shows Dice.
@@ -98,6 +106,7 @@ function showDice() {
     startButton.style.display = 'none';
     dice.style.display = 'block';
 }
+
 /**
  * Checks if avatar is selected on loading and if not, prevents moving forward to the game.
  */
@@ -141,6 +150,7 @@ function selectAvatar() {
                 localStorage.setItem('playerAvatar', player.avatar);
             }
             toggleInstructions();
+            toggleBoard();
         })
 
         player.avatar = localStorage.getItem('playerAvatar');
@@ -236,7 +246,11 @@ function addResult(currentPlayer) {
  */
 function showMessageBox() {
     messageBox.style.visibility = 'visible';
-    board.style.visibility = 'hidden';
+    // board.style.visibility = 'hidden';
+    toggleBoard();
+    if (messageBox.innerHTML === "Choose an avatar"){
+        instructions.style.visibility = 'hidden';
+    }
 }
 
 /**
@@ -245,15 +259,21 @@ function showMessageBox() {
 function hideMessageBox() {
     if (firstRound === true && currentPlayer === ai) {
         messageBox.style.visibility = 'hidden';
-        board.style.visibility = 'visible';
+        toggleBoard();
+        // board.style.visibility = 'visible';
+        
         currentPlayerTurn(currentPlayer);
     } else if (currentPlayer === ai) {
         messageBox.style.visibility = 'hidden';
-        board.style.visibility = 'visible';
-        // initiateAiMove()
-    } else {
+        // board.style.visibility = 'visible';
+        toggleBoard();
+    }else if (messageBox.innerHTML === "Choose an avatar"){
         messageBox.style.visibility = 'hidden';
-        board.style.visibility = 'visible';
+        instructions.style.visibility = 'visible'; // specific case, cannot use toggle here
+    }else{
+        messageBox.style.visibility = 'hidden';
+        // board.style.visibility = 'visible';
+        toggleBoard();
     }
 }
 
