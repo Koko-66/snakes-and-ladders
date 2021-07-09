@@ -359,7 +359,7 @@ function diceThrow(currentPlayer) {
     currentPlayer.result = generateNumber();
     let result = currentPlayer.result;
     if (currentPlayer === player) {
-        dice.innerHTML = `<img src="../assets/images/Dice-${result}-b.svg.png" alt="Dice result ${result}">`;
+        dice.innerHTML = `<img src="assets/images/Dice-${result}-b.svg.png" alt="Dice result ${result}">`;
         addResult(player);
         currentPlayer.newPosition = currentPlayer.position + result;
     } else {
