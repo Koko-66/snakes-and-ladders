@@ -250,7 +250,7 @@ button:hover {
     margin: 0 auto;
     padding: 20px;
     border: rgba(0, 0, 0, 0, 0.7) solid 1px;
-    visibility: hidden;
+    visibility: visible;
 }
 
 
