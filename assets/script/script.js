@@ -53,11 +53,11 @@ document.addEventListener('DOMContentLoaded', function() {
 
     if (localStorage.getItem('turnInfo') === 'false'){
         messageToggle.innerHTML = "TURN INFO off";
-    }else if (localStorage.getItem('turnInfo') === 'false'){
-        messageToggle.innerHTML = "TURN INFO on";
+        turnInfoVisible = false
     }else{
-        turnInfoVisible = true;
-    }  
+        messageToggle.innerHTML = "TURN INFO on";
+        turnInfoVisible = true; 
+    }
 })
 
 //adds event listener to the dice
@@ -259,20 +259,16 @@ function showMessageBox() {
 function hideMessageBox() {
     if (firstRound === true && currentPlayer === ai) {
         messageBox.style.visibility = 'hidden';
-        toggleBoard();
-        // board.style.visibility = 'visible';
-        
+        toggleBoard(); 
         currentPlayerTurn(currentPlayer);
     } else if (currentPlayer === ai) {
         messageBox.style.visibility = 'hidden';
-        // board.style.visibility = 'visible';
         toggleBoard();
     }else if (messageBox.innerHTML === "Choose an avatar"){
         messageBox.style.visibility = 'hidden';
         instructions.style.visibility = 'visible'; // specific case, cannot use toggle here
     }else{
         messageBox.style.visibility = 'hidden';
-        // board.style.visibility = 'visible';
         toggleBoard();
     }
 }
@@ -443,7 +439,7 @@ function checkType(currentPlayer) {
         }
         currentPlayer !== ai ? currentPlayer = ai : currentPlayer = player; // swapps the player
         if (currentPlayer === ai && firstRound === false && player.position !== 25) {
-            setTimeout(initiateAiMove(), 1500); // initiates ai move if player set to ai
+                setTimeout(initiateAiMove(), 1500); // initiates ai move if player set to ai
         }
     }
 }
