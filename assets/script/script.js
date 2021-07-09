@@ -54,8 +54,6 @@ document.addEventListener('DOMContentLoaded', function() {
     if (localStorage.getItem('turnInfo') === 'false'){
         messageToggle.innerHTML = "TURN INFO off";
         turnInfoVisible = false
-//     }else if (localStorage.getItem('turnInfo') === 'true'){
-//         messageToggle.innerHTML = "TURN INFO on";
     }else{
         messageToggle.innerHTML = "TURN INFO on";
         turnInfoVisible = true; 
@@ -261,20 +259,16 @@ function showMessageBox() {
 function hideMessageBox() {
     if (firstRound === true && currentPlayer === ai) {
         messageBox.style.visibility = 'hidden';
-        toggleBoard();
-        // board.style.visibility = 'visible';
-        
+        toggleBoard(); 
         currentPlayerTurn(currentPlayer);
     } else if (currentPlayer === ai) {
         messageBox.style.visibility = 'hidden';
-        // board.style.visibility = 'visible';
         toggleBoard();
     }else if (messageBox.innerHTML === "Choose an avatar"){
         messageBox.style.visibility = 'hidden';
         instructions.style.visibility = 'visible'; // specific case, cannot use toggle here
     }else{
         messageBox.style.visibility = 'hidden';
-        // board.style.visibility = 'visible';
         toggleBoard();
     }
 }
@@ -291,7 +285,7 @@ function hideMessageBox() {
  Moves the avatar of the player who goes first.
  */
 function goesFirst() {
-    messageBox.innerHTML = ''; 
+    messageBox.innerHTML = '';
     firstRound = true;
     diceThrow(player);
     diceThrow(ai);
@@ -446,14 +440,13 @@ function checkType(currentPlayer) {
         }
         currentPlayer !== ai ? currentPlayer = ai : currentPlayer = player; // swapps the player
         if (currentPlayer === ai && firstRound === false && player.position !== 25) {
-            setTimeout(initiateAiMove(), 1500); // initiates ai move if player set to ai
+                setTimeout(initiateAiMove(), 1500); // initiates ai move if player set to ai
         }
     }
 }
 
 /**
  Computes the newPosition for the currentPlayer if the field contains a snake. Considers the fields by columns and adjusts the number according the pattern:
-
 *to check for numbers 8, 13, 18, 23 take away 3 and check %5, then adjust position by -5;
 *to check for numbers 6, 11, 16 take away 1 and check %5, then adjust position by -1;
  * to check for numbers 7, 12, 17 take away 2 and check %5, then adjust position by -3;
