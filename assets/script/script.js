@@ -285,6 +285,7 @@ function hideMessageBox() {
  Moves the avatar of the player who goes first.
  */
 function goesFirst() {
+    messageBox.innerHTML = '';
     firstRound = true;
     diceThrow(player);
     diceThrow(ai);
