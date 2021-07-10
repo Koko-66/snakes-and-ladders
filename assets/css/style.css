@@ -14,6 +14,7 @@
 
 body {
   color: rgba(0, 0, 0, 0, 0.7);
+  /* font-family: 'Viaoda Libre', cursive; */
   font-family: "Benne", serif;
   font-size: 18px;
   background: url("../images/fronds-1869757_1920.jpg");
@@ -158,11 +159,11 @@ p {
   width: 50%;
 }
 
-.avatar {
+.avatar-instructions {
   margin: 5px auto;
 }
 
-.avatar img {
+.avatar-instructions img {
   border: #fafafa solid 2px;
   background: rgba(0, 0, 0, 0.7);
   /* width: 70px; */
@@ -171,7 +172,7 @@ p {
   border-radius: 50%;
 }
 
-.avatar:hover {
+.avatar-instructions:hover {
   transform: scale(200%);
 }
 
@@ -308,6 +309,9 @@ img.avatar {
   background: #fafafa;
 }
 
+.avatar:hover {
+    transform: scale(150%);
+}
 img.snake,
 img.ladder {
   background: none;
