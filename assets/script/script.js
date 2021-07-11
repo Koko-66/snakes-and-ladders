@@ -27,6 +27,7 @@ let gameRunning = true;
 let board = document.getElementById("game-container");
 let header = document.getElementById("header");
 let messageBox = document.getElementById("message-box"); //div to display messages in full screen rather than alerts
+let messageText = document.getElementById("message-content");
 let firstRound;
 let snake1;
 let snake2;
@@ -64,6 +65,12 @@ dice.addEventListener("click", function () {
 
 //adds click event listener to message to hide it on clicking and initiate further steps
 messageBox.addEventListener("click", hideMessageBox);
+
+//Adds event listener to close button for instructions
+document.getElementById("close-instructions").addEventListener("click", toggleInstructions);
+
+//Adds event listenter to close button for message box (who starts and who wins messages)
+document.getElementById("close-message").addEventListener("click", hideMessageBox);
 
 //----- General functions -----
 
@@ -113,7 +120,7 @@ function showDice() {
  */
 function checkForAvatar() {
   if (player.avatar === null) {
-    messageBox.innerHTML = "Choose an avatar";
+    messageText.innerHTML = "Choose an avatar";
     showMessageBox();
   } else {
     toggleInstructions();
@@ -298,7 +305,7 @@ function showMessageBox() {
   messageBox.style.visibility = "visible";
   // board.style.visibility = 'hidden';
   toggleBoard();
-  if (messageBox.innerHTML === "Choose an avatar") {
+  if (messageText.innerHTML === "Choose an avatar") {
     instructions.style.visibility = "hidden";
   }
 }
@@ -314,7 +321,7 @@ function hideMessageBox() {
   } else if (currentPlayer === ai) {
     messageBox.style.visibility = "hidden";
     toggleBoard();
-  } else if (messageBox.innerHTML === "Choose an avatar") {
+  } else if (messageText.innerHTML === "Choose an avatar") {
     messageBox.style.visibility = "hidden";
     instructions.style.visibility = "visible"; // specific case, cannot use toggle here
   } else {
@@ -333,27 +340,27 @@ function hideMessageBox() {
  Moves the avatar of the player who goes first.
  */
 function goesFirst() {
-  messageBox.innerHTML = "";
+    messageText.innerHTML = "";
   firstRound = true;
   diceThrow(player);
   diceThrow(ai);
   if (player.result === ai.result) {
     //message box needs to be delayed till diceThrow(ai) executes to prevent ai result showing as 0;
     setTimeout(function () {
-      messageBox.innerHTML = `You: ${player.result}<br>Jazzy Croc: ${ai.result}<br><br>It's a tie! Try again!`;
+        messageText.innerHTML = `You: ${player.result}<br>Jazzy Croc: ${ai.result}<br><br>It's a tie! Try again!`;
     }, 300);
   } else if (player.result > ai.result) {
     currentPlayer = player;
     showDice();
     setTimeout(function () {
-      messageBox.innerHTML = `You: ${player.result}<br>Jazzy Croc: ${ai.result}<br><br>You're going first! Throw the dice!`;
+        messageText.innerHTML = `You: ${player.result}<br>Jazzy Croc: ${ai.result}<br><br>You're going first! Throw the dice!`;
     }, 300);
     // addResult(player);
   } else {
     currentPlayer = ai;
     showDice();
     setTimeout(function () {
-      messageBox.innerHTML = `You: ${player.result}<br>Jazzy Croc: ${ai.result}<br><br>Jazzy Croc is going first!`;
+        messageText.innerHTML = `You: ${player.result}<br>Jazzy Croc: ${ai.result}<br><br>Jazzy Croc is going first!`;
     }, 300);
   }
   showMessageBox();
@@ -461,13 +468,6 @@ function checkType(currentPlayer) {
       document.getElementById(
         `${currentPlayer.name}-${currentPlayer.newPosition}`
       ).innerHTML = currentPlayer.avatar;
-    //   if (currentPlayer === player) {
-    //     messageBox.innerHTML = "Ooops! There's a snake! Run away!";
-    //     setTimeout(showMessageBox(), 400);
-    //   } else {
-    //     messageBox.innerHTML = "Jazzy Croc found a snake!";
-    //     setTimeout(showMessageBox(), 400);
-    //   }
     } else if (field.getAttribute("data-type") === "ladder") {
       document.getElementById(
         `${currentPlayer.name}-${currentPlayer.position}`
@@ -476,13 +476,6 @@ function checkType(currentPlayer) {
       document.getElementById(
         `${currentPlayer.name}-${currentPlayer.newPosition}`
       ).innerHTML = currentPlayer.avatar;
-    //   if (currentPlayer === player) {
-    //     messageBox.innerHTML = "Great, you found a ladder! Climb up!";
-    //     setTimeout(showMessageBox(), 400);
-    //   } else {
-    //     messageBox.innerHTML = "Jazzy Croc found a ladder!";
-    //     setTimeout(showMessageBox(), 400);
-    //   }
     } else {
       checkIfWin(currentPlayer);
     }
@@ -568,10 +561,10 @@ function checkIfWin(currentPlayer) {
   if (currentPlayer.position == 25) {
     gameRunning = false;
     if (currentPlayer === player) {
-      messageBox.innerHTML = "Congratulations! You won!";
+        messageText.innerHTML = "Congratulations! You won!";
       setTimeout(showMessageBox(), 5000);
     } else {
-      messageBox.innerHTML = "Sorry! You lost, try again!";
+        messageText.innerHTML = "Sorry! You lost, try again!";
       setTimeout(showMessageBox(), 5000);
     }
     setTimeout(function () {
