@@ -27,7 +27,7 @@
         src="assets/images/JazzyCroc_no-backgr.png"
         alt="Jazzy Crock's avatar"
       />
-      <!-- nav not needed for this game -->
+      <!-- nav not needed -->
       <h1>Snakes and Ladders</h1>
       <i class="far fa-question-circle" onclick="toggleInstructions()"></i>
     </header>
@@ -52,27 +52,22 @@
           <strong>START GAME</strong>&nbsp;button.
         </p>
         <p>
-          If you are going first, throw the dice. Be polite, and wait for Jazzy
-          Crock to move before throwing the dice&nbsp;again.
+          If you are going first, throw the dice. Wait for Jazzy Crock to move
+          before throwing the dice&nbsp;again.
         </p>
         <p>
-          Try to find a <strong>LADDER</strong>, it will help you reach the
-          end&nbsp;quicker.
+          Try to find a <strong>LADDER</strong>, you will move one field up and
+          can reach the end&nbsp;quicker.
         </p>
         <p>
           But be careful! If you come accross a <strong>SNAKE</strong>, you will
-          need to run&nbsp;away.
-        </p>
-        <p>
-          You can turn the pop up with information about Croc's move off by
-          clicking <strong>Turn Info</strong> toggle button at any time during
-          the&nbsp;game.
+          need to run away and will move one field&nbsp;down.
         </p>
         <br />
         <p>Choose Your avatar, Blue or&nbsp;Sunny:</p>
         <div id="avatars">
           <!-- Div with player avatars to chose from -->
-          <!-- attirbute 'data-avatar-color' added to grab element by attribute when selecting -->
+          <!-- Attirbute 'data-avatar-color' added to grab element by attribute when selecting -->
           <div
             id="avatar2"
             data-avatar-color="blue"
@@ -97,7 +92,7 @@
         <br />
         <p>Good luck!</p>
         <br />
-        <!-- Button checking for avatar and hiding instruction, if true -->
+        <!-- Clicking the button initiates function checking if avatar is selected and hides instruction, if true; otherwise a message 'Choose avatar' appears -->
         <button id="lets-go" onclick="checkForAvatar()">Let's play!</button>
       </div>
     </section>
@@ -105,12 +100,14 @@
     <section id="message-holder">
       <div id="message-box" class="message-box full-screen">
         <div id="message-content">
-          <!-- div to display start and end of game messages as full screen -->
+          <!-- div where mesages created in JavaScript will appear (start and end of game messages); displayed as full screen -->
         </div>
+        <!-- 'x' font awesome icon for closing the message box -->
         <i id="close-message" class="fas fa-times"></i>
       </div>
     </section>
 
+    <!-- section with game board and controls (buttons) -->
     <section id="game-area">
       <div id="game-container">
         <div id="game-board">
@@ -133,7 +130,7 @@
           >
             START Game
           </button>
-          <!-- Reloads the page and resets everything -->
+          <!-- Resetn button reloads the page and resets everything -->
           <button
             id="reset-btn"
             onclick="window.location.reload(true)"
@@ -144,6 +141,7 @@
         </div>
       </div>
     </section>
+    <!-- Footer with author's info -->
     <footer>made by&nbsp;<span>kokoMedia</span></footer>
 
     <script src="assets/script/script.js"></script>
