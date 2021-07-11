@@ -2,7 +2,7 @@
 @import url("https://fonts.googleapis.com/css2?family=Otomanopee+One&display=swap");
 @import url("https://fonts.googleapis.com/css2?family=Festive&display=swap");
 
-/* ---General--- */
+/* ---General styling--- */
 
 * {
   margin: 0;
@@ -10,11 +10,8 @@
   border: 0;
 }
 
-/* Body*/
-
 body {
   color: rgba(0, 0, 0, 0, 0.7);
-  /* font-family: 'Viaoda Libre', cursive; */
   font-family: "Benne", serif;
   font-size: 18px;
   background: url("../images/fronds-1869757_1920.jpg");
@@ -23,27 +20,21 @@ body {
   color: white;
 }
 
-/* Header */
-
+  /*Flex styling to show Help icon in line with text*/
 header {
-  /*flex styling to show Help icon in line with text*/
   display: flex;
   align-items: center;
   justify-content: center;
   padding-top: 20px;
   height: 90px;
   width: 100%;
-  /* margin-left: -3%; */
   visibility: visible;
 }
 
-/* Jazzy Croc picture in the header */
-
+/* Jazzy Croc's picture in the header */
 header img {
   height: inherit;
 }
-
-/*Footer*/
 
 footer {
   position: fixed;
@@ -52,12 +43,12 @@ footer {
   font-size: 0.8em;
 }
 
+/* Font styling for author name */
 footer span {
   font-family: "Festive", cursive;
 }
 
-/* Main heading (used in the header) */
-
+/* Game title */
 h1 {
   font-family: "Otomanopee One", sans-serif;
   font-size: 30px;
@@ -65,15 +56,27 @@ h1 {
   margin: auto 0;
 }
 
-/* Heading 2 (used in the intructions box) */
-
+/* Heading for Instructions */
 h2 {
   text-decoration: underline;
   font-size: 22px;
 }
 
-/*Styling for instructions and game messages to show as full screen*/
+/* Styling for all game buttons */
+button {
+  display: block;
+  border: black solid 1px;
+  border-radius: 10px;
+  height: 2.5em;
+  width: 30%;
+  font-size: inherit;
+  font-family: inherit;
+  background-color: rgba(165, 20, 108, 0.85);
+  color: white;
+  margin-top: 30px;
+}
 
+/* Styling for instructions and game messages to show as full screen */
 .full-screen {
   position: fixed;
   top: 0;
@@ -84,8 +87,9 @@ h2 {
   overflow: scroll;
 }
 
-/* Div for messages displaying during the game */
+/* ---Message box--- */
 
+/* Styling for div messages displaying during the game */
 .message-box {
   font-family: "Otomanopee One", sans-serif;
   display: flex;
@@ -99,32 +103,30 @@ h2 {
   line-height: 1.3em;
 }
 
+/* 'x' icon to close message box */
 #close-message {
   margin-top: 50px;
   font-size: large;
 }
 
-/* ---Header--- */
+/*---Header---*/
 
-/* Help icon*/
-
+/* Help icon */
 .far {
   color: #b13477;
   font-size: xx-large;
   padding-left: 15px;
 }
 
-/* Help icon on hover */
-
+/* Increases the size of help icon and all buttons on hover */
 .far:hover,
 button:hover {
   transform: scale(120%);
 }
 
-/* ---Instructions box--- */
+/*---Instructions box---*/
 
 /* Instructions section */
-
 #instructions {
   display: block;
   line-height: 1.3em;
@@ -133,11 +135,11 @@ button:hover {
 }
 
 /* div holding the intructions content */
-
 #instructions-container {
   padding-top: 10vh;
 }
 
+/* 'x' icon for closing instructions box */
 #close-instructions {
   float: right;
   margin-top: -50px;
@@ -145,13 +147,11 @@ button:hover {
 }
 
 /* padding for paragraphs in the instructions box */
-
 p {
   padding: 0 20px;
 }
 
 /* Note text in the instructions box */
-
 #note {
   font-size: 0.9em;
   font-style: italic;
@@ -159,10 +159,9 @@ p {
   padding-bottom: 10px;
 }
 
-/* --Avatars for player in the instructions box-- */
+/* ---Avatars for player in the instructions box--- */
 
 /* Div for avatars (flext to show in line) */
-
 #avatars {
   display: flex;
   flex-direction: row;
@@ -186,26 +185,7 @@ p {
   transform: scale(200%);
 }
 
-/* Sytling for "Let's go" button */
-
-button {
-  display: block;
-  border: black solid 1px;
-  border-radius: 10px;
-  height: 2.5em;
-  width: 30%;
-  font-size: inherit;
-  font-family: inherit;
-  background-color: rgba(165, 20, 108, 0.85);
-  color: white;
-  margin-top: 30px;
-}
-
-/* adds hover effect to all buttons */
-
-button:hover {
-  transform: scale(120%);
-}
+/* ---Game buttons and controls--- */
 
 .controls {
   width: 70px;
@@ -221,14 +201,14 @@ button:hover {
   margin-bottom: 30px;
 }
 
-/* ---Main game area */
+/* ---Main game area--- */
 
 /* game area section */
-
 #game-area {
   margin: auto;
 }
 
+/* div containing the board, start/dice and reset buttons */
 #game-container {
   display: flex;
   width: max-content;
@@ -238,8 +218,7 @@ button:hover {
   visibility: visible;
 }
 
-/* div at the top of the board to hold results */
-
+/* div at the top of the board to holding results for Croc and Player */
 #results {
   display: flex;
   flex-direction: row;
@@ -251,6 +230,7 @@ button:hover {
   margin-right: 30px;
 }
 
+/* Game-board only*/
 #game-board {
   float: left;
   width: auto;
@@ -259,6 +239,7 @@ button:hover {
   margin-left: 5%;
 }
 
+/* Div on top and bottom of the board with START / END and results */
 .board-edge {
   height: 1em;
   font-size: 1.5em;
@@ -266,19 +247,20 @@ button:hover {
   padding-top: 10px;
 }
 
+/* Div at the top of the board with END and results */
 #wrapping-top {
   display: flex;
   justify-content: flex-end;
   border-bottom: none;
 }
 
-/*game board styling */
-
+/* Styling for a board row; has to be flex needed to allow numbers to flow corrctly once generated by JavaScript */
 .board-row {
   display: flex;
   flex-direction: row;
 }
 
+/* Styling for a board field; requires fixed height and width (not a % value) to display correctly */
 .field {
   display: flex;
   align-items: flex-end;
@@ -290,13 +272,12 @@ button:hover {
   border-radius: 10%;
   text-align: right;
   vertical-align: bottom;
-  margin: 5px;
+  margin: 5px; /* adds space between individual fields */
   padding: 5px;
   font-size: 28px;
 }
 
-/* Styling for avatars when on the board */
-
+/* ---Styling for avatars when on the board--- */
 img.avatar {
   border: #fafafa solid 1px;
   background: rgba(0, 0, 0, 0.9);
@@ -309,15 +290,18 @@ img.avatar {
   justify-content: flex-end;
 }
 
-/* croc's image */
+/* Croc's image */
 .ai img {
   border: rgba(0, 0, 0, 0.7) solid 1px;
   background: #fafafa;
 }
 
+/* Increases the size of avatar on hover */
 .avatar:hover {
   transform: scale(150%);
 }
+
+/* --Images shown on the board-- */
 img.snake,
 img.ladder {
   background: none;
@@ -330,18 +314,15 @@ img.ladder {
 img.snake {
   top: 50px;
   height: 65px;
-  /* right: 25px; */
 }
 
 img.ladder {
   bottom: 35px;
   left: 0px;
   height: 80px;
-  /* width: 60%; */
 }
 
-/* Styles for start and end fields */
-
+/* Styles for the first and the last field */
 #f1,
 #f25 {
   background-color: rgba(40, 143, 144, 0.8);
@@ -349,15 +330,18 @@ img.ladder {
   color: #fafafa;
 }
 
+/* Moves the start button to the middle of the height of the board on larger devices */
 #start-game-btn {
   margin-top: 200px;
 }
 
+/* Moves the dice in the same position as Start button and hides it as default (on loading page) */
 .dice {
   display: none;
   margin-top: 200px;
 }
 
+/* Aligns dice image with its container */
 .dice img {
   width: 70px;
   height: 70px;
@@ -365,7 +349,7 @@ img.ladder {
   margin: -5px;
 }
 
-/* Adds animation to start button and dice to indicate required action */
+/* --Adds pulsing effect to start button and dice to indicate required-- */
 @keyframes pulse {
   from {
     transform: scale(1);
@@ -391,8 +375,7 @@ img.ladder {
 /* ----Media queries for different sizes of screen---- */
 
 @media screen and (max-width: 650px) {
-  /* Changes display of the dice, start and reset buttons to show under the board*/
-
+  /* --Changes display of the dice, start and reset buttons to show under the board-- */
   #instructions-container {
     padding-top: 5vh;
   }
@@ -401,23 +384,28 @@ img.ladder {
     display: flex;
     flex-direction: column;
   }
+
   #game-board {
     margin-left: 0;
     padding: 0px;
     padding-top: 20px;
   }
+
   .dice {
     margin: 0 20px;
   }
+
   #start-game-btn {
     margin: 20px 20px;
   }
+
   /* displays buttons and dice in one line */
   #controls-container {
     display: flex;
     flex-direction: row-reverse;
     justify-content: center;
   }
+
   .controls {
     margin: 20px 20px;
   }
@@ -428,25 +416,33 @@ img.ladder {
     font-size: 26px;
     margin-left: -5px;
   }
+
   header img {
     height: 90%;
     width: auto;
   }
+
+  /* Adjusts placement of the help icon */
   .far {
     padding: 0 12px;
   }
+
   .field {
     margin: 3px;
   }
+
   #game-area {
     padding: 5px;
   }
+
   #game-container {
     padding: 0;
   }
+
   .board-edge {
     font-size: 1.4em;
   }
+
   #instructions {
     font-size: 0.9em;
   }
@@ -462,20 +458,25 @@ img.ladder {
   header {
     height: 70px;
   }
+
   #instructions {
     font-size: 0.8em;
   }
+
   .avatar img {
     width: 60px;
     height: 60px;
   }
+
   .far {
     font-size: x-large;
     padding-left: 7px;
   }
+
   .board-edge {
     font-size: 1.2em;
   }
+
   .field {
     width: 60px;
     height: 60px;
@@ -483,121 +484,142 @@ img.ladder {
     padding: 3px;
     font-size: 24px;
   }
-  /* Styling for avatars when on the board */
+
   img.avatar {
     width: 20px;
     height: 20px;
     margin: auto;
   }
-  /* Moves croc's avatar on the smaller boards closer to the center of the field */
+
+  /* Moves Croc's image on the smaller boards closer to the center of the field */
   .croc-avatar {
     margin-left: -10px;
   }
+
   img.snake {
     top: 50px;
     height: 45px;
     margin-bottom: 20px;
-    /* right: 25px; */
   }
+
   img.ladder {
     bottom: 35px;
     margin-left: 10px;
     height: 60px;
-    /* width: 60%; */
   }
+
+  /* Aligns image with the div correctly */
   .dice img {
-    width: 60px;
-    height: 60px;
     margin-top: -5px;
   }
+
+  /* Adjusts sizing for Start, Reset and Dice */
   .controls {
     width: 60px;
     height: 60px;
     font-size: 0.75em;
     line-height: 1.2;
   }
+
+  /* Div holding messages */
   .message-box {
     font-size: 26px;
   }
 }
 
 @media screen and (max-width: 400px) {
-  /* change header to display within a line and align better with the screen */
+  /* Changes header font size to fit in one line */
   h1 {
     font-size: 24px;
   }
 }
+
 @media screen and (max-width: 385px) {
-  /* change header to display within a line and align better with the screen */
+  /* Change header to display within a line and align better with the screen */
   h1 {
     font-size: 20px;
   }
-  /* resize field to smaller */
+
   .field {
     width: 50px;
     height: 50px;
   }
-  /* reduce font size of the start/end and results info */
+
+  /* Reduce font size of the START/END and results info */
   .board-edge {
     font-size: 1.1em;
   }
 
-  /* reduce padding for paragraph in instructions */
+  /* Reduce padding for paragraph in instructions */
   p {
     padding: 0 10px;
   }
+
+  /* Further reduce the size of text in instructions */
   #instructions {
     font-size: 0.7em;
   }
 }
+
 @media screen and (max-width: 335px) {
   h1 {
     font-size: 18px;
   }
 }
+
 @media screen and (max-width: 325px) {
+  /* Further resizing to main components; same below */
   header {
     height: 60px;
     margin-left: 0;
   }
+
   #instructions {
     font-size: 0.6em;
   }
+
   .far {
     padding-left: 5px;
   }
+
   .board-edge {
     font-size: 1em;
   }
+
   .field {
     width: 45px;
     height: 45px;
     font-size: 22px;
   }
+
   img.snake {
     top: 40px;
     height: 45px;
     margin-bottom: 10px;
   }
+
   img.ladder {
     bottom: 30px;
     height: 50px;
-    /* width: 50%; */
   }
+
   .dice img {
     width: 55px;
     height: 55px;
-    /* margin-top: -5px; */
+    margin-top: -5px;
   }
+
   .controls {
     width: 55px;
     height: 55px;
     font-size: 0.7em;
     margin: 10px 10px;
   }
+
   #start-game-btn {
     margin: 10px 10px;
   }
+
   .message-box {
     font-size: 20px;
   }
@@ -607,14 +629,17 @@ img.ladder {
   h1 {
     font-size: 16px;
   }
+
   .field {
     width: 40px;
     height: 40px;
     font-size: 18px;
   }
+
   .board-edge {
     font-size: 0.9em;
   }
+
   .avatar img {
     width: 50px;
     height: 50px;
