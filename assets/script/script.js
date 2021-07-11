@@ -28,8 +28,6 @@ let board = document.getElementById("game-container");
 let header = document.getElementById("header");
 let messageBox = document.getElementById("message-box"); //div to display messages in full screen rather than alerts
 let firstRound;
-let turnInfoVisible;
-let messageToggle = document.getElementById("turn-info-btn");
 
 // -----Events listeners ----
 
@@ -43,20 +41,11 @@ document.addEventListener("DOMContentLoaded", function () {
   selectAvatar();
   if (localStorage.getItem("instructionsShown")) {
     instructions.style.display = "none";
-    // board.style.visibility = 'visbile';
     toggleBoard();
   } else {
-    // cannot use toggle here
+    // cannot use toggle here; the board becomes visible
     board.style.visibility = "hidden";
     header.style.visibility = "hidden";
-  }
-
-  if (localStorage.getItem("turnInfo") === "false") {
-    messageToggle.innerHTML = "TURN INFO off";
-    turnInfoVisible = false;
-  } else {
-    messageToggle.innerHTML = "TURN INFO on";
-    turnInfoVisible = true;
   }
 });
 
@@ -65,20 +54,6 @@ dice.addEventListener("click", round);
 
 //adds click event listener to message to hide it on clicking and initiate further steps
 messageBox.addEventListener("click", hideMessageBox);
-
-/**
- * event lsitener for toggling message with information about Corc's result in between moves
- */
-document.getElementById("turn-info-btn").addEventListener("click", function () {
-  turnInfoVisible !== true
-    ? (turnInfoVisible = true)
-    : (turnInfoVisible = false);
-  console.log(turnInfoVisible);
-  turnInfoVisible !== true
-    ? (messageToggle.innerHTML = "TURN INFO off")
-    : (messageToggle.innerHTML = "TURN INFO on");
-  localStorage.setItem("turnInfo", turnInfoVisible);
-});
 
 //----- General functions -----
 
@@ -97,7 +72,7 @@ function toggleInstructions() {
     : (board.style.visibility = "visible");
 }
 /**
- * Toggles visibility of the board, control buttons (dice, reset, start nad turn info) and header depending on the visibilyt of the instrucitons and messages;
+ * Toggles visibility of the board, control buttons (dice, reset, start nad turn info) and header depending on the visibility of the instrucitons and messages;
  */
 function toggleBoard() {
   instructions.style.display !== "block"
@@ -350,18 +325,6 @@ function round() {
 function initiateAiMove() {
   currentPlayer = ai;
   diceThrow(ai);
-  if (turnInfoVisible === true) {
-    if (firstRound === true) {
-      firstRound = false;
-      hideMessageBox();
-    } else {
-      messageBox.innerHTML = `Jazzy Croc: ${ai.result}`;
-    }
-    setTimeout(showMessageBox(), 500);
-    messageBox.addEventListener("click", function () {
-      hideMessageBox();
-    });
-  }
   currentPlayerTurn(ai);
 }
 
@@ -450,11 +413,9 @@ function checkType(currentPlayer) {
       if (currentPlayer === player) {
         messageBox.innerHTML = "Ooops! There's a snake! Run away!";
         setTimeout(showMessageBox(), 400);
-        // showMessageBox();
           } else {
             messageBox.innerHTML = "Jazzy Croc found a snake!";
             setTimeout(showMessageBox(), 400);
-            // showMessageBox();
       }
     } else if (field.getAttribute("data-type") === "ladder") {
       document.getElementById(
@@ -467,11 +428,9 @@ function checkType(currentPlayer) {
       if (currentPlayer === player) {
         messageBox.innerHTML = "Great, you found a ladder! Climb up!";
         setTimeout(showMessageBox(), 400);
-        // showMessageBox();
       } else {
         messageBox.innerHTML = "Jazzy Croc found a ladder!";
         setTimeout(showMessageBox(), 400);
-        // showMessageBox();
       }
     } else {
       checkIfWin(currentPlayer);
