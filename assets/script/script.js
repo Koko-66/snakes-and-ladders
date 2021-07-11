@@ -57,7 +57,10 @@ document.addEventListener("DOMContentLoaded", function () {
 });
 
 //adds event listener to the dice
-dice.addEventListener("click", round);
+dice.addEventListener("click", function () {
+  round();
+  dice.style.animationName = "unset";
+});
 
 //adds click event listener to message to hide it on clicking and initiate further steps
 messageBox.addEventListener("click", hideMessageBox);
@@ -225,10 +228,11 @@ function generateSLPositions() {
     let index = Math.floor(Math.random() * z);
     let value = rangeLadders[index];
     ladders.push(value);
-    while (snakes.includes(value)) { // checks whether the field already contains a snake and generates intex again if yes
+    while (snakes.includes(value)) {
+      // checks whether the field already contains a snake and generates intex again if yes
       index = Math.floor(Math.random() * z);
       value = rangeLadders[index];
-      console.log(value)
+      console.log(value);
     }
     value = eval(`${rangeLadders.splice(index, 1)}`);
     eval(`ladder${x} = ${value}`);
@@ -344,13 +348,13 @@ function goesFirst() {
     setTimeout(function () {
       messageBox.innerHTML = `You: ${player.result}<br>Jazzy Croc: ${ai.result}<br><br>You're going first! Throw the dice!`;
     }, 300);
-    // document.getElementById('ai-result').innerHTML = ''; // deletes the ai's result from the box, since it's not moving
-    addResult(player);
-    // firstRound = false;
+    // addResult(player);
   } else {
     currentPlayer = ai;
     showDice();
-    messageBox.innerHTML = `You: ${player.result}<br>Jazzy Croc: ${ai.result}<br><br>Jazzy Croc is going first!`;
+    setTimeout(function () {
+      messageBox.innerHTML = `You: ${player.result}<br>Jazzy Croc: ${ai.result}<br><br>Jazzy Croc is going first!`;
+    }, 300);
   }
   showMessageBox();
 }
@@ -371,6 +375,8 @@ function initiateAiMove() {
   currentPlayer = ai;
   diceThrow(ai);
   currentPlayerTurn(ai);
+//   let pulseResetDelay =  300*ai.result
+  setTimeout(function(){dice.style.animationName = "pulse"}, 3000);
 }
 
 /** @generator generates random number between 1 and 6 for currentPlayer; */
@@ -455,13 +461,13 @@ function checkType(currentPlayer) {
       document.getElementById(
         `${currentPlayer.name}-${currentPlayer.newPosition}`
       ).innerHTML = currentPlayer.avatar;
-      if (currentPlayer === player) {
-        messageBox.innerHTML = "Ooops! There's a snake! Run away!";
-        setTimeout(showMessageBox(), 400);
-          } else {
-            messageBox.innerHTML = "Jazzy Croc found a snake!";
-            setTimeout(showMessageBox(), 400);
-      }
+    //   if (currentPlayer === player) {
+    //     messageBox.innerHTML = "Ooops! There's a snake! Run away!";
+    //     setTimeout(showMessageBox(), 400);
+    //   } else {
+    //     messageBox.innerHTML = "Jazzy Croc found a snake!";
+    //     setTimeout(showMessageBox(), 400);
+    //   }
     } else if (field.getAttribute("data-type") === "ladder") {
       document.getElementById(
         `${currentPlayer.name}-${currentPlayer.position}`
@@ -470,13 +476,13 @@ function checkType(currentPlayer) {
       document.getElementById(
         `${currentPlayer.name}-${currentPlayer.newPosition}`
       ).innerHTML = currentPlayer.avatar;
-      if (currentPlayer === player) {
-        messageBox.innerHTML = "Great, you found a ladder! Climb up!";
-        setTimeout(showMessageBox(), 400);
-      } else {
-        messageBox.innerHTML = "Jazzy Croc found a ladder!";
-        setTimeout(showMessageBox(), 400);
-      }
+    //   if (currentPlayer === player) {
+    //     messageBox.innerHTML = "Great, you found a ladder! Climb up!";
+    //     setTimeout(showMessageBox(), 400);
+    //   } else {
+    //     messageBox.innerHTML = "Jazzy Croc found a ladder!";
+    //     setTimeout(showMessageBox(), 400);
+    //   }
     } else {
       checkIfWin(currentPlayer);
     }
@@ -487,6 +493,7 @@ function checkType(currentPlayer) {
       player.position !== 25
     ) {
       setTimeout(initiateAiMove(), 1500); // initiates ai move if player set to ai
+      
     }
   }
 }
@@ -558,7 +565,7 @@ function moveIfLadder(currentPlayer) {
 Checks if player/ai's position is equal to 25 (will not be greater since set in currentPlayerTurn), sets gameRunning to false and generates a winning message and reloads the page.
 */
 function checkIfWin(currentPlayer) {
-  if (currentPlayer.position === 25) {
+  if (currentPlayer.position == 25) {
     gameRunning = false;
     if (currentPlayer === player) {
       messageBox.innerHTML = "Congratulations! You won!";

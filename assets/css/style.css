@@ -191,7 +191,7 @@ button {
   margin-top: 30px;
 }
 
-/* adds click effect  */
+/* adds hover effect to all buttons */
 
 button:hover {
   transform: scale(120%);
@@ -359,10 +359,27 @@ img.ladder {
   margin: -5px;
 }
 
+/* Adds animation to start button and dice to indicate required action */
+@keyframes pulse {
+    from { transform: scale(1); }
+    50% { transform: scale(0.85); }
+    to { transform: scale(1); }
+  }
+  
+  .fe-pulse-w-pause {
+    animation-name: pulse;
+    animation-duration: 1s;
+    animation-iteration-count: infinite;
+  }
+  .fe-pulse-w-pause:hover,
+  .fe-pulse-w-pause:focus {
+    animation-name: unset; 
+  }
+
 /* ----Media queries for different sizes of screen---- */
 
 @media screen and (max-width: 650px) {
-  /* Displays dice, start and reset button under the board*/
+  /* Changes display of the dice, start and reset buttons to show under the board*/
 
   #instructions-container {
     padding-top: 5vh;
