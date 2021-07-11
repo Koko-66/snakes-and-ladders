@@ -28,6 +28,13 @@ let board = document.getElementById("game-container");
 let header = document.getElementById("header");
 let messageBox = document.getElementById("message-box"); //div to display messages in full screen rather than alerts
 let firstRound;
+let snake1;
+let snake2;
+let snake3;
+let ladder1;
+let ladder2;
+let ladder3;
+// let toast = document.getElementById("toast-message");
 
 // -----Events listeners ----
 
@@ -192,12 +199,50 @@ function createGameBoard() {
   fillBoard();
 }
 
+/**
+ * Generates positions for snakes and ladders
+ */
+
+function generateSLPositions() {
+  let snakes = []; // array to use for checking for snakes when creating ladders;
+  let rangeSnakes = [6, 8, 10, 12, 14, 16, 18, 20, 22, 24]; //possible snake positions
+
+  let y = 10; // value to use in generation of index; needs to be decreased to allow for change of indexes in rangeSnakes as they are spliced; same logic used below for ladders
+  for (let x = 1; x < 4; ++x) {
+    let index = Math.floor(Math.random() * y);
+    let value = eval(`${rangeSnakes.splice(index, 1)}`);
+    snakes.push(value);
+    eval(`snake${x} = ${value}`);
+    console.log(`snake${x} = ${value}`);
+    console.log(snakes);
+    --y;
+  }
+
+  let rangeLadders = [2, 4, 6, 8, 10, 12, 14, 16, 18, 20];
+  let ladders = [];
+  let z = 10;
+  for (let x = 1; x < 4; ++x) {
+    let index = Math.floor(Math.random() * z);
+    let value = rangeLadders[index];
+    ladders.push(value);
+    while (snakes.includes(value)) { // checks whether the field already contains a snake and generates intex again if yes
+      index = Math.floor(Math.random() * z);
+      value = rangeLadders[index];
+      console.log(value)
+    }
+    value = eval(`${rangeLadders.splice(index, 1)}`);
+    eval(`ladder${x} = ${value}`);
+    console.log(`ladder${x} = ${value}`);
+    --z;
+  }
+}
 
 /**
  * Adds numbers, snakes, ladders and id's to the board for tracking movement
  * Numering in descending oreder to start from the bottom of page and go up.
  */
 function fillBoard() {
+  generateSLPositions();
   let i = 25;
   let fields = document.getElementsByClassName("field");
   for (field of fields) {
@@ -213,10 +258,10 @@ function fillBoard() {
       } else {
         field.innerHTML = `1<div id ="pl-1" class="player"></div> <div id ="ai-1" class="ai">${evilBoy}</div>`;
       }
-    } else if (i === 7 || i === 20 || i === 24) {
+    } else if (i === snake1 || i === snake2 || i === snake3) {
       field.innerHTML = `${i}${snake}<div id ="pl-${i}" class="player"></div> <div id ="ai-${i}" class="ai">`;
       field.setAttribute("data-type", "snake");
-    } else if (i === 2 || i === 13 || i === 19) {
+    } else if (i === ladder1 || i === ladder2 || i === ladder3) {
       field.innerHTML = `${i}${ladder}<div id ="pl-${i}" class="player"></div> <div id ="ai-${i}" class="ai">`;
       field.setAttribute("data-type", "ladder");
     } else {
@@ -448,12 +493,13 @@ function checkType(currentPlayer) {
 
 /**
  Computes the newPosition for the currentPlayer if the field contains a snake. Considers the fields by columns and adjusts the number according the pattern:
-*to check for numbers 8, 13, 18, 23 take away 3 and check %5, then adjust position by -5;
-*to check for numbers 6, 11, 16 take away 1 and check %5, then adjust position by -1;
+ * to check for numbers in 8, 13, 18, 23 take away 3 and check %5, then adjust position by -5;
+ * to check for numbers 6, 11, 16 take away 1 and check %5, then adjust position by -1;
  * to check for numbers 7, 12, 17 take away 2 and check %5, then adjust position by -3;
  * to check for numbers 9, 14, 19 take away 4 and check %5, then adjust postion by -7; 
  * the remaining numbers: 10, 15, 20 adjust by -9;
  * bottom row can be ignored as snake cannot be placed there.
+ * Using pattern rather than set numbers allows to increase the number of rows in the future
  *  @param currentPlayer ai or player
  */
 function moveIfSnake(currentPlayer) {
