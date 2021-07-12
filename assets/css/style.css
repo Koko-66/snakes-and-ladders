@@ -108,10 +108,10 @@ button {
   line-height: 1.3em;
 }
 
-/* 'x' icon to close message box */
+/* 'Tap to close' ifnormation */
 #close-message {
   margin-top: 50px;
-  font-size: large;
+  font-size: small;
 }
 
 /*---Header---*/
@@ -210,6 +210,7 @@ p {
 /* game area section */
 #game-area {
   margin: auto;
+  margin-top: 2vh;
 }
 
 /* div containing the board, start/dice and reset buttons */
@@ -387,10 +388,6 @@ img.ladder {
     background-color: rgba(0, 0, 0, 0.885);
   }
 
-  header {
-    margin-bottom: -10vh;
-  }
-
   h1 {
     font-size: 40px;
   }
@@ -434,28 +431,6 @@ img.ladder {
     font-size: 22px;
     line-height: 1.4;
   }
-}
-
-/* Sytling for SurfaceDuo */
-@media only screen and (min-device-width: 540px) and (max-device-height: 720px) and (-webkit-min-device-pixel-ratio: 2) and (orientation: portrait) {
- header {
-  height: 9vh;
-  padding-top: 2vh;
- }
- h1 {
-   font-size: 26px;
- }
- #game-container {
-   padding: 0;
- }
- .board-edge {
-   font-size: 1.2em;
- }
-
- .field {
-   height: 65px;
-   width: 65px;
- }
 }
 
 @media screen and (max-width: 650px) {
@@ -729,5 +704,38 @@ img.ladder {
   .avatar img {
     width: 50px;
     height: 50px;
+  }
+}
+
+/* Sytling for SurfaceDuo */
+@media only screen and (min-device-width: 540px) and (max-device-height: 720px) and (-webkit-min-device-pixel-ratio: 2) and (orientation: portrait) {
+  header {
+    height: 9vh;
+    padding-top: 2vh;
+  }
+  h1 {
+    font-size: 26px;
+  }
+  #game-container {
+    padding: 0;
+  }
+  .board-edge {
+    font-size: 1.2em;
+  }
+
+  .field {
+    height: 65px;
+    width: 65px;
+  }
+
+  #instructions {
+    font-size: 0.9em;
+  }
+
+  .avatar-instructions img {
+    height: 60px;
+  }
+  .controls {
+    margin: 10px 20px;
   }
 }
