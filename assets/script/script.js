@@ -5,7 +5,7 @@ let blue = `<img src="assets/images/avatar_blue.png" alt="blue avatar" class="av
 let yellow = `<img src="assets/images/avatar-yellow2.png" alt="yellow avatar" class="avatar on-board" onclick="toggleInstructions()">`;
 let evilBoy = `<img src="assets/images/JazzyCroc_black-backgr.jpeg" alt="Jazzy Croc's avatar" class="avatar croc-avatar">`;
 
-//objects to store players' positions, results, and avatar
+//object to store player positions, results, and avatar
 let player = {
   name: "pl",
   result: 0,
@@ -13,6 +13,7 @@ let player = {
   newPosition: 0,
   avatar: "",
 };
+//object to store computer'sś positions, results, and avatar
 let ai = {
   avatar: evilBoy,
   name: "ai",
@@ -318,7 +319,7 @@ function hideMessageBox() {
     messageBox.style.visibility = "hidden";
     toggleBoard();
   } else if (messageText.innerHTML === "Choose an avatar") {
-    messageBox.style.visibility = "hidden";
+    messageBox.style.visibility = "hidden";    
     instructions.style.visibility = "visible"; // specific case, cannot use toggle here
   } else {
     messageBox.style.visibility = "hidden";
@@ -333,7 +334,7 @@ function hideMessageBox() {
 /**
  * Random dice throw for player and ai to decide who goes first.
  Shows a message with information about the intial throw results, hides 'Start Game' button and shows 'Dice' instead. 
- Moves the avatar of the player who goes first.
+ Moves the avatar of ai if he goes first
  */
 function goesFirst() {
   messageText.innerHTML = "";
@@ -350,6 +351,7 @@ function goesFirst() {
     currentPlayer = ai;
     showDice();
     messageText.innerHTML = `You: ${player.result}<br>Jazzy Croc: ${ai.result}<br><br>Jazzy Croc is going first!`;
+    addResult(ai);
   }
   showMessageBox();
 }
@@ -360,6 +362,7 @@ function round() {
   if (gameRunning) {
     currentPlayer = player;
     currentPlayerTurn(player);
+    diceThrow(player);
   }
 }
 
@@ -393,11 +396,15 @@ function diceThrow(currentPlayer) {
   let result = currentPlayer.result;
   if (currentPlayer === player) {
     dice.innerHTML = `<img src="assets/images/Dice-${result}-b.svg.png" alt="Dice result ${result}">`;
-    addResult(player);
+   if (firstRound === false) {
+     addResult(player);
+   }
     currentPlayer.newPosition = currentPlayer.position + result;
   } else {
     currentPlayer.newPosition = currentPlayer.position + result;
-    addResult(ai);
+    if (firstRound === false) {
+      addResult(ai);
+    }
   }
 }
 
