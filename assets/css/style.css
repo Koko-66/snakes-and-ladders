@@ -147,8 +147,8 @@ button:hover {
 /* 'x' icon for closing instructions box */
 #close-instructions {
   float: right;
-  margin-top: -50px;
-  margin-right: 40px;
+  margin-top: -2vh;
+  margin-right: 4vh;
 }
 
 /* padding for paragraphs in the instructions box */

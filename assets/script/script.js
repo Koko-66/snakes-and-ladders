@@ -69,7 +69,9 @@ messageBox.addEventListener("click", hideMessageBox);
 //Adds event listener to close button for instructions
 document
   .getElementById("close-instructions")
-  .addEventListener("click", toggleInstructions);
+  .addEventListener("click", function(){
+    checkForAvatar();
+  });
 
 //----- General functions -----
 
