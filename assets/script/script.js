@@ -382,8 +382,8 @@ function initiateAiMove() {
   currentPlayer = ai;
   diceThrow(ai);
   currentPlayerTurn(ai);
-//   let pulseResetDelay =  300*ai.result
-  setTimeout(function(){dice.style.animationName = "pulse"}, 3000);
+  let pulseResetDelay =  300*ai.result+7000
+  setTimeout(function(){dice.style.animationName = "pulse"}, pulseResetDelay);
 }
 
 /** @generator generates random number between 1 and 6 for currentPlayer; */
@@ -476,6 +476,7 @@ function checkType(currentPlayer) {
       document.getElementById(
         `${currentPlayer.name}-${currentPlayer.newPosition}`
       ).innerHTML = currentPlayer.avatar;
+      checkIfWin(currentPlayer);
     } else {
       checkIfWin(currentPlayer);
     }
@@ -558,18 +559,18 @@ function moveIfLadder(currentPlayer) {
 Checks if player/ai's position is equal to 25 (will not be greater since set in currentPlayerTurn), sets gameRunning to false and generates a winning message and reloads the page.
 */
 function checkIfWin(currentPlayer) {
-  if (currentPlayer.position == 25) {
+  if (currentPlayer.position === 25) {
     gameRunning = false;
     if (currentPlayer === player) {
         messageText.innerHTML = "Congratulations! You won!";
-      setTimeout(showMessageBox(), 5000);
+      setTimeout(showMessageBox(), 2000);
     } else {
         messageText.innerHTML = "Sorry! You lost, try again!";
-      setTimeout(showMessageBox(), 5000);
+      setTimeout(showMessageBox(), 2000);
     }
     setTimeout(function () {
       window.location.reload(true);
-    }, 1500);
+    }, 1000);
   } else {
     gameRunning = true;
   }
