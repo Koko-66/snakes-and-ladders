@@ -291,7 +291,6 @@ img.avatar {
   background: rgba(0, 0, 0, 0.9);
   width: 30px;
   margin: auto;
-  margin: 0 10px 20px -10px;
   border-radius: 50%;
   align-items: flex-end;
   justify-content: flex-end;
@@ -510,6 +509,10 @@ img.ladder {
   }
 }
 @media screen and (max-width: 445px) {
+  header img {  
+    height: 70%;
+  }
+
   #instructions {
     font-size: 0.8em;
   }
@@ -539,7 +542,6 @@ img.ladder {
   img.avatar {
     width: 20px;
     height: 20px;
-    margin: auto;
   }
 
   /* Moves Croc's image on the smaller boards closer to the center of the field */
@@ -614,9 +616,13 @@ img.ladder {
   }
 }
 
-@media screen and (max-width: 335px) {
+@media screen and (max-width: 340px) {
   h1 {
     font-size: 18px;
+  }
+
+  header img {  
+    height: 60%;
   }
 }
 
@@ -699,8 +705,12 @@ img.ladder {
 @media screen and (max-width: 305px) {
   h1 {
     font-size: 16px;
+    padding: 0 5px;
   }
 
+  .far {
+    font-size: inherit;
+  }
   .field {
     width: 40px;
     height: 40px;
