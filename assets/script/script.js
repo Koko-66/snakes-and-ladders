@@ -319,7 +319,7 @@ function hideMessageBox() {
     messageBox.style.visibility = "hidden";
     toggleBoard();
   } else if (messageText.innerHTML === "Choose an avatar") {
-    messageBox.style.visibility = "hidden";    
+    messageBox.style.visibility = "hidden";
     instructions.style.visibility = "visible"; // specific case, cannot use toggle here
   } else {
     messageBox.style.visibility = "hidden";
@@ -396,9 +396,9 @@ function diceThrow(currentPlayer) {
   let result = currentPlayer.result;
   if (currentPlayer === player) {
     dice.innerHTML = `<img src="assets/images/Dice-${result}-b.svg.png" alt="Dice result ${result}">`;
-   if (firstRound === false) {
-     addResult(player);
-   }
+    if (firstRound === false) {
+      addResult(player);
+    }
     currentPlayer.newPosition = currentPlayer.position + result;
   } else {
     currentPlayer.newPosition = currentPlayer.position + result;
@@ -430,10 +430,11 @@ function currentPlayerTurn(currentPlayer) {
         document.getElementById(
           `${currentPlayer.name}-${currentPlayer.position}`
         ).innerHTML = "";
-        currentPlayer.position = 25;
         currentPlayer.newPosition = 25;
-        document.getElementById(`${currentPlayer.name}-25`).innerHTML =
-          currentPlayer.avatar;
+        currentPlayer.position += 1;
+        document.getElementById(
+          `${currentPlayer.name}-${currentPlayer.position}`
+        ).innerHTML = currentPlayer.avatar;
       } else {
         document.getElementById(
           `${currentPlayer.name}-${currentPlayer.position}`
