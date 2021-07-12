@@ -202,7 +202,7 @@ p {
 }
 
 #lets-go {
-  margin: 30px auto;
+  margin: 20px auto;
 }
 
 /* ---Main game area--- */
@@ -422,7 +422,7 @@ img.ladder {
   }
 
   #instructions-container {
-    padding-top: 25vh;
+    padding-top: 15vh;
     font-size: 22px;
     line-height: 1.4;
   }
