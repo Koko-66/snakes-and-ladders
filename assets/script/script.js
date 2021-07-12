@@ -35,15 +35,14 @@ let snake3;
 let ladder1;
 let ladder2;
 let ladder3;
-// let toast = document.getElementById("toast-message");
 
 // -----Events listeners ----
 
 /**
- * Adds event listenter for instructions not to show on reloading; 
-creates board (needs to be generated at this point otherwise board does not exist to palce the avatar into) and hides it;
-checks localStorage for turnInfo and sets the content of the button accordingly
-*/
+ * Adds event listenter for instructions not to show on reloading;
+ * Creates board (needs to be generated at this point otherwise board does not exist to palce the avatar into) and hides it;
+ * checks localStorage for turnInfo and sets the content of the button accordingly.
+ */
 document.addEventListener("DOMContentLoaded", function () {
   createGameBoard();
   selectAvatar();
@@ -57,20 +56,19 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 });
 
-//adds event listener to the dice
+//Adds event listener to the dice
 dice.addEventListener("click", function () {
   round();
   dice.style.animationName = "unset";
 });
 
-//adds click event listener to message to hide it on clicking and initiate further steps
+//Adds click event listener to message to hide it on clicking and initiate further steps
 messageBox.addEventListener("click", hideMessageBox);
 
 //Adds event listener to close button for instructions
-document.getElementById("close-instructions").addEventListener("click", toggleInstructions);
-
-//Adds event listenter to close button for message box (who starts and who wins messages)
-document.getElementById("close-message").addEventListener("click", hideMessageBox);
+document
+  .getElementById("close-instructions")
+  .addEventListener("click", toggleInstructions);
 
 //----- General functions -----
 
@@ -136,7 +134,6 @@ function checkForAvatar() {
 function selectAvatar() {
   let avatars = document.getElementsByClassName("avatar-instructions");
   for (let avatar of avatars) {
-    // let playerDiv = document.getElementById(`pl-${player.position}`)
     avatar.addEventListener("click", function () {
       if (player.avatar === "") {
         if (this.getAttribute("data-avatar-color") === "blue") {
@@ -303,7 +300,6 @@ function addResult(currentPlayer) {
  */
 function showMessageBox() {
   messageBox.style.visibility = "visible";
-  // board.style.visibility = 'hidden';
   toggleBoard();
   if (messageText.innerHTML === "Choose an avatar") {
     instructions.style.visibility = "hidden";
@@ -340,28 +336,20 @@ function hideMessageBox() {
  Moves the avatar of the player who goes first.
  */
 function goesFirst() {
-    messageText.innerHTML = "";
+  messageText.innerHTML = "";
   firstRound = true;
   diceThrow(player);
   diceThrow(ai);
   if (player.result === ai.result) {
-    //message box needs to be delayed till diceThrow(ai) executes to prevent ai result showing as 0;
-    setTimeout(function () {
-        messageText.innerHTML = `You: ${player.result}<br>Jazzy Croc: ${ai.result}<br><br>It's a tie! Try again!`;
-    }, 300);
+    messageText.innerHTML = `You: ${player.result}<br>Jazzy Croc: ${ai.result}<br><br>It's a tie! Try again!`;
   } else if (player.result > ai.result) {
     currentPlayer = player;
     showDice();
-    setTimeout(function () {
-        messageText.innerHTML = `You: ${player.result}<br>Jazzy Croc: ${ai.result}<br><br>You're going first! Throw the dice!`;
-    }, 300);
-    // addResult(player);
+    messageText.innerHTML = `You: ${player.result}<br>Jazzy Croc: ${ai.result}<br><br>You're going first! Throw the dice!`;
   } else {
     currentPlayer = ai;
     showDice();
-    setTimeout(function () {
-        messageText.innerHTML = `You: ${player.result}<br>Jazzy Croc: ${ai.result}<br><br>Jazzy Croc is going first!`;
-    }, 300);
+    messageText.innerHTML = `You: ${player.result}<br>Jazzy Croc: ${ai.result}<br><br>Jazzy Croc is going first!`;
   }
   showMessageBox();
 }
@@ -382,8 +370,10 @@ function initiateAiMove() {
   currentPlayer = ai;
   diceThrow(ai);
   currentPlayerTurn(ai);
-  let pulseResetDelay =  300*ai.result+7000
-  setTimeout(function(){dice.style.animationName = "pulse"}, pulseResetDelay);
+  let pulseResetDelay = 300 * ai.result + 7000;
+  setTimeout(function () {
+    dice.style.animationName = "pulse";
+  }, pulseResetDelay);
 }
 
 /** @generator generates random number between 1 and 6 for currentPlayer; */
@@ -409,7 +399,6 @@ function diceThrow(currentPlayer) {
     currentPlayer.newPosition = currentPlayer.position + result;
     addResult(ai);
   }
-  // addResult(currentPlayer);
 }
 
 /**
@@ -487,7 +476,6 @@ function checkType(currentPlayer) {
       player.position !== 25
     ) {
       setTimeout(initiateAiMove(), 1500); // initiates ai move if player set to ai
-      
     }
   }
 }
@@ -562,10 +550,10 @@ function checkIfWin(currentPlayer) {
   if (currentPlayer.position === 25) {
     gameRunning = false;
     if (currentPlayer === player) {
-        messageText.innerHTML = "Congratulations! You won!";
+      messageText.innerHTML = "Congratulations! You won!";
       setTimeout(showMessageBox(), 2000);
     } else {
-        messageText.innerHTML = "Sorry! You lost, try again!";
+      messageText.innerHTML = "Sorry! You lost, try again!";
       setTimeout(showMessageBox(), 2000);
     }
     setTimeout(function () {
