@@ -85,6 +85,7 @@ Results for individual players are displayed in a designated place at the top of
 - Lighthouse (Chrome extension): used to check the performance and accessibility of the website
 - Prettier - Code Formatter (VS Code extension): used to beautify the HTML, CSS and JS code
 - Dev Tools on Chrome, Firefox and Safari: used for development, code testing and trials
+- [Am I Responsive?](http://ami.responsivedesign.is/#) site to generate the resposivene mockup
 
 ## Testing 
 
