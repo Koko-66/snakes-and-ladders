@@ -39,7 +39,7 @@ let ladder3;
 
 // -----Events listeners ----
 
-/* 
+/*
  * Adds event listenter to prevent instructions showing on reloading;
  * Creates board (needs to be generated at this point otherwise board does not exist to palce the avatar into) and hides it;
  * Checks localStorage for turnInfo and sets the content of the button accordingly.
@@ -69,7 +69,7 @@ messageBox.addEventListener("click", hideMessageBox);
 //Adds event listener to close button for instructions
 document
   .getElementById("close-instructions")
-  .addEventListener("click", function(){
+  .addEventListener("click", function () {
     checkForAvatar();
   });
 
@@ -246,7 +246,7 @@ function generateSLPositions() {
 
 /**
  * Adds numbers, snakes, ladders and id's to the board for tracking movement.
- * 
+ *
  * Numering in descending oreder to start from the bottom of page and go up.
  */
 function fillBoard() {
@@ -329,8 +329,8 @@ function hideMessageBox() {
 
 /**
  * Random dice throw for Player and Ai to decide who goes first.
- * 
- * Shows a message with information about the intial throw results, hides 'Start Game' button and shows 'Dice' instead. 
+ *
+ * Shows a message with information about the intial throw results, hides 'Start Game' button and shows 'Dice' instead.
  */
 function goesFirst() {
   messageText.innerHTML = "";
@@ -353,7 +353,7 @@ function goesFirst() {
 }
 /**
  * Initiates Player turn to start a round until gameRunning is true.
- * 
+ *
  * Function iniated on clicking the dice.
  */
 function round() {
@@ -371,7 +371,7 @@ function initiateAiMove() {
   currentPlayer = ai;
   diceThrow(ai);
   currentPlayerTurn(ai);
-  let pulseResetDelay = (300 * ai.result) + 7000;
+  let pulseResetDelay = 300 * ai.result + 7000;
   setTimeout(function () {
     dice.style.animationName = "pulse";
   }, pulseResetDelay);
@@ -452,9 +452,9 @@ function currentPlayerTurn(currentPlayer) {
 
 /**
  * Checks the data-type in the field to determine if it contains snake/ladder or checks for win.
- * 
+ *
  * Calls moveIfSnake/moveIfLadder functions to compute the new postions as needed.
- * 
+ *
  * Moves the avatar into the newPosition and initiates Ai move once Player's movement is completed
  */
 function checkType(currentPlayer) {
@@ -495,16 +495,16 @@ function checkType(currentPlayer) {
  * Computes the newPosition for the currentPlayer if the field contains a snake. Considers fields by columns and adjusts the number according the pattern to allow future resizing of the board (bottom row can be ignored as snake cannot be placed there):
  *
  * for numbers in 8, 13, 18, 23 take away 3 and check %5, then adjust position by -5;
- * 
+ *
  * for numbers 6, 11, 16 take away 1 and check %5, then adjust position by -1;
- * 
+ *
  * for numbers 7, 12, 17 take away 2 and check %5, then adjust position by -3;
- * 
- * for numbers 9, 14, 19 take away 4 and check %5, then adjust postion by -7; 
- * 
+ *
+ * for numbers 9, 14, 19 take away 4 and check %5, then adjust postion by -7;
+ *
  * remaining numbers: 10, 15, 20 adjust by -9;
- * 
- *  @param {object} currentPlayer 
+ *
+ *  @param {object} currentPlayer
  */
 function moveIfSnake(currentPlayer) {
   if ((currentPlayer.newPosition - 3) % 5 == 0) {
@@ -523,17 +523,17 @@ function moveIfSnake(currentPlayer) {
 
 /**
  * Computes the newPosition for the currentPlayer if the field contains a ladder. Considers the fields by columns and adjusts the number according the pattern (bottom row is checked for exact matches, top can be ignored as no ladder can be placed there):
- * 
+ *
  * to check for numbers 8, 13, 18 take away 3 and check %5, then adjust position by +5;
- * 
+ *
  * to check for numbers 6, 11 take away 1 and check %5, then adjust position by +9;
- * 
+ *
  * to check for numbers 7, 12, 17 take away 2 and check %5, then adjust position by +7;
- * 
- * to check for numbers 9, 14, 19 take away 4 and check %5, then adjust postion by +3; 
- * 
+ *
+ * to check for numbers 9, 14, 19 take away 4 and check %5, then adjust postion by +3;
+ *
  * the remaining numbers: 10, 15, 20, adjust by +1;
- * 
+ *
  * @param {object} currentPlayer
  */
 function moveIfLadder(currentPlayer) {
