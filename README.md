@@ -1,6 +1,6 @@
 
 # Snakes and Ladders
-Snakes and Ladders brings the popular board game to the screen. TThe game is aimed at players of all ages and is built purely for entertainment. 
+Snakes and Ladders brings the popular board game to the screen. The game is aimed at players of all ages and is built purely for entertainment. 
 ![Responsive Mockup](data/Responsive-layout.png)
 
 ## Deployed at
