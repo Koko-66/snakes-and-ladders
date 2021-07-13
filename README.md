@@ -47,12 +47,15 @@ A new board is generated when "Reset" button is clicked or after one of the play
  
 #### Dice and Start button
 ![Start Game and Reset buttons](data/start&reset.png)
+
 The game is controlled with the "Start Game" button and a "Dice". "Start Game" button pulses to indicate that the player needs to click it and initiates the function checking who will start the game. Once it is clicked, it is replaced by the dice. 
 ![Dice and Reset button](data/dice&resetButtons.png)
+
 Clicking the "Dice" immitates a dice throw, generates a random number between 1 and 6 and dice's image changes to reflect the throw result. After a certain period of time after Croc's move the dice starts pulsing as well, indicating that it needs to be clicked to progress with the game.
 
 #### Player's Results
 ![Results div](data/Results-div.png)
+
 Results for individual players are displayed in a designated place at the top of the board and increase in size temporarily at the time of change to make the turn and movement clearer to the user.
 
 ### Features Left to Implement
@@ -105,7 +108,7 @@ Results for individual players are displayed in a designated place at the top of
   - I want to have an option to select another avatar when I want to play again.
 		- Avatar can be swapped at any time in the instructions sections without board beign reset.
   - I can play the game on another device and have the same user experience.
-		- The game has been designed to appear correctly and maintain the same functionality on devices of different sizes using media queries.
+		- The game has been designed to appear correctly and maintain the same functionality on devices of different sizes using media queries. The game is not suitable for devices with screens smaller than 280px width.
 
 ### Validator Testing 
 - HTML
@@ -129,44 +132,57 @@ Results for individual players are displayed in a designated place at the top of
 ### Bugs and Fixes
 During the development and testing the game various bugs appeared. A summary of most important ones can be found below:
 
-1.  Dice not hiding after viewing and closing Instructions. The use of showDice() function does not solve the issue as it shows the dice even if game not started preventing initiation of game. 
-	__FIXED__ Removed dice toggle from hide() function when toggling instructions. 
+1.  Dice not hiding after viewing and closing Instructions. The use of showDice() function does not solve the issue as it shows the dice even if game not started preventing initiation of game.
 
-2. Various issues with hidding board and game buttons ("Start Game" button, Dice and "Reset Game" button) when showing full screen messages and instruction text. 
-	__FIXED__ Removed div for Ai's turn message and showing all messages using the same 'message-box' div (otherwise, if both coinciding, clicking the one on top would unhide the board while still showing the second message) and eventually hiding the 'game-container' div rather than just 'game-board' div to solve issues with Dice and Reset Game being visible.
+__FIXED__ Removed dice toggle from hide() function when toggling instructions. 
 
-3. Game could be initiated even if avatar is not selected, resulting in the avatar showing as "null" instead of an image. 	  	  
-	__FIXED__ Added checkForAvatar() function to the "Let's go" button, which displays a "Choose avatar!" message and prevents the Instructions from closing. This way the player cannot start the game until one of the avatars is selected.
+2. Various issues with hidding board and game buttons ("Start Game" button, Dice and "Reset Game" button) when showing full screen messages and instruction text.
 
-4. Changing avatar while game started causes duplication of avatar and its placement in the first field. 
-	__FIXED__ Adjusted SelectAvatar() function to place the avatar in its current field rather than f1 and in f1 only if no avatar has been previously selected.
+__FIXED__ Removed div for Ai's turn message and showing all messages using the same 'message-box' div (otherwise, if both coinciding, clicking the one on top would unhide the board while still showing the second message) and eventually hiding the 'game-container' div rather than just 'game-board' div to solve issues with Dice and Reset Game being visible.
+
+3. Game could be initiated even if avatar is not selected, resulting in the avatar showing as "null" instead of an image.
+
+__FIXED__ Added checkForAvatar() function to the "Let's go" button, which displays a "Choose avatar!" message and prevents the Instructions from closing. This way the player cannot start the game until one of the avatars is selected.
+
+4. Changing avatar while game started causes duplication of avatar and its placement in the first field.
+
+__FIXED__ Adjusted SelectAvatar() function to place the avatar in its current field rather than f1 and in f1 only if no avatar has been previously selected.
 
 5. Reset Board adds another game board below with reverse numbers; objects values not cleared.
-	__FIXED__  Changed "Reset Game" button to reload page rather than create new a new one. Before board is created the innerHtML of the 'game-board' is now first cleared to prevent similar issues when createGameBoard() function is initiated without window reloading. Will prevent issues if any new feaures are added in the future. 
 	
-6. When goesFirst() result is tie, "Start Game" button is replaced by Dice not allowing the player to try again nor to proceed with the game. 
-	__FIXED__ Deleted showDice() from goesFirst() tie condition, so that if tie "Start Game" button is still showing.
+__FIXED__  Changed "Reset Game" button to reload page rather than create new a new one. Before board is created the innerHtML of the 'game-board' is now first cleared to prevent similar issues when createGameBoard() function is initiated without window reloading. Will prevent issues if any new feaures are added in the future. 
+	
+6. When goesFirst() result is tie, "Start Game" button is replaced by Dice not allowing the player to try again nor to proceed with the game.
+
+__FIXED__ Deleted showDice() from goesFirst() tie condition, so that if tie "Start Game" button is still showing.
 
 7. 	Players position reaching beyond 25 causing "undefined" error.
-	__FIXED__ Adjusted function currentPlayerTurn() to change currentPlayer.postion and currentPlayer.newPosition to 25. This way positons are never out of range.
+
+__FIXED__ Adjusted function currentPlayerTurn() to change currentPlayer.postion and currentPlayer.newPosition to 25. This way positons are never out of range.
 	
 8. All movment functions for both players are executing at the same time making it difficult to understand what is happening and whose turn it is.
-	__FIXED__ Added interval for the currentPlayerTurn() function to move players on the board field by field. Initially added various messages to inform the user about snakes/ladders nad ai turns, though these were rather hindering user experience than enhancing it, therefore removed. As further improvement, added initiateAiMove() function and embeded it in checkType() so that the computer's move gets initiated only once the player's turn is finished. Tried setTimout() to achieve the same, however this method was not precise enough.
 
-9. On first starting the game after loading the page for the first time 'Choose avatar' message showing briefly before that with the information about who is going first. 
-	__FIXED__ Cleared the innerHTML of the message-box as a first step of goesFirst().
+__FIXED__ Added interval for the currentPlayerTurn() function to move players on the board field by field. Initially added various messages to inform the user about snakes/ladders nad ai turns, though these were rather hindering user experience than enhancing it, therefore removed. As further improvement, added initiateAiMove() function and embeded it in checkType() so that the computer's move gets initiated only once the player's turn is finished. Tried setTimout() to achieve the same, however this method was not precise enough.
+
+9. On first starting the game after loading the page for the first time 'Choose avatar' message showing briefly before that with the information about who is going first.
+
+__FIXED__ Cleared the innerHTML of the message-box as a first step of goesFirst().
 
 10. When clicking the avatar while on the board the instructions show but with game board elements showing underneath. Caused by event listener attached to the avatar class.
-	__FIXED__ Changed code to remove event listener from avatars while on the board and added onclick function instead.
+
+__FIXED__ Changed code to remove event listener from avatars while on the board and added onclick function instead.
 
 11. If ladder placed in field 16, the checkIfWin() function does not run and gets delayed utill the next round.
-  __FIXED__ Added CheckIfWin() to the the condition checking for ladder in the CheckType() function.
 
-12. Addition of "x" (close) icon to the instructions caused isse with the board showing even if avatar is not selected. 
- __FIXED__ Swapped toggleinstrucions() in the event listener for "close-isntructions" to checkForAvatar(), same as in "Let's go button".
+__FIXED__ Added CheckIfWin() to the the condition checking for ladder in the CheckType() function.
+
+12. Addition of "x" (close) icon to the instructions caused isse with the board showing even if avatar is not selected.
+
+__FIXED__ Swapped toggleinstrucions() in the event listener for "close-isntructions" to checkForAvatar(), same as in "Let's go button".
 
 ### Unfixed Bugs
-- At times, the pulsing of the dice seems to initiate too early, so a further delay might be needed. This needs monitoring.
+- At times, the pulsing of the dice seems to initiate too early, so a further delay might be needed. This needs monitoring and might need further adjustment depending on user feedback. 
+- Depending on the placement of snakes and ladders the avatars are sometimes placed slightly off-center. This is not a huge issue from the game functionality point of view, but again, might need further adjustment depending on user feedback.
 
 ## Deployment
 - The site was deployed to GitHub pages. The steps to deploy are as follows: 
