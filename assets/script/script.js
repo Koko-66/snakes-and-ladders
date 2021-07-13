@@ -5,7 +5,7 @@ let blue = `<img src="assets/images/avatar_blue.png" alt="blue avatar" class="av
 let yellow = `<img src="assets/images/avatar-yellow2.png" alt="yellow avatar" class="avatar on-board" onclick="toggleInstructions()">`;
 let evilBoy = `<img src="assets/images/JazzyCroc_black-backgr.jpeg" alt="Jazzy Croc's avatar" class="avatar croc-avatar">`;
 
-//object to store player positions, results, and avatar
+//object to store Player positions, results, and avatar
 let player = {
   name: "pl",
   result: 0,
@@ -13,7 +13,7 @@ let player = {
   newPosition: 0,
   avatar: "",
 };
-//object to store computer'sś positions, results, and avatar
+//object to store Ai's (computer's) positions, results, and avatar
 let ai = {
   avatar: evilBoy,
   name: "ai",
@@ -30,7 +30,7 @@ let header = document.getElementById("header");
 let messageBox = document.getElementById("message-box"); //div to display messages in full screen rather than alerts
 let messageText = document.getElementById("message-content");
 let firstRound;
-let snake1;
+let snake1; // store values for snakes and ladders positions later injected to the createGameBoard()
 let snake2;
 let snake3;
 let ladder1;
@@ -39,10 +39,10 @@ let ladder3;
 
 // -----Events listeners ----
 
-/**
- * Adds event listenter for instructions not to show on reloading;
+/* 
+ * Adds event listenter to prevent instructions showing on reloading;
  * Creates board (needs to be generated at this point otherwise board does not exist to palce the avatar into) and hides it;
- * checks localStorage for turnInfo and sets the content of the button accordingly.
+ * Checks localStorage for turnInfo and sets the content of the button accordingly.
  */
 document.addEventListener("DOMContentLoaded", function () {
   createGameBoard();
@@ -51,7 +51,7 @@ document.addEventListener("DOMContentLoaded", function () {
     instructions.style.display = "none";
     toggleBoard();
   } else {
-    // cannot use toggle here; the board becomes visible
+    // cannot use toggle here; if used the board becomes visible
     board.style.visibility = "hidden";
     header.style.visibility = "hidden";
   }
@@ -223,8 +223,6 @@ function generateSLPositions() {
     let value = eval(`${rangeSnakes.splice(index, 1)}`);
     snakes.push(value);
     eval(`snake${x} = ${value}`);
-    console.log(`snake${x} = ${value}`);
-    console.log(snakes);
     --y;
   }
 
@@ -239,17 +237,16 @@ function generateSLPositions() {
       // checks whether the field already contains a snake and generates intex again if yes
       index = Math.floor(Math.random() * z);
       value = rangeLadders[index];
-      console.log(value);
     }
     value = eval(`${rangeLadders.splice(index, 1)}`);
     eval(`ladder${x} = ${value}`);
-    console.log(`ladder${x} = ${value}`);
     --z;
   }
 }
 
 /**
- * Adds numbers, snakes, ladders and id's to the board for tracking movement
+ * Adds numbers, snakes, ladders and id's to the board for tracking movement.
+ * 
  * Numering in descending oreder to start from the bottom of page and go up.
  */
 function fillBoard() {
@@ -260,10 +257,10 @@ function fillBoard() {
     let snake = `<img src = "assets/images/purple-snake2.png" alt="snake" class="snake">`;
     let ladder = `<img src = "assets/images/ladder2.png" alt="ladder" class="ladder" data-type"="ladder">`;
 
-    // changes first field to "start" and last to "end" and adds separate divs for ai and player avatars with id's
+    // changes first field to "start" and last to "end" and adds separate divs for Ai and Player avatars with ids
     if (i === 1) {
       if (localStorage.getItem("avatarSelected")) {
-        //checks if avatar has been already selected and places the selected to place it in.
+        //checks if avatar has been already selected and places in the correct field.
         let avatar = localStorage.getItem("playerAvatar");
         field.innerHTML = `1<div id ="pl-1" class="player">${avatar}</div> <div id ="ai-1" class="ai">${evilBoy}</div>`;
       } else {
@@ -285,7 +282,7 @@ function fillBoard() {
 
 /**
  * Adds current player's result to the result display div at the top of the board and increases the size of the font to highlight whose turn it is.
- * @param {*} currentPlayer
+ * @param {object} currentPlayer
  */
 function addResult(currentPlayer) {
   resultHolder = document.getElementById(`${currentPlayer.name}-result`);
@@ -310,19 +307,16 @@ function showMessageBox() {
 }
 
 /**
- * Hides message box, shows board and intiates ai move if ai's turn
+ * Hides message box, shows board and intiates Ai move if Ai goes first
  */
 function hideMessageBox() {
   if (firstRound === true && currentPlayer === ai) {
     messageBox.style.visibility = "hidden";
     toggleBoard();
     currentPlayerTurn(currentPlayer);
-  } else if (currentPlayer === ai) {
-    messageBox.style.visibility = "hidden";
-    toggleBoard();
   } else if (messageText.innerHTML === "Choose an avatar") {
     messageBox.style.visibility = "hidden";
-    instructions.style.visibility = "visible"; // specific case, cannot use toggle here
+    instructions.style.visibility = "visible"; // specific case, cannot use toggleBoard() here
   } else {
     messageBox.style.visibility = "hidden";
     toggleBoard();
@@ -334,9 +328,9 @@ function hideMessageBox() {
 // - Running the game
 
 /**
- * Random dice throw for player and ai to decide who goes first.
- Shows a message with information about the intial throw results, hides 'Start Game' button and shows 'Dice' instead. 
- Moves the avatar of ai if he goes first
+ * Random dice throw for Player and Ai to decide who goes first.
+ * 
+ * Shows a message with information about the intial throw results, hides 'Start Game' button and shows 'Dice' instead. 
  */
 function goesFirst() {
   messageText.innerHTML = "";
@@ -358,7 +352,9 @@ function goesFirst() {
   showMessageBox();
 }
 /**
- * Runs one round made of Player and Ai Turn with delay for AI movement while gameRunning is true.
+ * Initiates Player turn to start a round until gameRunning is true.
+ * 
+ * Function iniated on clicking the dice.
  */
 function round() {
   if (gameRunning) {
@@ -369,29 +365,32 @@ function round() {
 }
 
 /**
- * Initiates Ai move after checking if messages need to be displayed and if it's the first round
+ * Initiates ai move and resets pulsing on the dice after a delay
  */
 function initiateAiMove() {
   currentPlayer = ai;
   diceThrow(ai);
   currentPlayerTurn(ai);
-  let pulseResetDelay = 300 * ai.result + 7000;
+  let pulseResetDelay = (300 * ai.result) + 7000;
   setTimeout(function () {
     dice.style.animationName = "pulse";
   }, pulseResetDelay);
 }
 
-/** @generator generates random number between 1 and 6 for currentPlayer; */
+/** @generator generates random number between 1 and 6 */
 function generateNumber() {
   return Math.floor(Math.random() * 6) + 1;
 }
 
 /** 
-Simulates a dice throw 
-*Generates a random number and pushes it to the result attribute of the current player and the resultHolders.
-*If current player is 'player', changes the image in the dice.
-*Computes the value of the new postion and pushes it to the newPosition attribute of the currentPlayer.
-@param currentPlayer;
+ * Simulates a dice throw
+ * 
+ * Generates a random number and pushes it to the result attribute of the current player and the resultHolders.
+ * 
+ * If current player is 'Player', changes the image in the dice.
+ * 
+ * Computes the value of the new postion and pushes it to the newPosition property of the currentPlayer.
+@param {object} currentPlayer;
 */
 function diceThrow(currentPlayer) {
   currentPlayer.result = generateNumber();
@@ -411,11 +410,12 @@ function diceThrow(currentPlayer) {
 }
 
 /**
- Takes currentPlayer as a parameter;
- *Sets interval for the individual steps to visualise movement.
- *Checks if new positions is outside of the board (>25) and if so, sets position and newPosition to 25 to avoid error.
- *If the new position is within range, increments position by one until it equals newPostion, then clears interval set in currentPlayerTurn function and checks for snake or ladder.
- @param currentPlayer ai or player
+ * Initiates current player's movment on the board. 
+ * 
+ * Sets interval for the individual steps to visualise movement: 
+ * checks if new positions is outside of the board (>25) and if so, sets position and newPosition to 25 to avoid error;
+ * if the new position is within range, increments position by one until it equals newPostion, then clears interval set in currentPlayerTurn function and checks for snake or ladder.
+ @param {object} currentPlayer 
  */
 function currentPlayerTurn(currentPlayer) {
   let id = setInterval(function () {
@@ -452,9 +452,10 @@ function currentPlayerTurn(currentPlayer) {
 
 /**
  * Checks the data-type in the field to determine if it contains snake/ladder or checks for win.
+ * 
  * Calls moveIfSnake/moveIfLadder functions to compute the new postions as needed.
- * Moves the avatar into the newPosition.
- * Initiates ai move
+ * 
+ * Moves the avatar into the newPosition and initiates Ai move once Player's movement is completed
  */
 function checkType(currentPlayer) {
   let field = document.getElementById(`f${currentPlayer.newPosition}`);
@@ -475,7 +476,7 @@ function checkType(currentPlayer) {
       document.getElementById(
         `${currentPlayer.name}-${currentPlayer.newPosition}`
       ).innerHTML = currentPlayer.avatar;
-      checkIfWin(currentPlayer);
+      checkIfWin(currentPlayer); //checks if the new position is a win in case ladder leads to the last field
     } else {
       checkIfWin(currentPlayer);
     }
@@ -491,15 +492,19 @@ function checkType(currentPlayer) {
 }
 
 /**
- Computes the newPosition for the currentPlayer if the field contains a snake. Considers the fields by columns and adjusts the number according the pattern:
- * to check for numbers in 8, 13, 18, 23 take away 3 and check %5, then adjust position by -5;
- * to check for numbers 6, 11, 16 take away 1 and check %5, then adjust position by -1;
- * to check for numbers 7, 12, 17 take away 2 and check %5, then adjust position by -3;
- * to check for numbers 9, 14, 19 take away 4 and check %5, then adjust postion by -7; 
- * the remaining numbers: 10, 15, 20 adjust by -9;
- * bottom row can be ignored as snake cannot be placed there.
- * Using pattern rather than set numbers allows to increase the number of rows in the future
- *  @param currentPlayer ai or player
+ * Computes the newPosition for the currentPlayer if the field contains a snake. Considers fields by columns and adjusts the number according the pattern to allow future resizing of the board (bottom row can be ignored as snake cannot be placed there):
+ *
+ * for numbers in 8, 13, 18, 23 take away 3 and check %5, then adjust position by -5;
+ * 
+ * for numbers 6, 11, 16 take away 1 and check %5, then adjust position by -1;
+ * 
+ * for numbers 7, 12, 17 take away 2 and check %5, then adjust position by -3;
+ * 
+ * for numbers 9, 14, 19 take away 4 and check %5, then adjust postion by -7; 
+ * 
+ * remaining numbers: 10, 15, 20 adjust by -9;
+ * 
+ *  @param {object} currentPlayer 
  */
 function moveIfSnake(currentPlayer) {
   if ((currentPlayer.newPosition - 3) % 5 == 0) {
@@ -517,14 +522,19 @@ function moveIfSnake(currentPlayer) {
 }
 
 /**
- Computes the newPosition for the currentPlayer if the field contains a ladder. Considers the fields by columns and adjusts the number according the pattern:
+ * Computes the newPosition for the currentPlayer if the field contains a ladder. Considers the fields by columns and adjusts the number according the pattern (bottom row is checked for exact matches, top can be ignored as no ladder can be placed there):
+ * 
  * to check for numbers 8, 13, 18 take away 3 and check %5, then adjust position by +5;
+ * 
  * to check for numbers 6, 11 take away 1 and check %5, then adjust position by +9;
+ * 
  * to check for numbers 7, 12, 17 take away 2 and check %5, then adjust position by +7;
+ * 
  * to check for numbers 9, 14, 19 take away 4 and check %5, then adjust postion by +3; 
+ * 
  * the remaining numbers: 10, 15, 20, adjust by +1;
- * bottom row is checked for exact matches, top can be ignored as no ladder can be placed there.
- * @param currentPlayer ai or player
+ * 
+ * @param {object} currentPlayer
  */
 function moveIfLadder(currentPlayer) {
   if (
@@ -554,7 +564,8 @@ function moveIfLadder(currentPlayer) {
 }
 
 /** 
-Checks if player/ai's position is equal to 25 (will not be greater since set in currentPlayerTurn), sets gameRunning to false and generates a winning message and reloads the page.
+* Checks if Player/Ai's position is equal to 25 (will not be greater since set to 25 in the currentPlayerTurn(), sets gameRunning to false, generates a winning message and reloads the page.
+@param {object} currentPlayer
 */
 function checkIfWin(currentPlayer) {
   if (currentPlayer.position === 25) {
